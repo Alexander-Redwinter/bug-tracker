@@ -1,45 +1,56 @@
 ﻿<!DOCTYPE html>
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BugTracker</title>
+    <title>@Localizer["Title"]</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Index">Tickets</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <!-- navbar-->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+            <a href="index.html" class="navbar-brand font-weight-bold"><i class="fas fa-bug mr-4"></i>@Localizer["Bug Tracker"]</a>
+            <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+                <li class="nav-item dropdown mr-3">
+                    <a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
+                    <div aria-labelledby="notifications" class="dropdown-menu">
+                        <a href="#" class="dropdown-item">
+                            <div class="d-flex align-items-center">
+                                <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                                <div class="text ml-2">
+                                    <p class="mb-0">You have # new messages</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown ml-auto">
+                    <a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Current User</a>
+                </li>
+            </ul>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - BugTracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="d-flex align-items-stretch">
+        <div id="sidebar" class="sidebar py-3">
+            <ul class="sidebar-menu list-unstyled">
+                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link text-muted shadow active"><span>Home</span><i class="fas fa-columns ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted"><span>Users</span><i class="fas fa-user-friends ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted"><span>@Localizer["Tickets"]</span><i class="fas fa-clipboard ml-3"></i></a></li>
+            </ul>
         </div>
-    </footer>
+        <div class="page-holder w-100 d-flex flex-wrap">
+            <div class="container-fluid px-xl-5">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
