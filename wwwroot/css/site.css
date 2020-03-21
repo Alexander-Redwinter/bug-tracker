@@ -24,10 +24,6 @@ for details on configuring this project to bundle and minify static web assets. 
 *
 */
 
-body {
-    background-image: url('../img/background.png');
-    background-size: cover;
-}
 
 .shadow {
     -webkit-box-shadow: 0 0.125rem 0.8rem rgba(0, 0, 0, 0.2) !important;
