@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#DT_load').DataTable({
+    dataTable = $('#DT_TicketsLoad').DataTable({
         "ajax": {
             "url": "/Ticket/GetAll",
             "type": "GET",

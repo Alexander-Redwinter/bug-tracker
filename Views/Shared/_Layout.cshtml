@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@Localizer["Title"]</title>
+    <title>@Localizer["BugTracker"]</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -29,7 +29,8 @@
     <!-- navbar-->
     <header class="header">
         <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
-            <a asp-controller="Home" asp-action="Index" class="navbar-brand font-weight-bold"><i class="fas fa-bug mr-4"></i>@Localizer["Bug Tracker"]</a>
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand font-weight-bold"><i class="fas fa-bug mr-4"></i>@Localizer["BugTracker"]</a>
+            
             <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
                 <li class="nav-item dropdown mr-3">
                     <a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
@@ -44,8 +45,13 @@
                         </a>
                     </div>
                 </li>
-                <li class="nav-item dropdown ml-auto">
-                    <a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Current User</a>
+                <li class="nav-item ml-auto">
+                    <a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">@User.Identity.Name</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <form method="post" asp-action="Logout" asp-controller="Account">
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                    </form>
                 </li>
             </ul>
         </nav>
@@ -55,9 +61,11 @@
             <ul class="sidebar-menu list-unstyled">
                 <li class="sidebar-list-item"><a asp-controller="Home" asp-action="Index" class="sidebar-link text-muted shadow @(controller == "Home" ? "active" : "stub")"><span>@Localizer["Dashboard"]</span><i class="fas fa-columns ml-3"></i></a></li>
                 <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Ticket" ? "active" : "stub")"><span>@Localizer["Tickets"]</span><i class="fas fa-clipboard ml-3"></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted"><span>Users</span><i class="fas fa-user-friends ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Home" asp-action="ThrowError" class="sidebar-link shadow text-muted"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted"><span>Roles</span><i class="fas fa-user-friends ml-3"></i></a></li>
+
             </ul>
+
         </div>
         <div class="page-holder w-100 d-flex flex-wrap">
             <div class="container-fluid px-xl-5">
@@ -66,6 +74,11 @@
             </div>
         </div>
     </div>
+    <footer>
+        <div class="col-sm-6 text-right">
+            @await Html.PartialAsync("_SelectLanguagePartial")
+        </div>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

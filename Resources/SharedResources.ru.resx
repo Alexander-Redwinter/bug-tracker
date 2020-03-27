@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Tickets" xml:space="preserve">
-    <value>Tickets In English</value>
+  <data name="BugTracker" xml:space="preserve">
+    <value>Багтракер</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>Bug Tracker</value>
+  <data name="Create Account" xml:space="preserve">
+    <value>Создать Учетную Запись</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Авторизация</value>
+  </data>
+  <data name="Ticket" xml:space="preserve">
+    <value>Заявка</value>
+  </data>
+  <data name="Tickets" xml:space="preserve">
+    <value>Заявки</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Здравствуйте</value>
+  </data>
+  <data name="You do not have required security level to access this service" xml:space="preserve">
+    <value />
   </data>
 </root>

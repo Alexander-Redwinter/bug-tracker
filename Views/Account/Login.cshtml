@@ -1,0 +1,34 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = Localizer["Login"];
+    Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label text="@Localizer["Remember me?"]"></label>
+                <input asp-for="RememberMe" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary text-white">Login</button>
+        </form>
+
+        <a asp-action="Register" class="btn btn-secondary">@Localizer["Create Account"]</a>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
