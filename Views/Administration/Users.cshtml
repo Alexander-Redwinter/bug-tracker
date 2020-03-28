@@ -1,0 +1,19 @@
+﻿<a asp-action="AssignRoles" class="btn btn-primary">@Localizer["Cancel"]</a>
+<div class="col-12 border p-3">
+    <table id="DT_UsersLoad" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Email"]</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/UserList.js"></script>
+    <partial name="_DeleteAlertPartial" />
+    <partial name="_UserListPartial" />
+}
+

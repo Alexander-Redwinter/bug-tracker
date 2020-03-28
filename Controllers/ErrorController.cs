@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
 {
+    [AllowAnonymous]
     public class ErrorController : Controller
     {
         [Route("Error/{statusCode}")]

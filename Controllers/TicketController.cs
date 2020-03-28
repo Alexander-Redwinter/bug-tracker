@@ -44,6 +44,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Project Manager, Developer, Tester")]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert()
         {
@@ -71,6 +72,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             var ticketsFromDb = await _Db.Tickets.FirstOrDefaultAsync(u => u.Id == id);

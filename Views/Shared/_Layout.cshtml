@@ -17,7 +17,20 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+
+
+
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.6/dist/sweetalert2.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.6/dist/sweetalert2.min.js"></script>
+
+
+
+
+
+
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />*@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -59,11 +72,10 @@
     <div class="d-flex align-items-stretch">
         <div id="sidebar" class="sidebar py-3">
             <ul class="sidebar-menu list-unstyled">
-                <li class="sidebar-list-item"><a asp-controller="Home" asp-action="Index" class="sidebar-link text-muted shadow @(controller == "Home" ? "active" : "stub")"><span>@Localizer["Dashboard"]</span><i class="fas fa-columns ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Home" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Home" ? "active" : "stub")"><span>@Localizer["Dashboard"]</span><i class="fas fa-columns ml-3"></i></a></li>
                 <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Ticket" ? "active" : "stub")"><span>@Localizer["Tickets"]</span><i class="fas fa-clipboard ml-3"></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Home" asp-action="ThrowError" class="sidebar-link shadow text-muted"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted"><span>Roles</span><i class="fas fa-user-friends ml-3"></i></a></li>
-
+                <li class="sidebar-list-item"><a asp-controller="Profile" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Profile" ? "active" : "stub")"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
+                @if (User.IsInRole("Admin") || User.IsInRole("Admin")){<li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted @(controller == "Administration" ? "active" : "stub")"><span>Administration</span><i class="fas fa-user-friends ml-3"></i></a></li>}
             </ul>
 
         </div>
@@ -86,7 +98,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -10,6 +10,8 @@ using Microsoft.Extensions.Localization;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace BugTracker.Controllers
 {
@@ -26,7 +28,18 @@ namespace BugTracker.Controllers
         {
             return View();
         }
-
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                 "BugTracker.PrefferedCulture",
+                  CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                  new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index");
+        }
         public IActionResult ThrowError()
         {
             return BadRequest();

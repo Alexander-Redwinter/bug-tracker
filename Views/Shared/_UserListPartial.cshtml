@@ -1,24 +1,27 @@
-﻿var dataTable;
+﻿<script>
+var dataTable;
 
 $(document).ready(function () {
     loadDataTable();
 });
 
 function loadDataTable() {
-    dataTable = $('#DT_RolesLoad').DataTable({
+    dataTable = $('#DT_UsersLoad').DataTable({
         "ajax": {
-            "url": "/Administration/GetRolesList",
+            "url": "/Administration/GetUserList",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "name", "width": "50%" },
+            { "data": "userName", "width": "20%" },
+            { "data": "email", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/Administration/EditUsersInRole?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:auto;'>
-                            Add or remove users
+                        <a class='btn btn-danger text-white' style='cursor:pointer; width:70px;'
+                            onclick=Delete('/Administration/DeleteUser?id=${data}')>
+                            Delete
                         </a>
                         </div>`;
                 }, "width": "40%"
@@ -30,3 +33,4 @@ function loadDataTable() {
         "width": "100%"
     });
 }
+</script>

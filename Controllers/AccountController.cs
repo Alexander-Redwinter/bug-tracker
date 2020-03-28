@@ -24,11 +24,6 @@ namespace BugTracker.Controllers
             _signInManager = signInManager;
         }
 
-        public IActionResult Index()
-        {
-            return RedirectToAction("Login");
-        }
-
         public IActionResult Register()
         {
             if (_signInManager.IsSignedIn(User))
@@ -75,7 +70,7 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
                 if (result.Succeeded)
                 {
@@ -86,7 +81,8 @@ namespace BugTracker.Controllers
                     }
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "No such combination of email/password found");
+                //TODO Add localization
+                ModelState.AddModelError("", "No such combination of name/password found");
             }
             return View(model);
         }
@@ -115,6 +111,7 @@ namespace BugTracker.Controllers
             {
                 return Json(true);
             }
+            //TODO Add localization
             return Json("Email is already in use");
         }
         #endregion

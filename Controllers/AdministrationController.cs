@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Demo")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -22,6 +22,11 @@ namespace BugTracker.Controllers
         }
         [HttpGet]
         public IActionResult AssignRoles()
+        {
+            return View();
+        }
+
+        public IActionResult Users()
         {
             return View();
         }
@@ -55,6 +60,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> EditUsersInRoleAsync(List<EditUsersInRoleViewModel> model, string id)
         {
@@ -91,6 +97,26 @@ namespace BugTracker.Controllers
             return RedirectToAction("AssignRoles");
         }
 
+        //TODO localize
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return Json(new { success = true, message = "Delete successful" });
+            }
+            return Json(new { success = false, message = "Something went wrong" });
+
+        }
+
+        #region APICalls
         [HttpGet]
         public IActionResult GetRolesList()
         {
@@ -99,5 +125,13 @@ namespace BugTracker.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult GetUserList()
+        {
+            var roles = _userManager.Users;
+            return Json(new { data = roles });
+
+        }
+        #endregion
     }
 }
