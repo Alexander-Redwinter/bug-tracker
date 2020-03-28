@@ -15,6 +15,12 @@ namespace BugTracker.Models
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProjectApplicationUser>().HasKey(e => new { e.ProjectId, e.ApplicationUserId});
+            modelBuilder.Entity<TicketApplicationUser>().HasKey(e => new { e.TicketId, e.ApplicationUserId });
+        }
+
         public DbSet<Ticket> Tickets { get; set; }
 
     }

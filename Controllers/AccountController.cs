@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BugTracker.Models;
 using BugTracker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +12,12 @@ namespace BugTracker.Controllers
     public class AccountController : Controller
     {
         private readonly IStringLocalizer<SharedResources> _localizer;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
 
-        public AccountController(UserManager<IdentityUser> userManager
-            , SignInManager<IdentityUser> signInManager
+        public AccountController(UserManager<ApplicationUser> userManager
+            , SignInManager<ApplicationUser> signInManager
             , IStringLocalizer<SharedResources> localizer)
         {
             _localizer = localizer;
@@ -38,7 +39,7 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
+                var user = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email

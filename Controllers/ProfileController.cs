@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,13 +10,13 @@ namespace BugTracker.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
 
         [BindProperty]
-        public IdentityUser identityUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
-        public ProfileController(UserManager<IdentityUser> userManager)
+        public ProfileController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
@@ -31,9 +32,9 @@ namespace BugTracker.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexPost()
         {
-            var user = await _userManager.FindByIdAsync(identityUser.Id);
-            user.UserName = identityUser.UserName;
-            user.Email = identityUser.Email;
+            var user = await _userManager.FindByIdAsync(ApplicationUser.Id);
+            user.UserName = ApplicationUser.UserName;
+            user.Email = ApplicationUser.Email;
             await _userManager.UpdateAsync(user);
             return View();
         }

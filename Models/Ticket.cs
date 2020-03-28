@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BugTracker.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,9 +10,10 @@ namespace BugTracker.Models
     public class Ticket
     {
 
+
         [Key]
         public int Id { get; set; }
-         
+
         [Required]
         public string Title { get; set; }
 
@@ -19,6 +21,22 @@ namespace BugTracker.Models
 
         [Required]
         public DateTime Created { get; set; }
+
+        public TicketPriority TicketPriority { get; set; } = TicketPriority.Medium;
+        public TicketStatus TicketStatus { get; set; } = TicketStatus.Open;
+        public TicketType TicketType { get; set; } = TicketType.Other;
+
+        public Project Project { get; set; }
+
+        public IList<TicketComment> TicketComments { get; set; }
+        public IList<TicketAttachment> TicketAttachments { get; set; }
+        public IList<TicketHistory> TicketHistories { get; set; }
+
+        //assigned users
+        public IList<TicketApplicationUser> TicketApplicationUsers { get; set; }
+
+        //submitter
+        public ApplicationUser ApplicationUser { get; set; }
 
     }
 }

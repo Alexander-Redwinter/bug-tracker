@@ -64,7 +64,7 @@ namespace BugTracker
                 options.RequestCultureProviders.Insert(0, provider);
             });
 
-            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
                 config.Password.RequiredLength = 8;
                 config.Password.RequireNonAlphanumeric = false;
