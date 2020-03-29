@@ -94,6 +94,9 @@ namespace BugTracker.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -108,15 +111,12 @@ namespace BugTracker.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId1")
+                    b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProjectId", "ApplicationUserId");
 
-                    b.HasIndex("ApplicationUserId1");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("ProjectApplicationUser");
                 });
@@ -167,15 +167,12 @@ namespace BugTracker.Migrations
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId1")
+                    b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("TicketId", "ApplicationUserId");
 
-                    b.HasIndex("ApplicationUserId1");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("TicketApplicationUser");
                 });
@@ -381,7 +378,9 @@ namespace BugTracker.Migrations
                 {
                     b.HasOne("BugTracker.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("ProjectApplicationUsers")
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracker.Models.Project", "Project")
                         .WithMany("ProjectApplicationUsers")
@@ -405,7 +404,9 @@ namespace BugTracker.Migrations
                 {
                     b.HasOne("BugTracker.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("TicketApplicationUsers")
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany("TicketApplicationUsers")

@@ -132,7 +132,13 @@
   <data name="Manage users" xml:space="preserve">
     <value />
   </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>Запомнить</value>
+  </data>
   <data name="Save changes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Sign In" xml:space="preserve">
     <value />
   </data>
   <data name="Ticket" xml:space="preserve">

@@ -4,6 +4,45 @@
     Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 }
 
+<div class="d-flex justify-content-center h-100">
+    <div class="card">
+        <div class="card-header">
+            <h3>@Localizer["Sign In"]</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="row align-items-center remember">
+                    <input asp-for="RememberMe" class="form-control" />@Localizer["Remember me"]
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary text-white">@Localizer["Login"]</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-center links">
+                <a asp-action="Register" class="btn btn-secondary text-white">@Localizer["Create Account"]</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* 
 <div class="row">
     <div class="col-md-12">
         <form method="post">
@@ -28,6 +67,8 @@
         <a asp-action="Register" class="btn btn-secondary">@Localizer["Create Account"]</a>
     </div>
 </div>
+     *@
+
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

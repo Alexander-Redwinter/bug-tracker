@@ -28,6 +28,8 @@ namespace BugTracker.Controllers
             return View(user);
         }
 
+
+        //TODO Add confirmation
         [HttpPost]
         [ActionName("Index")]
         public async Task<IActionResult> IndexPost()

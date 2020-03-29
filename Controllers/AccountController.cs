@@ -16,6 +16,8 @@ namespace BugTracker.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
 
 
+
+
         public AccountController(UserManager<ApplicationUser> userManager
             , SignInManager<ApplicationUser> signInManager
             , IStringLocalizer<SharedResources> localizer)
@@ -23,6 +25,7 @@ namespace BugTracker.Controllers
             _localizer = localizer;
             _userManager = userManager;
             _signInManager = signInManager;
+
         }
 
         public IActionResult Register()
