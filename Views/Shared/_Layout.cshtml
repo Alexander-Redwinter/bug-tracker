@@ -21,7 +21,7 @@
 
 
 
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.6/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.6/dist/sweetalert2.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.6/dist/sweetalert2.min.js"></script>
 
@@ -43,7 +43,7 @@
     <header class="header">
         <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
             <a asp-controller="Home" asp-action="Index" class="navbar-brand font-weight-bold"><i class="fas fa-bug mr-4"></i>@Localizer["BugTracker"]</a>
-            
+
             <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
                 <li class="nav-item dropdown mr-3">
                     <a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
@@ -75,7 +75,14 @@
                 <li class="sidebar-list-item"><a asp-controller="Home" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Home" ? "active" : "stub")"><span>@Localizer["Dashboard"]</span><i class="fas fa-columns ml-3"></i></a></li>
                 <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Ticket" ? "active" : "stub")"><span>@Localizer["Tickets"]</span><i class="fas fa-clipboard ml-3"></i></a></li>
                 <li class="sidebar-list-item"><a asp-controller="Profile" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Profile" ? "active" : "stub")"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
-                @if (User.IsInRole("Admin") || User.IsInRole("Admin")){<li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted @(controller == "Administration" ? "active" : "stub")"><span>Administration</span><i class="fas fa-user-friends ml-3"></i></a></li>}
+                @if (User.IsInRole("Admin") || User.IsInRole("Admin"))
+                {
+                    <li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted @(controller == "Administration" ? "active" : "stub")"><span>Administration</span><i class="fas fa-user-friends ml-3"></i></a></li>
+                }
+                @if (controller == "Error")
+                {
+                    <li class="sidebar-list-item"><a asp-controller="Error" asp-action="Secret" class="sidebar-link shadow text-muted"><i class="far fa-gem" ></i></a></li>
+                }
             </ul>
 
         </div>

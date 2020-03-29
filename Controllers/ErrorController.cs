@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
 {
-    [AllowAnonymous]
     public class ErrorController : Controller
     {
         [Route("Error/{statusCode}")]
@@ -18,6 +17,11 @@ namespace BugTracker.Controllers
         }
 
         public IActionResult Error404()
+        {
+            return View();
+        }
+
+        public IActionResult Secret()
         {
             return View();
         }
