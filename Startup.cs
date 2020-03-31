@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using BugTracker.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -18,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Newtonsoft.Json;
 
 namespace BugTracker
 {
@@ -47,6 +43,15 @@ namespace BugTracker
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources")
               .AddDataAnnotationsLocalization();
 
+
+
+            services.AddMvc().AddNewtonsoftJson(o =>
+            {
+                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                o.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            });
+
+
             var provider = new CookieRequestCultureProvider()
             {
                 CookieName = "BugTracker.PrefferedCulture"
@@ -55,7 +60,7 @@ namespace BugTracker
             {
                 var supportedCultures = new[]
                 {
-                new CultureInfo("en-US"),
+                new CultureInfo("en"),
                 new CultureInfo("ru")
                 };
                 options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");

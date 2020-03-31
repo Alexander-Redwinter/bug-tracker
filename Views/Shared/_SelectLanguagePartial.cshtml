@@ -1,4 +1,6 @@
-﻿@using System.Threading.Tasks
+﻿@*Keeping it as partial in case i want to move language selector*@
+
+@using System.Threading.Tasks
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -14,13 +16,8 @@
         .ToList();
 }
 
-<div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
-    <form id="selectLanguage" asp-controller="Home"
-          asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path"
-          method="post" class="form-horizontal" role="form">
-        @Localizer["Language:"] <select name="culture"
-                                        asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select>
-        <button type="submit" class="btn btn-default btn-xs">Save</button>
-
+<div>
+    <form id="selectLanguage" asp-controller="Home" asp-action="SetLanguage" method="post" class="form-horizontal" role="form">
+    <select class="custom-select" onChange="this.form.submit()" name="culture" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select>
     </form>
 </div>

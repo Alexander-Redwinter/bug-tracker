@@ -33,7 +33,7 @@ namespace BugTracker.Models
         public IList<TicketHistory> TicketHistories { get; set; }
 
         //assigned users
-        public IList<TicketApplicationUser> TicketApplicationUsers { get; set; }
+        public IList<TicketApplicationUser> TicketApplicationUsers { get; set; } = new List<TicketApplicationUser> ();
 
         //submitter
         public ApplicationUser ApplicationUser { get; set; }

@@ -2,27 +2,8 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-
-
-
-
-
-/*
-=========================================
-=========================================
-
-   Bubbly Dashboard Template
-
-=========================================
-========================================= */
-/*
-*
-* =====================
-* GENERAL
-* =====================
-*
-*/
 
 
 .shadow {
@@ -63,7 +44,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 .headings-font-family {
-    font-family: "Poppins", sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 .text-gray {
@@ -2774,12 +2755,12 @@ STYLE SWITCHER FOR DEMO
  * 3. TYPE
  */
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
-    background-image: url('../img/background.png');
+    background-image: url('../img/background_washed.png');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -2808,7 +2789,7 @@ h6,
 .h5,
 .h6 {
     margin-bottom: 0.5rem;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 800;
     line-height: 1.2;
     color: inherit;

@@ -1,5 +1,6 @@
-﻿
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 html, body {
+    font-family: 'Roboto', sans-serif;
     background-image: url('../img/background.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -21,12 +22,6 @@ html, body {
 
 .card-header h3 {
     color: #32b67a;
-}
-
-.social_icon {
-    position: absolute;
-    right: 20px;
-    top: -45px;
 }
 
 .input-group-prepend span {

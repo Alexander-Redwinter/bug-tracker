@@ -28,17 +28,16 @@ namespace BugTracker.Controllers
         {
             return View();
         }
-        public IActionResult SetLanguage(string culture, string returnUrl)
+
+        [AllowAnonymous]
+        public IActionResult SetLanguage(string culture)
         {
             Response.Cookies.Append(
                  "BugTracker.PrefferedCulture",
                   CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                   new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", "Profile");
         }
         public IActionResult ThrowError()
         {

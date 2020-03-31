@@ -20,6 +20,6 @@ namespace BugTracker.Models
 
         public ICollection<Ticket> Tickets{ get; set; }
 
-        public ICollection<ProjectApplicationUser> ProjectApplicationUsers{ get; set; }
+        public ICollection<ProjectApplicationUser> ProjectApplicationUsers { get; set; } = new List<ProjectApplicationUser>();
     }
 }

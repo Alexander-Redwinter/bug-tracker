@@ -1,13 +1,13 @@
 ﻿<script>
 function Delete(url) {
     Swal.fire({
-        title: '@Localizer["BugTracker"]',
-        text: "You won't be able to revert this!",
+        title: '@Localizer["Confirm Action"]',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: '@Localizer["Cancel"]',
+        confirmButtonText: '@Localizer["Confirm"]'
     }).then((result) => {
         if (result.value) {
             $.ajax({

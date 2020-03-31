@@ -120,26 +120,59 @@
   <data name="BugTracker" xml:space="preserve">
     <value>Багтракер</value>
   </data>
+  <data name="Close Project" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Closed Projects" xml:space="preserve">
+    <value>Закрытые Проекты</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Подтвердить</value>
+  </data>
+  <data name="Confirm Action" xml:space="preserve">
+    <value>Подтвердите Действие</value>
+  </data>
   <data name="Create Account" xml:space="preserve">
     <value>Создать Учетную Запись</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Главная</value>
   </data>
+  <data name="Delete Forever" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Go Back" xml:space="preserve">
+    <value>Вернуться</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Авторизация</value>
   </data>
   <data name="Manage users" xml:space="preserve">
-    <value />
+    <value>Пользователи</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="New Project" xml:space="preserve">
+    <value>Новый Проект</value>
+  </data>
+  <data name="Preffered Language" xml:space="preserve">
+    <value>Отображаемый язык</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Проекты</value>
   </data>
   <data name="Remember me" xml:space="preserve">
     <value>Запомнить</value>
   </data>
   <data name="Save changes" xml:space="preserve">
-    <value />
+    <value>Сохранить</value>
   </data>
   <data name="Sign In" xml:space="preserve">
-    <value />
+    <value>Авторизация</value>
   </data>
   <data name="Ticket" xml:space="preserve">
     <value>Заявка</value>
@@ -151,6 +184,6 @@
     <value>Здравствуйте</value>
   </data>
   <data name="You do not have required security level to access this service" xml:space="preserve">
-    <value />
+    <value>Недостаточно полномочий для использования сервиса</value>
   </data>
 </root>

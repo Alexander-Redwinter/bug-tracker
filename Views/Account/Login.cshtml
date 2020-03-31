@@ -7,7 +7,10 @@
 <div class="d-flex justify-content-center h-100">
     <div class="card">
         <div class="card-header">
-            <h3>@Localizer["Sign In"]</h3>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>@Localizer["Sign In"]</h3>
+                @await Html.PartialAsync("_SelectLanguagePartial")
+            </div>
         </div>
         <div class="card-body">
             <form method="post">
@@ -42,32 +45,32 @@
     </div>
 </div>
 
-@* 
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label text="@Localizer["Remember me?"]"></label>
-                <input asp-for="RememberMe" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-primary text-white">Login</button>
-        </form>
+@*
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label text="@Localizer["Remember me?"]"></label>
+                    <input asp-for="RememberMe" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary text-white">Login</button>
+            </form>
 
-        <a asp-action="Register" class="btn btn-secondary">@Localizer["Create Account"]</a>
+            <a asp-action="Register" class="btn btn-secondary">@Localizer["Create Account"]</a>
+        </div>
     </div>
-</div>
-     *@
+*@
 
 
 @section Scripts{

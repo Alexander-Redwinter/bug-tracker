@@ -16,7 +16,7 @@ namespace BugTracker.Models
 
         public IList<Ticket> Tickets{ get; set; }
 
-        public IList<TicketHistory> TicketHistories{ get; set; }
-        public ICollection<ProjectApplicationUser> ProjectApplicationUsers { get; set; }
+        public IList<TicketHistory> TicketHistories { get; set; } = new List<TicketHistory>();
+        public ICollection<ProjectApplicationUser> ProjectApplicationUsers { get; set; } = new List<ProjectApplicationUser>();
     }
 }

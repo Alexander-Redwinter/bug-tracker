@@ -14,6 +14,9 @@ namespace BugTracker.Controllers
     {
         private readonly ApplicationDbContext _DbContext;
         private readonly UserManager<ApplicationUser> _userManager;
+        [BindProperty]
+        public Project Project { get; set; }
+
 
         public ProjectsController(ApplicationDbContext DbContext, UserManager<ApplicationUser> userManager)
         {
@@ -22,36 +25,16 @@ namespace BugTracker.Controllers
 
         }
 
-        // GET: Projects
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-
-
-            //TODO maybe faster to get all user roles in list and check that way? only one request to DB
-
-            /*Admin and PM can see all projects
-            if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Project Manager"))
-            {
-                var list = await _DbContext.Projects.Where(p => p.IsOpen).ToListAsync();
-                return View(list);
-            }
-            else
-            {
-                //TODO no idea what it does
-                var list = _DbContext.Projects.Select(p => new
-                {
-                    CurrentUser = p.ProjectApplicationUsers.Where(pau => pau.ApplicationUserId == user.Id).Select(u => u.ApplicationUser)
-                });
-            }*/
-            var list = _DbContext.Projects.Select(p => new
-            {
-                CurrentUserProjects = p.ProjectApplicationUsers.Where(pau => pau.ApplicationUserId == user.Id).Select(p => p.Project)
-            });
-            return View(list);
+            return View();
         }
 
-        // GET: Projects/Details/5
+        public IActionResult ClosedProjects()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -69,29 +52,42 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
-        // GET: Projects/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Project project)
+        public async Task<IActionResult> Create([Bind("Name,Description")] Project model)
         {
             if (ModelState.IsValid)
             {
-                _DbContext.Add(project);
+                Project project = new Project();
+                project.Name = model.Name;
+                project.Description = model.Description;
+                project.IsOpen = true;
+
+                ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+
+                var projectUser = new ProjectApplicationUser();
+
+                projectUser.Project = project;
+                projectUser.ApplicationUser = user;
+
+                project.ProjectApplicationUsers.Add(projectUser);
+                user.ProjectApplicationUsers.Add(projectUser);
+
+                _DbContext.Projects.Add(project);
+                await _userManager.UpdateAsync(user);
+
                 await _DbContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            return View(project);
+            return View(model);
         }
 
-        // GET: Projects/Edit/5
+        /*
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,9 +103,6 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
-        // POST: Projects/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Project project)
@@ -141,39 +134,100 @@ namespace BugTracker.Controllers
             }
             return View(project);
         }
+        */
 
-        // GET: Projects/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+
+        [HttpDelete]
+        public async Task<IActionResult> Close(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var project = await _DbContext.Projects
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (project == null)
-            {
-                return NotFound();
-            }
-
-            return View(project);
+            var project = await _DbContext.Projects.FindAsync(id);
+            project.IsOpen = false;
+            _DbContext.Projects.Update(project);
+            await _DbContext.SaveChangesAsync();
+            return Json(new { success = true, message = "Project closed" });
         }
 
-        // POST: Projects/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
             var project = await _DbContext.Projects.FindAsync(id);
             _DbContext.Projects.Remove(project);
             await _DbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true, message = "Delete successful" });
         }
 
-        private bool ProjectExists(int id)
+        public async Task<IActionResult> GetProjects()
         {
-            return _DbContext.Projects.Any(e => e.Id == id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var allProjects = _DbContext.Projects.Where(p => p.IsOpen).Include(p => p.ProjectApplicationUsers).ToList();
+
+
+            //Admin and PM can see all projects
+            if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Project Manager"))
+            {
+                //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
+                foreach (Project p in allProjects)
+                {
+                    p.ProjectApplicationUsers.Clear();
+                }
+                return Json(new { data = allProjects });
+            }
+            //Everyone else sees only projects they are assigned to
+            //there's gotta be a better way to sort
+            List<Project> sortedProjects = new List<Project>();
+            foreach (Project p in allProjects)
+            {
+                foreach (ProjectApplicationUser pau in p.ProjectApplicationUsers)
+                {
+                    if (pau.ApplicationUserId == user.Id)
+                    {
+                        sortedProjects.Add(allProjects.Find(fp => fp.Id == p.Id));
+                    }
+                }
+
+            }
+            //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
+            foreach (Project p in allProjects)
+            {
+                p.ProjectApplicationUsers.Clear();
+            }
+            return Json(new { data = sortedProjects });
         }
+
+
+        public async Task<IActionResult> GetClosedProjects()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var allProjects = _DbContext.Projects.Where(p => !p.IsOpen).Include(p => p.ProjectApplicationUsers).ToList();
+
+            //Admin and PM can see all projects
+            if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Project Manager"))
+            {
+                return Json(new { data = allProjects });
+            }
+            //Everyone else sees only projects they are assigned to
+            else
+            {
+                //there's gotta be a better way to sort
+                List<Project> sortedProjects = new List<Project>();
+                foreach (Project p in allProjects)
+                {
+                    foreach (ProjectApplicationUser pau in p.ProjectApplicationUsers)
+                    {
+                        if (pau.ApplicationUserId == user.Id)
+                        {
+                            sortedProjects.Add(p);
+                        }
+                    }
+
+                }
+
+                return Json(new { data = sortedProjects });
+            }
+        }
+
     }
+
+
+
 }

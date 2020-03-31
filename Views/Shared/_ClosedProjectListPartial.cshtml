@@ -6,22 +6,22 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#DT_UsersLoad').DataTable({
+    dataTable = $('#DT_ClosedProjectsLoad').DataTable({
         "ajax": {
-            "url": "/Administration/GetUserList",
+            "url": "/Projects/GetClosedProjects",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "userName", "width": "20%" },
-            { "data": "email", "width": "20%" },
+            { "data": "name", "width": "20%" },
+            { "data": "description", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
                         <a class='btn btn-danger text-white' style='cursor:pointer; width:auto;'
-                            onclick=Delete('/Administration/DeleteUser?id=${data}')>
-                            Delete
+                            onclick=Delete('/Projects/Delete?id=${data}')>
+                            @Localizer["Delete Forever"]
                         </a>
                         </div>`;
                 }, "width": "40%"
