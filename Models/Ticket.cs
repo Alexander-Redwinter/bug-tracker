@@ -22,15 +22,16 @@ namespace BugTracker.Models
         [Required]
         public DateTime Created { get; set; }
 
-        public TicketPriority TicketPriority { get; set; } = TicketPriority.Medium;
+        public TicketPriority TicketPriority { get; set; } = TicketPriority.High;
         public TicketStatus TicketStatus { get; set; } = TicketStatus.Open;
-        public TicketType TicketType { get; set; } = TicketType.Other;
+        public TicketType TicketType { get; set; } = TicketType.BugError;
+
 
         public Project Project { get; set; }
 
-        public IList<TicketComment> TicketComments { get; set; }
-        public IList<TicketAttachment> TicketAttachments { get; set; }
-        public IList<TicketHistory> TicketHistories { get; set; }
+        public IList<TicketComment> TicketComments { get; set; } = new List<TicketComment>();
+        public IList<TicketAttachment> TicketAttachments { get; set; } = new List<TicketAttachment>();
+        public IList<TicketHistory> TicketHistories { get; set; } = new List<TicketHistory>();
 
         //assigned users
         public IList<TicketApplicationUser> TicketApplicationUsers { get; set; } = new List<TicketApplicationUser> ();

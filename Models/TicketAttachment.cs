@@ -7,6 +7,8 @@ namespace BugTracker.Models
         [Key]
         public int Id { get; set; }
         public Ticket Ticket { get; set; }
+
+        public byte[] Image { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
     }

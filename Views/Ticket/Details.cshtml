@@ -1,0 +1,59 @@
+﻿@model BugTracker.Models.Ticket
+@using BugTracker.Enums
+
+<h1>+COMMENTS + ATTACHMENTS +HISTORIES +USER WHO CREATED +ASSIGNED USERS +PROJECT</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketPriority"></label>
+                <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<TicketPriority>()" class="form-control"><option>@Localizer["Select one"]</option></select>
+                <span asp-validation-for="TicketPriority" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketStatus"></label>
+                <select asp-for="TicketStatus" asp-items="Html.GetEnumSelectList<TicketStatus>()" class="form-control"></select>
+                <span asp-validation-for="TicketStatus" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                    <label asp-for="TicketType"></label>
+                    <select asp-for="TicketType" asp-items="Html.GetEnumSelectList<TicketType>()" class="form-control"></select>
+                    <span asp-validation-for="TicketType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<a asp-action="AssignUsers" class="btn btn-primary">@Localizer["Assign Users"]</a>
+<form id="createComment" asp-action="CreateComment" method="Post">
+    <input type="hidden" name="id" value="@Model.Id">
+    <input type="text" name="comment" value="" />
+    <button type="submit">@Localizer["Comment"]</button>
+
+</form>
+<form id="addAttachment" asp-action="CreateAttachment" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="@Model.Id">
+            <input type="file" id="file1" name="file1" class="form-control" />
+        <button type="submit">@Localizer["Add Attachment"]</button>
+</form>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

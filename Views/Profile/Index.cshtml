@@ -1,36 +1,49 @@
 ﻿@model BugTracker.Models.ApplicationUser
 
+<div class="col-lg-6 mb-5">
+    <div class="card">
+        <div class="card-body">
+            <form method="post" asp-action="Index">
+                <input type="hidden" asp-for="Id" />
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["User Name"]</label>
+                    <div class="col-md-9">
 
-    <div class="border container" style="padding:30px">
-        <form method="post" asp-action="Index">
-            <input type="hidden" asp-for="Id" />
-            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-            <div class="form-group row">
-                <div col-6>
-                    <input asp-for="UserName" class="form-control" />
-                    <span asp-validation-for="UserName" class="text-danger"></span>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="Email"></label>
-                    </div>
-                    <div col-6>
+                    <label class="col-md-3 form-control-label text-nowrap" asp-for="Email"></label>
+                    <div class="col-md-9">
+
                         <input asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <div class="col-3 offset-3">
-                        <button type="submit" class="btn btn-primary form-control">@Localizer["Save changes"]</button>
+                    <div class="col-md-9 ml-auto">
+                        <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
                     </div>
                 </div>
+            </form>
 
-            </div>
-        </form>
-        @Localizer["Preffered Language"]:
-        @await Html.PartialAsync("_SelectLanguagePartial")
+        </div>
+
     </div>
-
+</div>
+<div class="col-lg-6 mb-5">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="form-control-label text-nowrap">@Localizer["Preffered Language"]</h2>
+        </div>
+        <div class="card-body">
+            @await Html.PartialAsync("_SelectLanguagePartial")
+        </div>
+    </div>
+</div>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }

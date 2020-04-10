@@ -63,7 +63,7 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> EditUsersInRoleAsync(List<EditUsersInRoleViewModel> model, string id)
+        public async Task<IActionResult> EditUsersInRole(List<EditUsersInRoleViewModel> model, string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
 

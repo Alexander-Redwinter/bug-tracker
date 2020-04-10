@@ -1474,6 +1474,7 @@ STYLE SWITCHER FOR DEMO
     padding: 0.4rem 1.8rem;
     font-size: 0.9rem;
     line-height: 1.5;
+    width:auto;
     border-radius: 2rem;
     -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -1517,6 +1518,7 @@ STYLE SWITCHER FOR DEMO
     color: #fff;
     background-color: #32b67a;
     border-color: #32b67a;
+    
 }
 
     .btn-primary:hover {

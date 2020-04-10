@@ -1,8 +1,16 @@
-﻿<script>
+﻿<script src="~/js/moment/locale/ru.js" charset="UTF-8"></script>
+<script>
 var dataTable;
 
-$(document).ready(function () {
+    $(document).ready(function () {
+        if ("@Localizer["Locale"]" !== "Locale") {
+            moment.locale('ru');
+        } else {
+            moment.locale('en');
+        }
+
     loadDataTable();
+
 });
 
 function loadDataTable() {
@@ -13,22 +21,25 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "title", "width": "20%" },
+            {
+                "data": "id", "width": "20%", "render": function (data, type, row) {
+                    return `<a href="/Ticket/Details/${data}" class="btn btn-primary">` + row.title + `</a>`
+                }
+            },
             { "data": "description", "width": "20%" },
-            { "data": "created", "width": "20%" },
+            {
+
+                "data": "created", "render": function (data) {
+                    var date = moment(data).calendar();
+                    return date;
+                }
+            },
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/Ticket/Upsert?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
-                            Edit
-                        </a>
-                        &nbsp;
-                        <a class='btn btn-danger text-white' style='cursor:pointer; width:70px;'
-                            onclick=Delete('/Ticket/Delete?id='+${data})>
-                            Delete
-                        </a>
-                        </div>`;
+                        <a href="/Ticket/AssignUser/${data}" class='btn btn-success text-white' style='cursor:pointer;'>Add or remove users</a>
+                        <a class='btn btn-danger text-white' style='cursor:pointer;' onclick=Delete('/Ticket/Resolve?id='+${data})>@Localizer["Resolve"]</a></div>`;
                 }, "width": "40%"
             }
         ],

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BugTracker.Models.TicketHistory>
+
+
+<h1>Histories</h1>
+<h2>Histories are currently JSON with left being old value and right being new value</h2>
+<h3>I am working on making them more readable</h3>
+<h4>Please wait warmly</h4>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.When)
+            </th>
+            <th>
+                Changes
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.When)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OldValue)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

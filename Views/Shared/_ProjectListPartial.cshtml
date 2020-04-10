@@ -23,11 +23,11 @@ function loadDataTable() {
             {
                 "data": "id","render": function (data) {
                     return `<div class="text-center">
-                        <a href="/Projects/Edit?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
+                        <a href="/Projects/Edit?id=${data}" class='btn btn-success text-white' style='cursor:pointer;'>
                             Edit
                         </a>
                         &nbsp;
-                        <a class='btn btn-danger text-white' style='cursor:pointer; width:auto;'
+                        <a class='btn btn-danger text-white' style='cursor:pointer;'
                             onclick=Delete('/Projects/Close?id=${data}')>
                             @Localizer["Close Project"]
                         </a>

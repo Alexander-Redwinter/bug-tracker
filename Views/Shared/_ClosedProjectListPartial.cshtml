@@ -13,14 +13,22 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "name", "width": "20%" },
+            {
+                "data": "id", "width": "20%", "render": function (data, type, row) {
+                    return `<a href="/Projects/Details/${data}" class="btn btn-primary">` + row.name + `</a>`
+                }
+            },
             { "data": "description", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
+                        <a class='btn btn-success text-white' style='cursor:pointer; width:auto;'
+                            onclick=Delete('/Projects/Open/${data}')>
+                            @Localizer["Open Project"]
+                        </a>
                         <a class='btn btn-danger text-white' style='cursor:pointer; width:auto;'
-                            onclick=Delete('/Projects/Delete?id=${data}')>
+                            onclick=Delete('/Projects/Delete/${data}')>
                             @Localizer["Delete Forever"]
                         </a>
                         </div>`;

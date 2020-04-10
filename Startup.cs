@@ -32,7 +32,7 @@ namespace BugTracker
         {
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddHttpContextAccessor();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews(config =>
             {
