@@ -34,11 +34,10 @@ namespace BugTracker
         {
 
         //heroku db connection
-        // var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+        var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
         //local db connection
-
-            var databaseUrl = "postgres://postgres:postgres@localhost:5432/BugTracker";
+        //var databaseUrl = "postgres://postgres:postgres@localhost:5432/BugTracker";
 
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');
