@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BugTracker.Enums;
 using BugTracker.Models;
@@ -82,6 +83,14 @@ namespace BugTracker.Controllers
                 ticket.Description = model.Description;
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 ticket.ApplicationUser = user;
+                TicketApplicationUser tau = new TicketApplicationUser();
+                tau.ApplicationUser = user;
+                tau.Ticket = ticket;
+                ticket.TicketPriority = model.TicketPriority;
+                ticket.TicketStatus = model.TicketStatus;
+                ticket.TicketType = model.TicketType;
+
+                ticket.TicketApplicationUsers.Add(tau);
                 ticket.Created = DateTime.Now;
                 ticket.Project = _DbContext.Projects.Find(model.ProjectId);
 
@@ -166,6 +175,10 @@ namespace BugTracker.Controllers
             return View();
         }
 
+        public IActionResult ViewResolved()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateAttachment(int id)
@@ -299,13 +312,12 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            var ticket = await _DbContext.Tickets
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var ticket = await _DbContext.Tickets.Where(m => m.Id == id).Include(t => t.Project).FirstOrDefaultAsync();
             if (ticket == null)
             {
                 return NotFound();
             }
-
+            ViewBag.Project = ticket.Project.Name;
             return View(ticket);
         }
 
@@ -335,6 +347,7 @@ namespace BugTracker.Controllers
             }
             return Json(new { data = sortedList });
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllResolved()
@@ -433,15 +446,24 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var ticket = await _DbContext.Tickets.FirstOrDefaultAsync(u => u.Id == id);
+            var ticket = _DbContext.Tickets.Where(u => u.Id == id).Include(t => t.TicketAttachments)
+                .Include(t => t.TicketComments).SingleOrDefault();
             if (ticket == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
+            foreach (TicketAttachment ta in ticket.TicketAttachments)
+            {
+                _DbContext.TicketAttachments.Remove(ta);
+            }
+            foreach (TicketComment tc in ticket.TicketComments)
+            {
+                _DbContext.TicketComments.Remove(tc);
+            }
+            await _DbContext.SaveChangesAsync();
             _DbContext.Tickets.Remove(ticket);
             await _DbContext.SaveChangesAsync();
-            //TODO LOCALIZE ME
-            return Json(new { success = true, message = "Ticket Resolved" });
+            return Json(new { success = true, message = "Delete Successful" });
         }
 
         /*[HttpPost]
@@ -461,18 +483,26 @@ namespace BugTracker.Controllers
 
 
 
-        public IActionResult GetComments()
+        public IActionResult GetComments(int? id)
         {
-            var model = _DbContext.TicketComments.ToList();
-            //TODO DO WITH DATATABLES
-            return View(model);
+            var ticket = _DbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketComments).SingleOrDefault();
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            var model = ticket.TicketComments;
+            return Json(new { data = model });
         }
 
-        public IActionResult GetAttachments()
+        public IActionResult GetAttachments(int? id)
         {
-            var model = _DbContext.TicketAttachments.ToList();
-            //TODO DO WITH DATATABLES
-            return View(model);
+            var ticket = _DbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketAttachments).SingleOrDefault();
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            var model = ticket.TicketAttachments;
+            return Json(new { data = model });
         }
 
         public IActionResult GetHistories()
@@ -486,8 +516,7 @@ namespace BugTracker.Controllers
 
 
             }
-            //TODO DO WITH DATATABLES
-            return View(model);
+            return Json(new { data = model });
         }
 
         public async Task<IActionResult> GetMadeByCurrentUser()
@@ -531,7 +560,99 @@ namespace BugTracker.Controllers
             return Json(new { data = sorted });
         }
 
+        public async Task<IActionResult> GetAllAssignedStatus()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
 
+            List<Ticket> sortedList = new List<Ticket>();
+            foreach (Ticket t in tickets)
+            {
+                foreach (TicketApplicationUser pau in t.TicketApplicationUsers)
+                {
+                    if (pau.ApplicationUserId == user.Id)
+                    {
+                        sortedList.Add(t);
+                    }
+                }
+            }
+            int open = 0;
+            int inprogress = 0;
+            int requireadditionalinfo = 0;
+            int unknown = 0;
+            //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
+            foreach (Ticket t in sortedList)
+            {
+                switch (t.TicketStatus)
+                {
+                    case TicketStatus.Open:
+                        open++;
+                        break;
+                    case TicketStatus.InProgress:
+                        inprogress++;
+                        break;
+                    case TicketStatus.RequireAdditionalInfo:
+                        requireadditionalinfo++;
+                        break;
+                    case TicketStatus.Unknown:
+                        unknown++;
+                        break;
+                }
+
+            }
+            List<JsonDto> list = new List<JsonDto>();
+            list.Add(new JsonDto() { title = "Open", value = open.ToString() });
+            list.Add(new JsonDto() { title = "In Progress", value = inprogress.ToString() });
+            list.Add(new JsonDto() { title = "Additional Info Required", value = requireadditionalinfo.ToString() });
+            list.Add(new JsonDto() { title = "Unknown", value = unknown.ToString() });
+            return Json(new { data = list });
+        }
+        public async Task<IActionResult> GetAllAssignedPriority()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
+
+            List<Ticket> sortedList = new List<Ticket>();
+            foreach (Ticket t in tickets)
+            {
+                foreach (TicketApplicationUser pau in t.TicketApplicationUsers)
+                {
+                    if (pau.ApplicationUserId == user.Id)
+                    {
+                        sortedList.Add(t);
+                    }
+                }
+            }
+            int low = 0;
+            int medium = 0;
+            int high = 0;
+            int none = 0;
+            foreach (Ticket t in sortedList)
+            {
+                switch (t.TicketPriority)
+                {
+                    case TicketPriority.Low:
+                        low++;
+                        break;
+                    case TicketPriority.Medium:
+                        medium++;
+                        break;
+                    case TicketPriority.High:
+                        high++;
+                        break;
+                    case TicketPriority.None:
+                        none++;
+                        break;
+                }
+
+            }
+            List<JsonDto> list = new List<JsonDto>();
+            list.Add(new JsonDto() { title = "Low", value = low.ToString() });
+            list.Add(new JsonDto() { title = "Medium", value = medium.ToString() });
+            list.Add(new JsonDto() { title = "High", value = high.ToString() });
+            list.Add(new JsonDto() { title = "None", value = none.ToString() });
+            return Json(new { data = list });
+        }
         #endregion
 
     }

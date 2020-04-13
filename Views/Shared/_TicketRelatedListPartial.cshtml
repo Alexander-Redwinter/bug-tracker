@@ -1,0 +1,98 @@
+﻿<script src="~/js/moment/locale/ru.js" charset="UTF-8"></script>
+<script>
+    var dataTableComments;
+    var dataTableAttachments;
+    var dataTableHistories;
+
+    $(document).ready(function () {
+        if ("@Localizer["Locale"]" !== "Locale") {
+            moment.locale('ru');
+        } else {
+            moment.locale('en');
+        }
+
+    loadDataTable();
+
+});
+
+function loadDataTable() {
+
+
+    dataTableComments = $('#DT_CommentsLoad').DataTable({
+        "ajax": {
+            "url": "/Ticket/GetComments/@Model.Id",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "order": [[1, "desc"]],
+                    "aLengthMenu": [[5, 10, 25], [5, 10, 25, "All"]],
+        "columns": [
+            { "data": "comment", "width": "60%" },
+            {
+
+                "data": "created", "render": function (data) {
+                    var date = moment(data).calendar();
+                    return date;
+                }, "width": "30%"
+            },
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `<div class="text-center">
+                        <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/DeleteComment/'+${data})>@Localizer["Delete"]</a></div>`;
+                }, "width": "10%"
+            }
+        ],
+        "language": {
+            "emptyTable": "@Localizer["Nothing yet"]",
+                "loadingRecords" : "Please wait warmly"
+        },
+        "width": "100%"
+    });
+
+        dataTableAttachments = $('#DT_AttachmentsLoad').DataTable({
+        "ajax": {
+            "url": "/Ticket/GetAttachments/@Model.Id",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            {
+                "data": "id", "width": "20%", "render": function (data, type, row) {
+                    return `<a href="/Ticket/ViewAttachment/${data}">Attachment</a>`
+                }
+            },
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `<div class="text-center">
+                        <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/DeleteAttachment/'+${data})>@Localizer["Delete"]</a></div>`;
+                }, "width": "40%"
+            }
+        ],
+        "language": {
+            "emptyTable": "@Localizer["Nothing yet"]",
+                "loadingRecords" : "Please wait warmly"
+        },
+        "width": "100%"
+    });
+
+    dataTableHistories = $('#DT_HistoriesLoad').DataTable({
+        "ajax": {
+            "url": "/Ticket/GetHistories/",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            {
+                "data": "oldValue", "width": "100%"
+            },
+        ],
+        "language": {
+            "emptyTable": "@Localizer["No changes since creation"]",
+                "loadingRecords" : "Please wait warmly"
+        },
+        "width": "100%"
+    });
+}
+</script>

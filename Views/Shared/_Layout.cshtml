@@ -41,7 +41,8 @@
 
             <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
                 <li class="nav-item ml-auto">
-                    <a id="userInfo" asp-controller="Profile" asp-action="Index" aria-haspopup="true" aria-expanded="false" class="nav-link">@User.Identity.Name</a>
+
+                    <a id="userInfo" asp-controller="Profile" asp-action="Index" aria-haspopup="true" aria-expanded="false" class="nav-link"><span class="text-muted">@Localizer["Logged in as"]: </span> @User.Identity.Name</a>
                 </li>
                 <li class="nav-item ml-auto">
                     <form method="post" asp-action="Logout" asp-controller="Account">
@@ -55,8 +56,8 @@
         <div id="sidebar" class="sidebar py-3">
             <ul class="sidebar-menu list-unstyled">
                 <li class="sidebar-list-item"><a asp-controller="Home" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Home" ? "active" : "stub")"><span>@Localizer["Dashboard"]</span><i class="fas fa-columns ml-3"></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Projects" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Projects" ? "active" : "stub")"><span>@Localizer["Projects"]</span><i class="fas fa-clipboard ml-3"></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Ticket" ? "active" : "stub")"><span>@Localizer["Tickets"]</span><i class="fas fa-clipboard ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Ticket" ? "active" : "stub")"><span>@Localizer["Tickets"]</span><i class="fas fa-list ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Projects" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Projects" ? "active" : "stub")"><span>@Localizer["Projects"]</span><i class="fas fa-project-diagram ml-3"></i></i></a></li>
                 <li class="sidebar-list-item"><a asp-controller="Profile" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Profile" ? "active" : "stub")"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
                 @if (User.IsInRole("Admin") || User.IsInRole("Admin"))
                 {
@@ -64,7 +65,7 @@
                 }
                 @if (controller == "Error")
                 {
-                    <li class="sidebar-list-item"><a asp-controller="Error" asp-action="Secret" class="sidebar-link shadow text-muted"><i class="far fa-gem"></i></a></li>
+                    <li class="sidebar-list-item"><a asp-controller="Error" asp-action="Secret" class="sidebar-link shadow text-muted "><span>Secret</span><i class="fas fa-torii-gate ml-3"></i></a></li>
                 }
             </ul>
 

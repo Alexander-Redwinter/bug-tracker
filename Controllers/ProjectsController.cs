@@ -159,6 +159,17 @@ namespace BugTracker.Controllers
 
         }
 
+        public IActionResult GetTickets(int? id)
+        {
+            var project = _DbContext.Projects.Where(p => p.Id == id).Include(p => p.Tickets).SingleOrDefault();
+            if (project == null)
+            {
+                return NotFound();
+            }
+            var model = project.Tickets;
+            return Json(new { data = model });
+        }
+
         [HttpPost]
         public async Task<IActionResult> AssignUser(List<EditUsersInRoleViewModel> model, int id)
         {

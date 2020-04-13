@@ -1,29 +1,59 @@
-﻿<h2>+ CLOSED TICKETS</h2>
-<div class="col-6">
-    <h2 class="text-info">Ticket List</h2>
-</div>
-<div class="col-3 offset-3">
-    <a asp-action="Create" class="btn btn-info form-control text-white">
+﻿<p>
+    <a asp-action="Create" class="btn btn-primary text-white">
         @Localizer["New Ticket"]
     </a>
-</div>
-<div class="col-12 border p-3">
-    <table id="DT_TicketsLoad" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>@Localizer["Title"]</th>
-                <th>@Localizer["Description"]</th>
-                <th>@Localizer["Created"]</th>
-                <th></th>
+</p>
+<p>
+    <a asp-action="ViewResolved" class="btn btn-secondary text-white">
+        @Localizer["View Resolved"]
+    </a>
+</p>
+    <div class="row">
+        <div class="col p-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="h6 text-uppercase mb-0">@Localizer["Your Tickets"]</h3>
+                </div>
 
-            </tr>
-        </thead>
-    </table>
-</div>
+                <div class="card-body">
 
+                    <table id="DT_TicketsLoad" class="table table-striped card-text" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Title"]</th>
+                                <th>@Localizer["Description"]</th>
+                                <th>@Localizer["Created"]</th>
+                                <th></th>
 
-@section Scripts{
-    <script src="~/js/TicketList.js"></script>
-    <partial name="_DeleteAlertPartial" />
-    <partial name="_TicketListPartial" />
-}
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col p-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="h6 text-uppercase mb-0">@Localizer["Assigned Tickets"]</h3>
+                </div>
+
+                <div class="card-body">
+                    <table id="DT_AssignedTicketsLoad" class="table table-striped card-text" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Title"]</th>
+                                <th>@Localizer["Description"]</th>
+                                <th>@Localizer["Created"]</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+        <partial name="_DeleteAlertPartial" />
+        <partial name="_TicketListPartial" />
+    }

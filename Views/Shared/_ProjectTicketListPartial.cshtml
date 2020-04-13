@@ -1,7 +1,6 @@
 ﻿<script src="~/js/moment/locale/ru.js" charset="UTF-8"></script>
 <script>
     var dataTable;
-    var dataTableAssigned;
 
     $(document).ready(function () {
         if ("@Localizer["Locale"]" !== "Locale") {
@@ -17,13 +16,13 @@
 function loadDataTable() {
     dataTable = $('#DT_TicketsLoad').DataTable({
         "ajax": {
-            "url": "/Ticket/GetAll",
+            "url": "/Projects/GetTickets/@Model.Id",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
             {
-                "data": "id", "width": "20%", "render": function (data, type, row) {
+                "data": "id", "width": "30%", "render": function (data, type, row) {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
@@ -43,43 +42,6 @@ function loadDataTable() {
                         <br/>
                         <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/Resolve?id='+${data})>@Localizer["Resolve"]</a></div>`;
                 }, "width": "40%"
-            }
-        ],
-        "language": {
-            "emptyTable": "@Localizer["Nothing yet"]",
-                "loadingRecords" : "Please wait warmly"
-        },
-        "width": "100%"
-    });
-
-    dataTableAssigned = $('#DT_AssignedTicketsLoad').DataTable({
-        "ajax": {
-            "url": "/Ticket/GetAllAssigned",
-            "type": "GET",
-            "datatype": "json"
-        },
-        "columns": [
-            {
-                "data": "id", "render": function (data, type, row) {
-                    return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
-                }
-            },
-            { "data": "description"},
-            {
-
-                "data": "created", "render": function (data) {
-                    var date = moment(data).calendar();
-                    return date;
-                }
-            },
-            {
-                "data": "id",
-                "render": function (data) {
-                    return `<div class="text-center">
-                        <a href="/Ticket/AssignUser/${data}" style='cursor:pointer;'>@Localizer["Assign Users"]</a>
-                        <br/>
-                        <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/Resolve?id='+${data})>@Localizer["Resolve"]</a></div>`;
-                }
             }
         ],
         "language": {

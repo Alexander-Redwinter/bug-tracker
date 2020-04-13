@@ -1,0 +1,53 @@
+﻿<p>
+    <a asp-action="Index" class="btn btn-primary">
+        @Localizer["Go Back"]
+    </a>
+</p>
+<div class="row">
+    <div class="col p-3">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="h6 text-uppercase mb-0">@Localizer["Resolved Tickets"]</h3>
+            </div>
+            <div class="card-body">
+                <table id="DT_ResolvedTicketsLoad" class="table table-striped card-text" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["Title"]</th>
+                            <th>@Localizer["Description"]</th>
+                            <th>@Localizer["Created"]</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col p-3">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="h6 text-uppercase mb-0">@Localizer["Assigned Tickets"]</h3>
+            </div>
+            <div class="card-body">
+                <table id="DT_ResolvedAssignedTicketsLoad" class="table table-striped card-text" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["Title"]</th>
+                            <th>@Localizer["Description"]</th>
+                            <th>@Localizer["Created"]</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_DeleteAlertPartial" />
+    <partial name="_ResolvedTicketListPartial" />
+}
+

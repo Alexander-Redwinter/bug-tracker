@@ -5,6 +5,33 @@ for details on configuring this project to bundle and minify static web assets. 
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 
+.even{
+    background-color: aqua
+}
+
+.dataTables_length {
+    margin: 3px
+}
+.dataTables_filter {
+    margin: 3px
+}
+
+.paginate_button {
+    margin: 3px
+}
+
+a {
+    font-family: 'Roboto', sans-serif;
+    color: #32b67a;
+    text-decoration: none;
+    font-size: medium;
+}
+
+    a:hover, a:focus {
+        color: #227a52;
+        text-decoration: underline;
+    }
+
 
 .shadow {
     -webkit-box-shadow: 0 0.125rem 0.8rem rgba(0, 0, 0, 0.2) !important;
@@ -1261,6 +1288,7 @@ button {
     }
 
 .sidebar-link {
+    text-shadow: 0 0.125rem 0.5rem #fff !important;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1472,9 +1500,9 @@ STYLE SWITCHER FOR DEMO
     font-weight: 400;
     border: 1px solid transparent;
     padding: 0.4rem 1.8rem;
-    font-size: 0.9rem;
+    font-size: medium;
     line-height: 1.5;
-    width:auto;
+    width: auto;
     border-radius: 2rem;
     -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -2768,15 +2796,6 @@ body {
     height: 100%;
 }
 
-a {
-    color: #32b67a;
-    text-decoration: none;
-}
-
-    a:hover, a:focus {
-        color: #227a52;
-        text-decoration: underline;
-    }
 
 h1,
 h2,

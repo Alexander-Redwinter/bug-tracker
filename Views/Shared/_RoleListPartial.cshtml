@@ -10,6 +10,7 @@
             searching: false,
             paging: false,
             info: false,
+            ordering: false,
             "ajax": {
                 "url": "/Administration/GetRolesList",
                 "type": "GET",
@@ -29,7 +30,8 @@
                 }
             ],
             "language": {
-                "emptyTable": "@Localizer["Nothing yet"]"
+                "emptyTable": "@Localizer["Nothing yet"]",
+                "loadingRecords" : "Please wait warmly"
             },
             "width": "100%"
         });

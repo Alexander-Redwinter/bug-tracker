@@ -120,6 +120,9 @@
   <data name="Add Attachment" xml:space="preserve">
     <value />
   </data>
+  <data name="Assigned Tickets" xml:space="preserve">
+    <value />
+  </data>
   <data name="Attachment by user" xml:space="preserve">
     <value />
   </data>
@@ -206,5 +209,8 @@
   </data>
   <data name="You do not have required security level to access this service" xml:space="preserve">
     <value>Недостаточно полномочий для использования сервиса</value>
+  </data>
+  <data name="Your Tickets" xml:space="preserve">
+    <value />
   </data>
 </root>

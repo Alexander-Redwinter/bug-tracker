@@ -1,5 +1,88 @@
 ﻿
-
-<div class="text-center">
-    <h1 class="display-4">Dashboard coming soon</h1>
+<div class="row">
+    <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h6 text-uppercase mb-0">Tickets By Priority</h2>
+            </div>
+            <div class="card-body">
+                <div class="chart-holder">
+                    <canvas id="ChartPriority"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h6 text-uppercase mb-0">Concerning Tickets</h2>
+            </div>
+            <div class="card-body">
+                <div class="chart-holder">
+                    <canvas id="ChartStatus"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="~/js/chart.js/Chart.min.js"></script>
+<script>
+
+    $.getJSON('/Ticket/GetAllAssignedStatus', function (jsonarray) {
+        var labels = jsonarray.data.map(function (e) {
+            return e.title;
+        });
+        var data = jsonarray.data.map(function (e) {
+            return e.value;
+        });;
+        var chartStatus = document.getElementById('ChartStatus').getContext('2d');
+        var chartStatus = new Chart(chartStatus, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: labels,
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                    ]
+                }]
+            }
+        });
+    }
+    )
+
+    $.getJSON('/Ticket/GetAllAssignedPriority', function (jsonarray) {
+        var labels = jsonarray.data.map(function (e) {
+            return e.title;
+        });
+        var data = jsonarray.data.map(function (e) {
+            return e.value;
+        });;
+        var chartPriority = document.getElementById('ChartPriority').getContext('2d');
+        var chartPriority = new Chart(chartPriority, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: labels,
+                    data: data,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(75, 192, 192, 1)',
+                    ]
+                }]
+            }
+        });
+    }
+    )
+
+
+
+</script>
