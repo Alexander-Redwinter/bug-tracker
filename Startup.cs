@@ -46,7 +46,7 @@ namespace BugTracker
             }.ToString();
 
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseNpgsql(Configuration.GetConnectionString(connection)));
+                options => options.UseNpgsql(connection));
             services.AddHttpContextAccessor();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews(config =>
