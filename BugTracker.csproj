@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200406120034_Possibly Useless.cs" />
-    <Compile Remove="Migrations\20200406120034_Possibly Useless.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\js\chart.js\Chart.bundle.js" />
     <None Include="wwwroot\js\chart.js\Chart.bundle.min.js" />
     <None Include="wwwroot\js\chart.js\Chart.js" />
@@ -35,7 +30,7 @@
 
   <Target Name="PrePublishTarget" AfterTargets="Publish">
     <Exec Command="dotnet tool install --global dotnet-ef" />
-    <Exec Command="dotnet-ef database update" />
+    <Exec Command="dotnet ef database update" />
   </Target>
 
 </Project>

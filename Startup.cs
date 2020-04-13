@@ -32,8 +32,14 @@ namespace BugTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //heroku db connection
-            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+        //heroku db connection
+        // var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+        //local db connection
+
+            var databaseUrl = "postgres://postgres:postgres@localhost:5432/BugTracker";
+
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');
             string connection = new NpgsqlConnectionStringBuilder
@@ -47,6 +53,8 @@ namespace BugTracker
 
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseNpgsql(connection));
+
+
             services.AddHttpContextAccessor();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews(config =>
