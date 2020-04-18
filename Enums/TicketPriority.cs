@@ -7,9 +7,9 @@ namespace BugTracker.Enums
 {
     public enum TicketPriority
     {
+        None,
         Low,
         Medium,
-        High,
-        None
+        High
     }
 }

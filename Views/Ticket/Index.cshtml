@@ -9,7 +9,7 @@
     </a>
 </p>
     <div class="row">
-        <div class="col p-3">
+        <div class="col-6 p-3">
             <div class="card">
                 <div class="card-header">
                     <h3 class="h6 text-uppercase mb-0">@Localizer["Your Tickets"]</h3>
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col p-3">
+        <div class="col-6 p-3">
             <div class="card">
                 <div class="card-header">
                     <h3 class="h6 text-uppercase mb-0">@Localizer["Assigned Tickets"]</h3>
@@ -53,7 +53,8 @@
         </div>
     </div>
 
-    @section Scripts{
-        <partial name="_DeleteAlertPartial" />
-        <partial name="_TicketListPartial" />
-    }
+
+@section Scripts{
+    <partial name="_DeleteAlertPartial" />
+    <partial name="_TicketListPartial" />
+}

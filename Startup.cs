@@ -22,9 +22,12 @@ namespace BugTracker
     public class Startup
     {
 
-        public Startup(IConfiguration configuration)
+        private IWebHostEnvironment CurrentEnvironment { get; set; }
+
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             Configuration = configuration;
+            CurrentEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -32,12 +35,17 @@ namespace BugTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-        //heroku db connection
-        var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-
-        //local db connection
-        //var databaseUrl = "postgres://postgres:postgres@localhost:5432/BugTracker";
+            String databaseUrl;
+            if (CurrentEnvironment.IsDevelopment())
+            {
+                //local db connection
+                databaseUrl = "postgres://postgres:postgres@localhost:5432/BugTracker";
+            }
+            else
+            {
+                //heroku db connection
+                databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            }
 
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');

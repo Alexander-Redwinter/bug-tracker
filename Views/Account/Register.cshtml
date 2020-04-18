@@ -1,33 +1,45 @@
 ﻿@model RegisterViewModel
 @{
-    ViewBag.Title = Localizer["Register"];
     Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 }
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+
+
+<div class="d-flex justify-content-center h-100">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>@Localizer["Register"]</h3>
+                @await Html.PartialAsync("_SelectLanguagePartial")
             </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class=" input-group form-group">
+                    <label class="mr-2">@Localizer["Email"]</label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+                <div class="input-group form-group">
+                    <label class="mr-2">@Localizer["Password"]</label>
+                    <input asp-for="Password" class="form-control" />
+                </div>
+                <div class="input-group form-group">
+                    <label class="mr-2">@Localizer["Confirm Password"]</label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary text-white">@Localizer["Create Account"]</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-center">
+
+                <a asp-action="Login" class="btn btn-secondary ">@Localizer["Login"]</a>
             </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <button type="submit" class="btn btn-primary text-white">@Localizer["Create Account"]</button>
-        </form>
-        <a asp-action="Login" class="btn btn-secondary">@Localizer["Login"]</a>
+        </div>
     </div>
 </div>
-
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }

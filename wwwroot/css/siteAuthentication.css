@@ -1,4 +1,19 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+a {
+    font-family: 'Roboto', sans-serif;
+    color: #32b67a;
+    text-decoration: none;
+    font-size: medium;
+}
+
+    a:hover, a:focus {
+        color: #227a52;
+        text-decoration: underline;
+    }
+
+
+
 html, body {
     font-family: 'Roboto', sans-serif;
     background-image: url('../img/background.png');
@@ -12,8 +27,8 @@ html, body {
     align-content: center;
 }
 
+
 .card {
-    height: 370px;
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;

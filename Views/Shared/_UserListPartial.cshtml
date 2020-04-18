@@ -13,19 +13,19 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "userName", "width": "20%" },
+            { "data": "userName"},
 
-            { "data": "email", "width": "20%" },
+            { "data": "email"},
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
                         <a class='btn btn-danger text-white' style='cursor:pointer;'
                             onclick=Delete('/Administration/DeleteUser?id=${data}')>
-                            Delete
+                            @Localizer["Delete"]
                         </a>
                         </div>`;
-                }, "width": "40%"
+                }
             }
         ],
         "language": {

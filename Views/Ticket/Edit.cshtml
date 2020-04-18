@@ -1,8 +1,8 @@
 ﻿@model BugTracker.Models.Ticket
 
-<h1>Edit</h1>
+<h1>@Localizer["Edit"]</h1>
 
-<h4>Ticket</h4>
+<h4>@Localizer["Ticket"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -47,6 +47,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["Go Back"]</a>
 </div>
 

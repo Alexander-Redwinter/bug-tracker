@@ -91,6 +91,25 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> LoginAsDemo()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync("Demo", "demodemo", false, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+            return BadRequest();
+        }
+
+
+
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

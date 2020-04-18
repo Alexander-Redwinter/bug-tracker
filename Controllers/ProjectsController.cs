@@ -107,7 +107,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,IsOpen")] Project project)
         {
             if (id != project.Id)
             {

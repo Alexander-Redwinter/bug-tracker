@@ -44,8 +44,8 @@ namespace BugTracker.Controllers
             }
 
             var model = new List<EditUsersInRoleViewModel>();
-
-            foreach (var user in _userManager.Users)
+            var users = _userManager.Users.ToList();
+            foreach (var user in users)
             {
                 var EditUsersInRoleViewModel = new EditUsersInRoleViewModel
                 {
@@ -58,6 +58,42 @@ namespace BugTracker.Controllers
                 model.Add(EditUsersInRoleViewModel);
             }
             return View(model);
+        }
+
+        public async Task<IActionResult> SeedRoles()
+        {
+
+            if (!await _roleManager.RoleExistsAsync("Admin"))
+            {
+                IdentityRole[] roles = {
+                new IdentityRole()
+                {
+                    Name = "Admin"
+                },
+                new IdentityRole()
+                {
+                    Name = "Project Manager"
+                },
+                new IdentityRole()
+                {
+                    Name = "Developer"
+                },
+                new IdentityRole()
+                {
+                    Name = "Tester"
+                },
+                new IdentityRole()
+                {
+                    Name = "Demo"
+                }};
+
+                foreach (var r in roles)
+                {
+                    await _roleManager.CreateAsync(r);
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

@@ -101,7 +101,7 @@ namespace BugTracker.Controllers
                     TicketAttachment attachment = new TicketAttachment();
                     attachment.ApplicationUser = user;
                     attachment.Ticket = ticket;
-
+                    attachment.Name = file.FileName;
                     MemoryStream ms = new MemoryStream();
                     file.CopyTo(ms);
                     attachment.Image = ms.ToArray();
@@ -191,6 +191,7 @@ namespace BugTracker.Controllers
                 TicketAttachment attachment = new TicketAttachment();
                 attachment.ApplicationUser = user;
                 attachment.Ticket = ticket;
+                attachment.Name = file.FileName;
 
                 MemoryStream ms = new MemoryStream();
                 file.CopyTo(ms);
@@ -216,8 +217,8 @@ namespace BugTracker.Controllers
             }
 
             var model = new List<EditUsersInRoleViewModel>();
-
-            foreach (var user in _userManager.Users)
+            var users = _userManager.Users.ToList();
+            foreach (var user in users)
             {
                 var EditUsersInRoleViewModel = new EditUsersInRoleViewModel
                 {
@@ -441,6 +442,35 @@ namespace BugTracker.Controllers
             //TODO LOCALIZE ME
             return Json(new { success = true, message = "Ticket Resolved" });
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAttachment(int id)
+        {
+            var attachment = await _DbContext.TicketAttachments.FirstOrDefaultAsync(u => u.Id == id);
+            if (attachment == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            _DbContext.TicketAttachments.Remove(attachment);
+            await _DbContext.SaveChangesAsync();
+            //TODO LOCALIZE ME
+            return Json(new { success = true, message = "Attachment Deleted" });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await _DbContext.TicketComments.FirstOrDefaultAsync(u => u.Id == id);
+            if (comment == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            _DbContext.TicketComments.Remove(comment);
+            await _DbContext.SaveChangesAsync();
+            //TODO LOCALIZE ME
+            return Json(new { success = true, message = "Comment Deleted" });
+        }
+
 
         [HttpDelete]
         [Authorize(Roles = "Admin")]

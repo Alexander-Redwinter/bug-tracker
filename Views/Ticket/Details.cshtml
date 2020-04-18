@@ -19,28 +19,33 @@
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="Created" />
                     <div class="form-group">
-                        <label asp-for="Title" class="control-label"></label>
+                        <label class="col-md-3 form-control-label text-nowrap">@Localizer["Title"]</label>
+
                         <input asp-for="Title" class="form-control" />
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Description" class="control-label"></label>
+                        <label class="col-md-3 form-control-label text-nowrap">@Localizer["Description"]</label>
+
                         <input asp-for="Description" class="form-control" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="TicketPriority"></label>
+                        <label class="col-md-3 form-control-label text-nowrap">@Localizer["Priority"]</label>
+
                         <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<TicketPriority>()" class="form-control"><option>@Localizer["Select one"]</option></select>
                         <span asp-validation-for="TicketPriority" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="TicketStatus"></label>
+                        <label class="col-md-3 form-control-label text-nowrap">@Localizer["Status"]</label>
+
                         <select asp-for="TicketStatus" asp-items="Html.GetEnumSelectList<TicketStatus>()" class="form-control"></select>
                         <span asp-validation-for="TicketStatus" class="text-danger"></span>
 
                     </div>
                     <div class="form-group">
-                        <label asp-for="TicketType"></label>
+                        <label class="col-md-3 form-control-label text-nowrap">@Localizer["Type"]</label>
+
                         <select asp-for="TicketType" asp-items="Html.GetEnumSelectList<TicketType>()" class="form-control"></select>
                         <span asp-validation-for="TicketType" class="text-danger"></span>
                     </div>
@@ -53,7 +58,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="h6 text-uppercase mb-0">@Localizer["History"]</h3>
-                <br/>
+                <br />
                 <h3 class="h6 text-uppercase mb-0"><i class="fas fa-wrench"></i> This service is work in progress <i class="fas fa-wrench"></i></h3>
 
             </div>
@@ -79,13 +84,6 @@
                     <p><input type="text" name="comment" value="" /><button class="btn btn-success ml-3" type="submit">@Localizer["Comment"]</button></p>
                 </form>
                 <table id="DT_CommentsLoad" class="table table-striped card-text" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Comment</th>
-                            <th>Created</th>
-                            <th></th>
-                        </tr>
-                    </thead>
                 </table>
             </div>
         </div>
@@ -100,12 +98,6 @@
                     <p><button class="btn btn-success" type="submit">@Localizer["Add Attachment"]</button></p>
                 </form>
                 <table id="DT_AttachmentsLoad" class="table table-striped card-text" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
                 </table>
             </div>
         </div>

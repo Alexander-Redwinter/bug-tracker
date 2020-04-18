@@ -21,18 +21,21 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
+        "order": [[2, "desc"]],
         "columns": [
             {
                 "data": "id", "width": "20%", "render": function (data, type, row) {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description", "width": "20%" },
+            { "data": "description"},
             {
 
-                "data": "created", "render": function (data) {
-                    var date = moment(data).calendar();
-                    return date;
+                "data": "created", "render": function (data, type, full, meta) {
+                    if(type == 'display')
+                        return moment(data).calendar();
+                    else
+                        return data;
                 }
             },
             {
@@ -42,7 +45,7 @@ function loadDataTable() {
                         <a href="/Ticket/AssignUser/${data}" style='cursor:pointer;'>@Localizer["Assign Users"]</a>
                         <br/>
                         <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/Resolve?id='+${data})>@Localizer["Resolve"]</a></div>`;
-                }, "width": "40%"
+                }
             }
         ],
         "language": {
@@ -58,6 +61,8 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
+        "order": [[2, "desc"]],
+
         "columns": [
             {
                 "data": "id", "render": function (data, type, row) {
@@ -67,9 +72,11 @@ function loadDataTable() {
             { "data": "description"},
             {
 
-                "data": "created", "render": function (data) {
-                    var date = moment(data).calendar();
-                    return date;
+                "data": "created", "render": function (data, type, full, meta) {
+                    if(type == 'display')
+                        return moment(data).calendar();
+                    else
+                        return data;
                 }
             },
             {

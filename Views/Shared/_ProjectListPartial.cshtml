@@ -13,26 +13,23 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
+
         "columns": [
             {
-                "data": "id", "width": "20%", "render": function (data, type, row) {
+                "data": "id", "render": function (data, type, row) {
                     return `<a href="/Projects/Details/${data}" >` + row.name + `</a>`
                 }
             },
-            { "data": "description", "width": "20%" },
+            { "data": "description"},
             {
                 "data": "id","render": function (data) {
                     return `<div class="text-center">
-                        <a href="/Projects/Edit?id=${data}" style='cursor:pointer;'>
-                            Edit
-                        </a>
-                        &nbsp;
                         <a href='#' style='cursor:pointer;'
                             onclick=Delete('/Projects/Close?id=${data}')>
                             @Localizer["Close Project"]
                         </a>
                         </div>`;
-                }, "width": "40%"
+                }
             }
         ],
         "language": {

@@ -1,6 +1,5 @@
 ﻿@model LoginViewModel
 @{
-    ViewBag.Title = Localizer["Login"];
     Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 }
 
@@ -20,28 +19,28 @@
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
                     <input asp-for="UserName" class="form-control" />
-                    <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
                     <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="row align-items-center remember">
-                    <input asp-for="RememberMe" class="form-control" />@Localizer["Remember me"]
+                    <input asp-for="RememberMe" id="remember" />
+                    <label class="h6 mb-0" for="remember">@Localizer["Remember me"]</label>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary text-white">@Localizer["Login"]</button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary text-white mr-5">@Localizer["Login"]</button>
+                    <a asp-action="LoginAsDemo" class="btn btn-info">@Localizer["Login as Demo"]</a>
                 </div>
             </form>
         </div>
-        <div class="card-footer">
-            <div class="d-flex justify-content-center links">
+        <div class="card-footer ">
+            <div class="d-flex justify-content-center">
                 <a asp-action="Register" class="btn btn-secondary text-white">@Localizer["Create Account"]</a>
             </div>
-        </div>
+            </div>
     </div>
 </div>
 

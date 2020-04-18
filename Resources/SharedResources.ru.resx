@@ -117,23 +117,65 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Attachment" xml:space="preserve">
-    <value />
+  <data name="Add or remove users" xml:space="preserve">
+    <value>Назначить Пользователей</value>
+  </data>
+  <data name="Add or remove users from this role" xml:space="preserve">
+    <value>Назначить Пользователей</value>
+  </data>
+  <data name="Add or remove users to this project" xml:space="preserve">
+    <value>Назначить Пользователей</value>
+  </data>
+  <data name="Add or remove users to this ticket" xml:space="preserve">
+    <value>Назначить Пользователей</value>
+  </data>
+  <data name="Add Ticket" xml:space="preserve">
+    <value>Добавить Заявку</value>
+  </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Администрация</value>
+  </data>
+  <data name="All Users" xml:space="preserve">
+    <value>Пользователи</value>
+  </data>
+  <data name="Assign User" xml:space="preserve">
+    <value>Назначить</value>
+  </data>
+  <data name="Assign Users" xml:space="preserve">
+    <value>Назначить</value>
   </data>
   <data name="Assigned Tickets" xml:space="preserve">
-    <value />
+    <value>Назначенные Заявки</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Приложение</value>
   </data>
   <data name="Attachment by user" xml:space="preserve">
-    <value />
+    <value>Приложение пользователя</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Приложения</value>
   </data>
   <data name="BugTracker" xml:space="preserve">
     <value>Багтракер</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
   <data name="Close Project" xml:space="preserve">
-    <value />
+    <value>Закрыть Проект</value>
   </data>
   <data name="Closed Projects" xml:space="preserve">
     <value>Закрытые Проекты</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Прокомментировать</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Комментарии</value>
+  </data>
+  <data name="Concerning Tickets" xml:space="preserve">
+    <value>Статус</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Подтвердить</value>
@@ -141,29 +183,47 @@
   <data name="Confirm Action" xml:space="preserve">
     <value>Подтвердите Действие</value>
   </data>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>Подтвердите Пароль</value>
+  </data>
   <data name="Create Account" xml:space="preserve">
     <value>Создать Учетную Запись</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Дата Создания</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Главная</value>
   </data>
-  <data name="Delete Forever" xml:space="preserve">
-    <value />
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="for ticket" xml:space="preserve">
-    <value />
+    <value>для заявки</value>
   </data>
   <data name="Go Back" xml:space="preserve">
     <value>Вернуться</value>
   </data>
+  <data name="History" xml:space="preserve">
+    <value>История</value>
+  </data>
   <data name="Locale" xml:space="preserve">
     <value>Локаль</value>
   </data>
+  <data name="Logged in as" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Авторизация</value>
+  </data>
+  <data name="Login as Demo" xml:space="preserve">
+    <value>Демо Аккаунт</value>
   </data>
   <data name="Manage users" xml:space="preserve">
     <value>Пользователи</value>
@@ -174,8 +234,29 @@
   <data name="New Project" xml:space="preserve">
     <value>Новый Проект</value>
   </data>
+  <data name="New Ticket" xml:space="preserve">
+    <value>Новая Заявка</value>
+  </data>
+  <data name="Nothing yet" xml:space="preserve">
+    <value>Пока пусто</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="Open Projects" xml:space="preserve">
+    <value>Открытые Проекты</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
   <data name="Preffered Language" xml:space="preserve">
     <value>Отображаемый язык</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Приоритет</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Проект</value>
   </data>
   <data name="Projects" xml:space="preserve">
     <value>Проекты</value>
@@ -183,26 +264,68 @@
   <data name="Remember me" xml:space="preserve">
     <value>Запомнить</value>
   </data>
+  <data name="Resolve" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="Resolved Tickets" xml:space="preserve">
+    <value>Закрытые Заявки</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Роли</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
   <data name="Save changes" xml:space="preserve">
     <value>Сохранить</value>
   </data>
   <data name="Sign In" xml:space="preserve">
     <value>Авторизация</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
   <data name="Submit New Ticket" xml:space="preserve">
-    <value />
+    <value>Подать Новую Заявку</value>
   </data>
   <data name="This deletes project, it's tickets with all attachments and comments, forever. Be absolutely sure what you are doing." xml:space="preserve">
-    <value />
+    <value>Удаление приводит к невозвратимой потере заявки и всех её приложений и комментариев</value>
   </data>
   <data name="Ticket" xml:space="preserve">
     <value>Заявка</value>
   </data>
+  <data name="Ticket for" xml:space="preserve">
+    <value>Заявка для</value>
+  </data>
   <data name="Tickets" xml:space="preserve">
     <value>Заявки</value>
   </data>
+  <data name="Tickets By Priority" xml:space="preserve">
+    <value>Приоритет</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Upload File" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
+  <data name="User has to relog after assigning for it to take effect" xml:space="preserve">
+    <value>После назначения роли, пользователю необходимо перезайти в приложение</value>
+  </data>
   <data name="User Name" xml:space="preserve">
-    <value />
+    <value>Имя </value>
+  </data>
+  <data name="View Resolved" xml:space="preserve">
+    <value>Закрытые Заявки</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Здравствуйте</value>
@@ -211,6 +334,6 @@
     <value>Недостаточно полномочий для использования сервиса</value>
   </data>
   <data name="Your Tickets" xml:space="preserve">
-    <value />
+    <value>Ваши Заявки</value>
   </data>
 </root>

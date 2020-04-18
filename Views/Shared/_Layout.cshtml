@@ -57,11 +57,11 @@
             <ul class="sidebar-menu list-unstyled">
                 <li class="sidebar-list-item"><a asp-controller="Home" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Home" ? "active" : "stub")"><span>@Localizer["Dashboard"]</span><i class="fas fa-columns ml-3"></i></a></li>
                 <li class="sidebar-list-item"><a asp-controller="Ticket" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Ticket" ? "active" : "stub")"><span>@Localizer["Tickets"]</span><i class="fas fa-list ml-3"></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Projects" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Projects" ? "active" : "stub")"><span>@Localizer["Projects"]</span><i class="fas fa-project-diagram ml-3"></i></i></a></li>
-                <li class="sidebar-list-item"><a asp-controller="Profile" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Profile" ? "active" : "stub")"><span>User</span><i class="fas fa-user ml-3"></i></a></li>
-                @if (User.IsInRole("Admin") || User.IsInRole("Admin"))
+                <li class="sidebar-list-item"><a asp-controller="Projects" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Projects" ? "active" : "stub")"><span>@Localizer["Projects"]</span><i class="fas fa-project-diagram ml-3"></i></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Profile" asp-action="Index" class="sidebar-link shadow text-muted @(controller == "Profile" ? "active" : "stub")"><span>@Localizer["User"]</span><i class="fas fa-user ml-3"></i></a></li>
+                @if (User.IsInRole("Admin"))
                 {
-                    <li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted @(controller == "Administration" ? "active" : "stub")"><span>Administration</span><i class="fas fa-user-friends ml-3"></i></a></li>
+                    <li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted @(controller == "Administration" ? "active" : "stub")"><span>@Localizer["Administration"]</span><i class="fas fa-user-friends ml-3"></i></a></li>
                 }
                 @if (controller == "Error")
                 {

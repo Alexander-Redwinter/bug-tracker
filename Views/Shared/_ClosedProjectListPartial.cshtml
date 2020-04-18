@@ -18,21 +18,22 @@ function loadDataTable() {
                     return `<a href="/Projects/Details/${data}" class="btn btn-primary">` + row.name + `</a>`
                 }
             },
-            { "data": "description", "width": "20%" },
+            { "data": "description"},
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
                         <a href='#'  class=style='cursor:pointer; width:auto;'
                             onclick=Delete('/Projects/Open/${data}')>
-                            @Localizer["Open Project"]
+                            @Localizer["Open"]
                         </a>
+                        &nbsp;
                         <a href='#' style='cursor:pointer; width:auto;'
                             onclick=Delete('/Projects/Delete/${data}')>
-                            @Localizer["Delete Forever"]
+                            @Localizer["Delete"]
                         </a>
                         </div>`;
-                }, "width": "40%"
+                }
             }
         ],
         "language": {

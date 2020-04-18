@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label text-nowrap" asp-for="Title"></label>
+                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["Title"]</label>
                     <div class="col-md-9">
                         <input asp-for="Title" class="form-control" />
                         <span asp-validation-for="Title" class="text-danger"></span>
@@ -31,7 +31,7 @@
 
 
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label text-nowrap" asp-for="Description"></label>
+                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["Description"]</label>
                     <div class="col-md-9">
                         <input asp-for="Description" class="form-control" />
                         <span asp-validation-for="Description" class="text-danger"></span>
@@ -39,7 +39,8 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label text-nowrap" asp-for="TicketPriority"></label>
+                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["Priority"]</label>
+
                     <div class="col-md-9">
                         <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<TicketPriority>()" class="form-control"></select>
                         <span asp-validation-for="TicketPriority" class="text-danger"></span>
@@ -47,7 +48,8 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label text-nowrap" asp-for="TicketStatus"></label>
+                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["Status"]</label>
+
                     <div class="col-md-9">
                         <select asp-for="TicketStatus" asp-items="Html.GetEnumSelectList<TicketStatus>()" class="form-control"></select>
                         <span asp-validation-for="TicketStatus" class="text-danger"></span>
@@ -55,7 +57,8 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label text-nowrap" asp-for="TicketType"></label>
+                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["Type"]</label>
+
                     <div class="col-md-9">
                         <select asp-for="TicketType" asp-items="Html.GetEnumSelectList<TicketType>()" class="form-control"></select>
                         <span asp-validation-for="TicketType" class="text-danger"></span>
@@ -63,7 +66,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["Add Attachment"]</label>
+                    <label class="col-md-3 form-control-label text-nowrap">@Localizer["Attachment"]</label>
                     <div class="col-md-9">
                         <input type="file" id="file1" name="file1" class="form-control" />
                     </div>

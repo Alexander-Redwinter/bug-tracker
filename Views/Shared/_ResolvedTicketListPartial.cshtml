@@ -21,18 +21,21 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
+        "order": [[2, "desc"]],
         "columns": [
             {
-                "data": "id", "width": "20%", "render": function (data, type, row) {
+                "data": "id", "render": function (data, type, row) {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description", "width": "20%" },
+            { "data": "description"},
             {
 
-                "data": "created", "render": function (data) {
-                    var date = moment(data).calendar();
-                    return date;
+                "data": "created", "render": function (data, type, full, meta) {
+                    if(type == 'display')
+                        return moment(data).calendar();
+                    else
+                        return data;
                 }
             },
             {
@@ -40,7 +43,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `<div class="text-center">
                         <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/Delete/'+${data})>@Localizer["Delete Forever"]</a></div>`;
-                }, "width": "40%"
+                }
             }
         ],
         "language": {
@@ -56,18 +59,20 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
+        "order": [[2, "desc"]],
         "columns": [
             {
-                "data": "id", "width": "20%", "render": function (data, type, row) {
+                "data": "id", "render": function (data, type, row) {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description", "width": "20%" },
+            { "data": "description"},
             {
-
-                "data": "created", "render": function (data) {
-                    var date = moment(data).calendar();
-                    return date;
+                "data": "created", "render": function (data, type, full, meta) {
+                    if(type == 'display')
+                        return moment(data).calendar();
+                    else
+                        return data;
                 }
             },
         ],
