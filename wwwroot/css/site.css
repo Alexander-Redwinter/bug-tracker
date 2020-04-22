@@ -5,6 +5,11 @@ for details on configuring this project to bundle and minify static web assets. 
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 
+td, td * {
+    font-size: medium;
+
+}
+
 .even{
     background-color: aqua
 }
@@ -24,7 +29,6 @@ a {
     font-family: 'Roboto', sans-serif;
     color: #32b67a;
     text-decoration: none;
-    font-size: medium;
 }
 
     a:hover, a:focus {
@@ -1298,6 +1302,7 @@ button {
     -webkit-transition: background 0.3s;
     transition: background 0.3s;
     padding: 1rem 2rem;
+    font-size: large
 }
 
     .sidebar-link:hover {

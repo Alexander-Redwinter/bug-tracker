@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
 {
+
+    [Authorize(Roles = "Admin,Demo")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -97,6 +99,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUsersInRole(List<EditUsersInRoleViewModel> model, string id)
         {
             var role = await _roleManager.FindByIdAsync(id);

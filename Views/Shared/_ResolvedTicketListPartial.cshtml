@@ -28,7 +28,7 @@ function loadDataTable() {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description"},
+            { "data": "description", "visible" : false},
             {
 
                 "data": "created", "render": function (data, type, full, meta) {
@@ -46,6 +46,9 @@ function loadDataTable() {
                 }
             }
         ],
+                    "createdRow": function ( row, data, index ) {
+        $("td", row).attr("title", data.description);
+    },
         "language": {
             "emptyTable": "@Localizer["Nothing yet"]",
                 "loadingRecords" : "Please wait warmly"
@@ -66,7 +69,7 @@ function loadDataTable() {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description"},
+            { "data": "description", "visible" : false},
             {
                 "data": "created", "render": function (data, type, full, meta) {
                     if(type == 'display')
@@ -76,6 +79,9 @@ function loadDataTable() {
                 }
             },
         ],
+                    "createdRow": function ( row, data, index ) {
+        $("td", row).attr("title", data.description);
+    },
         "language": {
             "emptyTable": "@Localizer["Nothing yet"]",
                 "loadingRecords" : "Please wait warmly"

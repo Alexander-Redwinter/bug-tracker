@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add Attachment" xml:space="preserve">
+    <value>Добавить Приложение</value>
+  </data>
   <data name="Add or remove users" xml:space="preserve">
     <value>Назначить Пользователей</value>
   </data>
@@ -138,11 +141,14 @@
   <data name="All Users" xml:space="preserve">
     <value>Пользователи</value>
   </data>
+  <data name="Assign" xml:space="preserve">
+    <value>Назначить</value>
+  </data>
   <data name="Assign User" xml:space="preserve">
     <value>Назначить</value>
   </data>
   <data name="Assign Users" xml:space="preserve">
-    <value>Назначить</value>
+    <value>Назначить Пользователей</value>
   </data>
   <data name="Assigned Tickets" xml:space="preserve">
     <value>Назначенные Заявки</value>
@@ -186,6 +192,9 @@
   <data name="Confirm Password" xml:space="preserve">
     <value>Подтвердите Пароль</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
   <data name="Create Account" xml:space="preserve">
     <value>Создать Учетную Запись</value>
   </data>
@@ -210,6 +219,9 @@
   <data name="Go Back" xml:space="preserve">
     <value>Вернуться</value>
   </data>
+  <data name="High" xml:space="preserve">
+    <value>Высокий</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>История</value>
   </data>
@@ -225,8 +237,14 @@
   <data name="Login as Demo" xml:space="preserve">
     <value>Демо Аккаунт</value>
   </data>
+  <data name="Low" xml:space="preserve">
+    <value>Низкий</value>
+  </data>
   <data name="Manage users" xml:space="preserve">
     <value>Пользователи</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Средний</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>
@@ -236,6 +254,9 @@
   </data>
   <data name="New Ticket" xml:space="preserve">
     <value>Новая Заявка</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Минимальный</value>
   </data>
   <data name="Nothing yet" xml:space="preserve">
     <value>Пока пусто</value>

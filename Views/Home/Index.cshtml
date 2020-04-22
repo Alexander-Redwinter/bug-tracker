@@ -16,7 +16,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <h2 class="h6 text-uppercase mb-0">@Localizer["Concerning Tickets"]</h2>
-</div>
+            </div>
             <div class="card-body">
                 <div class="chart-holder">
                     <canvas id="ChartStatus"></canvas>
@@ -66,10 +66,13 @@
         var chartPriority = document.getElementById('ChartPriority').getContext('2d');
         var chartPriority = new Chart(chartPriority, {
             type: 'bar',
+            options: {
+                legend: false
+            },
             data: {
                 labels: labels,
                 datasets: [{
-                    label: labels,
+                    label: " ",
                     data: data,
                     backgroundColor: [
                         'rgba(54, 162, 235, 1)',

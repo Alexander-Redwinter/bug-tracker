@@ -16,7 +16,7 @@ function Delete(url) {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
-                        reload();
+                        window.location.reload();
                     }
                     else {
                         toastr.error(data.message);

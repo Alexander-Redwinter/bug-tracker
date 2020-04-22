@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using BugTracker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
 {
+
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _DbContext;
@@ -53,6 +55,7 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
+        [Authorize(Roles = "Admin,Project Manager,Demo")]
         public IActionResult Create()
         {
             return View();
@@ -60,6 +63,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Create([Bind("Name,Description")] Project model)
         {
             if (ModelState.IsValid)
@@ -91,6 +95,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin,Project Manager,Demo")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,6 +112,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,IsOpen")] Project project)
         {
             if (id != project.Id)
@@ -129,6 +135,8 @@ namespace BugTracker.Controllers
             }
             return View(project);
         }
+
+        [Authorize(Roles = "Admin,Project Manager,Demo")]
 
         public IActionResult AssignUser(int id)
         {
@@ -171,6 +179,8 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Project Manager")]
+
         public async Task<IActionResult> AssignUser(List<EditUsersInRoleViewModel> model, int id)
         {
             try
@@ -228,6 +238,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Close(int id)
         {
             var project = await _DbContext.Projects.FindAsync(id);
@@ -238,6 +249,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Open(int id)
         {
             var project = await _DbContext.Projects.FindAsync(id);
@@ -248,6 +260,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             //Very expensive operation with multiple DB calls, not recommended to delete projects forever

@@ -85,13 +85,23 @@ function loadDataTable() {
 
     dataTableHistories = $('#DT_HistoriesLoad').DataTable({
         "ajax": {
-            "url": "/Ticket/GetHistories/",
+            "url": "/Ticket/GetHistories/@Model.Id",
             "type": "GET",
             "datatype": "json"
         },
+                "order": [[1, "desc"]],
         "columns": [
             {
-                "data": "oldValue", "width": "100%"
+                "data": "oldValue"
+            },
+            {
+
+                "data": "when", "render": function (data, type, full, meta) {
+                    if(type == 'display')
+                        return moment(data).calendar();
+                    else
+                        return data;
+                }
             },
         ],
         "language": {

@@ -21,14 +21,14 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
-        "order": [[2, "desc"]],
+        "order": [[3, "desc"]],
         "columns": [
             {
                 "data": "id", "width": "20%", "render": function (data, type, row) {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description"},
+            { "data": "description", "visible" : false},
             {
 
                 "data": "created", "render": function (data, type, full, meta) {
@@ -39,15 +39,35 @@ function loadDataTable() {
                 }
             },
             {
+                "data": "ticketPriority", "render": function (data, type, full, meta) {
+                    if (type == 'display') {
+                                        if (data === 3) {
+                    return "@Localizer["High"]";
+                }
+                if (data === 2) {
+                    return "@Localizer["Medium"]";
+                }
+                                if (data === 1) {
+                    return "@Localizer["Low"]";
+                }
+                    return "@Localizer["None"]";
+                    }
+                    return data;
+                    }
+},
+            {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/Ticket/AssignUser/${data}" style='cursor:pointer;'>@Localizer["Assign Users"]</a>
+                        <a href="/Ticket/AssignUser/${data}" style='cursor:pointer;'>@Localizer["Assign"]</a>
                         <br/>
                         <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/Resolve?id='+${data})>@Localizer["Resolve"]</a></div>`;
                 }
             }
         ],
+    "createdRow": function ( row, data, index ) {
+        $("td", row).attr("title", data.description);
+    },
         "language": {
             "emptyTable": "@Localizer["Nothing yet"]",
                 "loadingRecords" : "Please wait warmly"
@@ -61,7 +81,7 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
-        "order": [[2, "desc"]],
+        "order": [[3, "desc"]],
 
         "columns": [
             {
@@ -69,7 +89,7 @@ function loadDataTable() {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description"},
+            { "data": "description", "visible" : false},
             {
 
                 "data": "created", "render": function (data, type, full, meta) {
@@ -78,17 +98,37 @@ function loadDataTable() {
                     else
                         return data;
                 }
-            },
+            }, {
+                "data": "ticketPriority", "render": function (data, type, full, meta) {
+                    if (type == 'display')
+                    {
+                        if (data === 3) {
+                            return "@Localizer["High"]";
+                        }
+                        if (data === 2) {
+                            return "@Localizer["Medium"]";
+                        }
+                        if (data === 1) {
+                            return "@Localizer["Low"]";
+                        }
+                        return "@Localizer["None"]";
+                    }
+                        return data;
+                    }
+                },
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/Ticket/AssignUser/${data}" style='cursor:pointer;'>@Localizer["Assign Users"]</a>
+                        <a href="/Ticket/AssignUser/${data}" style='cursor:pointer;'>@Localizer["Assign"]</a>
                         <br/>
                         <a href="#" style='cursor:pointer;' onclick=Delete('/Ticket/Resolve?id='+${data})>@Localizer["Resolve"]</a></div>`;
                 }
             }
         ],
+            "createdRow": function ( row, data, index ) {
+        $("td", row).attr("title", data.description);
+    },
         "language": {
             "emptyTable": "@Localizer["Nothing yet"]",
                 "loadingRecords" : "Please wait warmly"

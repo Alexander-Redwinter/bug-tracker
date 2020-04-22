@@ -10,7 +10,7 @@
                 <h3 class="h6 text-uppercase mb-0">@Localizer["Resolved Tickets"]</h3>
             </div>
             <div class="card-body">
-                <table id="DT_ResolvedTicketsLoad" class="table table-striped card-text" style="width:100%">
+                <table id="DT_ResolvedTicketsLoad" class="table table-striped card-text table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>@Localizer["Title"]</th>
@@ -24,13 +24,14 @@
             </div>
         </div>
     </div>
+    
     <div class="col p-3">
         <div class="card">
             <div class="card-header">
                 <h3 class="h6 text-uppercase mb-0">@Localizer["Assigned Tickets"]</h3>
             </div>
             <div class="card-body">
-                <table id="DT_ResolvedAssignedTicketsLoad" class="table table-striped card-text" style="width:100%">
+                <table id="DT_ResolvedAssignedTicketsLoad" class="table table-striped card-text table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>@Localizer["Title"]</th>
@@ -45,9 +46,8 @@
         </div>
     </div>
 </div>
-
-@section Scripts{
-    <partial name="_DeleteAlertPartial" />
-    <partial name="_ResolvedTicketListPartial" />
-}
+    @section Scripts{
+        <partial name="_DeleteAlertPartial" />
+        <partial name="_ResolvedTicketListPartial" />
+    }
 

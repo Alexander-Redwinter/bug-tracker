@@ -74,6 +74,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Project Manager,Developer,Tester")]
         public async Task<IActionResult> Create(CreateTicketViewModel model)
         {
             if (ModelState.IsValid)
@@ -89,7 +90,6 @@ namespace BugTracker.Controllers
                 ticket.TicketPriority = model.TicketPriority;
                 ticket.TicketStatus = model.TicketStatus;
                 ticket.TicketType = model.TicketType;
-
                 ticket.TicketApplicationUsers.Add(tau);
                 ticket.Created = DateTime.Now;
                 ticket.Project = _DbContext.Projects.Find(model.ProjectId);
@@ -113,9 +113,6 @@ namespace BugTracker.Controllers
                 return View("Index");
             }
             return BadRequest();
-
-
-
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -134,6 +131,7 @@ namespace BugTracker.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Project Manager,Developer,Tester")]
         public async Task<IActionResult> Edit(int id, Ticket ticket)
         {
             if (id != ticket.Id)
@@ -181,6 +179,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Project Manager,Developer,Tester")]
         public async Task<IActionResult> CreateAttachment(int id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -204,6 +203,8 @@ namespace BugTracker.Controllers
             //TODO ADD TOASTER NOTIF
             return RedirectToAction("Details", new { id });
         }
+
+        [Authorize(Roles = "Admin,Project Manager,Demo")]
 
         public IActionResult AssignUser(int id)
         {
@@ -234,6 +235,7 @@ namespace BugTracker.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,Project Manager")]
         [HttpPost]
         public async Task<IActionResult> AssignUser(List<EditUsersInRoleViewModel> model, int id)
         {
@@ -292,6 +294,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Project Manager,Developer,Tester")]
         public async Task<IActionResult> CreateComment(int id, string comment)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -444,6 +447,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,Project Manager,Developer,Tester")]
         public async Task<IActionResult> DeleteAttachment(int id)
         {
             var attachment = await _DbContext.TicketAttachments.FirstOrDefaultAsync(u => u.Id == id);
@@ -458,6 +462,8 @@ namespace BugTracker.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,Project Manager,Developer,Tester")]
+
         public async Task<IActionResult> DeleteComment(int id)
         {
             var comment = await _DbContext.TicketComments.FirstOrDefaultAsync(u => u.Id == id);
@@ -473,7 +479,7 @@ namespace BugTracker.Controllers
 
 
         [HttpDelete]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             var ticket = _DbContext.Tickets.Where(u => u.Id == id).Include(t => t.TicketAttachments)
@@ -495,23 +501,6 @@ namespace BugTracker.Controllers
             await _DbContext.SaveChangesAsync();
             return Json(new { success = true, message = "Delete Successful" });
         }
-
-        /*[HttpPost]
-        public ActionResult AttachmentDetails()
-        {
-            Image img = db.Images.OrderByDescending
-        (i => i.Id).SingleOrDefault();
-            string imageBase64Data =
-        Convert.ToBase64String(img.ImageData);
-            string imageDataURL =
-        string.Format("data:image/jpg;base64,{0}",
-        imageBase64Data);
-            ViewBag.ImageTitle = img.ImageTitle;
-            ViewBag.ImageDataUrl = imageDataURL;
-            return View("Index");
-        }*/
-
-
 
         public IActionResult GetComments(int? id)
         {
@@ -535,16 +524,15 @@ namespace BugTracker.Controllers
             return Json(new { data = model });
         }
 
-        public IActionResult GetHistories()
+        public IActionResult GetHistories(int? id)
         {
-            var model = _DbContext.TicketHistories.ToList();
+            var model = _DbContext.TicketHistories.Where(t => t.KeyValue == "{\"Id\":" + id.ToString() + "}").ToList();
             foreach (var m in model)
             {
                 var jdp = new JsonDiffPatch();
 
                 m.OldValue = jdp.Diff(m.OldValue, m.NewValue);
-
-
+                
             }
             return Json(new { data = model });
         }

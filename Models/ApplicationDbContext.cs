@@ -59,7 +59,7 @@ namespace BugTracker.Models
                     NewValue = JsonConvert.SerializeObject(e.Properties.Where(p => e.State == EntityState.Added || e.State == EntityState.Modified).ToDictionary(p => p.Metadata.Name, p => p.CurrentValue).NullIfEmpty()),
                     OldValue = JsonConvert.SerializeObject(e.Properties.Where(p => e.State == EntityState.Deleted || e.State == EntityState.Modified).ToDictionary(p => p.Metadata.Name, p => p.OriginalValue).NullIfEmpty())
                 }).ToList()
-            );
+            );;
 
             //Return list of pairs of EntityEntry and ToolAudit  
             return entitiesToTrack.Where(e => e.Properties.Any(p => p.IsTemporary))
