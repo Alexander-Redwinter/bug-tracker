@@ -74,9 +74,18 @@ var turns = 0;
     const grid = document.querySelector('.memory-grid')
     const resultDisplay = document.querySelector('#result')
 
+    function preloadImage(url) {
+        var img = new Image();
+        img.src = url;
+    }
+
+
+
+
     //creating board
     function createBoard() {
         for (let i = 0; i < cardArray.length; i++) {
+            preloadImage(cardArray[i].img)
             var card = document.createElement('img')
             card.setAttribute('src', '/img/memory/blank.png')
             card.setAttribute('height', 150)
