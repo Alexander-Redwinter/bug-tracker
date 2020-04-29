@@ -4113,3 +4113,37 @@ code {
         color: #6c757d;
     }
 
+    /*css for secret games*/
+.frog-square {
+    height: 150px;
+    width: 150px;
+    border-style: solid;
+    border-color: deepskyblue;
+    background-color:snow;
+}
+
+.frog-grid {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+    width: 500px;
+    height: 500px;
+}
+
+.frog {
+    background-image: url("/img/frog/frog.png");
+    background-size: cover;
+}
+
+.frozen {
+    background-image: url("/img/frog/frog-frozen.png");
+    background-size: cover;
+}
+
+.memory-grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 350px;
+    width: 1050px;
+}

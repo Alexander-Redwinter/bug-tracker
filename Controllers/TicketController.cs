@@ -82,6 +82,10 @@ namespace BugTracker.Controllers
                 Ticket ticket = new Ticket();
                 ticket.Title = model.Title;
                 ticket.Description = model.Description;
+                if (model.Description == null)
+                {
+                    ticket.Description = "No Description";
+                }
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 ticket.ApplicationUser = user;
                 TicketApplicationUser tau = new TicketApplicationUser();

@@ -21,9 +21,6 @@ namespace BugTracker.Controllers
             return View();
         }
 
-        public IActionResult Secret()
-        {
-            return View();
-        }
+
     }
 }

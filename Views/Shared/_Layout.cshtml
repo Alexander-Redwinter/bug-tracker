@@ -63,9 +63,9 @@
                 {
                     <li class="sidebar-list-item"><a asp-controller="Administration" asp-action="AssignRoles" class="sidebar-link shadow text-muted @(controller == "Administration" ? "active" : "stub")"><span>@Localizer["Administration"]</span><i class="fas fa-user-friends ml-3"></i></a></li>
                 }
-                @if (controller == "Error")
+                @if (controller == "Secret" || controller == "Error")
                 {
-                    <li class="sidebar-list-item"><a asp-controller="Error" asp-action="Secret" class="sidebar-link shadow text-muted "><span>Secret</span><i class="fas fa-torii-gate ml-3"></i></a></li>
+                    <li class="sidebar-list-item"><a asp-controller="Secret" asp-action="Index" class="sidebar-link shadow text-muted "><span>Secret</span><i class="fas fa-torii-gate ml-3"></i></a></li>
                 }
             </ul>
 
