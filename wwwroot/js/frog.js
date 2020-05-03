@@ -10,6 +10,7 @@ let currentTime = timeLeft.textContent;
 var canClick = true;
 var gameOver = false;
 
+
 function randomSquare() {
     canClick = true;
     square.forEach(cn => {
@@ -21,6 +22,11 @@ function randomSquare() {
     randomPosition.classList.add('frog');
     hitPosition = randomPosition.id;
 
+}
+
+function preloadImage(url) {
+    var img = new Image();
+    img.src = url;
 }
 
 square.forEach(id => {
@@ -38,6 +44,9 @@ square.forEach(id => {
 })
 
 function moveFrog() {
+    preloadImage('/img/frog/frog.png')
+    preloadImage('/img/frog/frog-frozen.png')
+
     let timerId = null
     loop();
 

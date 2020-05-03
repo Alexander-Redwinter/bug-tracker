@@ -22,5 +22,15 @@ namespace BugTracker.Controllers
         {
             return View();
         }
+
+        public IActionResult Connect()
+        {
+            return View();
+        }
+
+        public IActionResult Gourd()
+        {
+            return View();
+        }
     }
 }

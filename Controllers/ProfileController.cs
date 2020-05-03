@@ -21,7 +21,7 @@ namespace BugTracker.Controllers
             _userManager = userManager;
         }
 
-
+        
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);

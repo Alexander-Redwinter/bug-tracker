@@ -7,16 +7,16 @@ for details on configuring this project to bundle and minify static web assets. 
 
 td, td * {
     font-size: medium;
-
 }
 
-.even{
+.even {
     background-color: aqua
 }
 
 .dataTables_length {
     margin: 3px
 }
+
 .dataTables_filter {
     margin: 3px
 }
@@ -1551,7 +1551,6 @@ STYLE SWITCHER FOR DEMO
     color: #fff;
     background-color: #32b67a;
     border-color: #32b67a;
-    
 }
 
     .btn-primary:hover {
@@ -4113,13 +4112,13 @@ code {
         color: #6c757d;
     }
 
-    /*css for secret games*/
+/*css for secret games*/
 .frog-square {
     height: 150px;
     width: 150px;
     border-style: solid;
     border-color: deepskyblue;
-    background-color:snow;
+    background-color: snow;
 }
 
 .frog-grid {
@@ -4146,4 +4145,56 @@ code {
     flex-wrap: wrap;
     height: 350px;
     width: 1050px;
+}
+
+.connect-grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 450px;
+    width: 525px;
+    background-color: white;
+}
+
+    .connect-grid div {
+        height: 75px;
+        width: 75px;
+    }
+
+.connect-square {
+    background-image: url("/img/connect/empty.png");
+    background-size: cover;
+}
+
+.player-one {
+    background-image: url("/img/connect/player-one.png");
+    background-size: cover;
+}
+
+.player-two {
+    background-image: url("/img/connect/player-two.png");
+    background-size: cover;
+}
+
+.gourd-grid {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    background-image: url("/img/gourd/background.png");
+    background-size: cover;
+}
+
+    .gourd-grid div {
+        width: 50px;
+        height: 50px;
+    }
+
+.suika {
+    background-image: url("/img/gourd/suika.png");
+    background-size: cover;
+}
+
+.gourd {
+    background-image: url("/img/gourd/gourd.png");
+    background-size: cover;
 }

@@ -105,6 +105,8 @@ var turns = 0;
         if (cardsChosen[0] === cardsChosen[1]) {
             cards[optionOneId].setAttribute('src', '/img/memory/white.png')
             cards[optionTwoId].setAttribute('src', '/img/memory/white.png')
+            cards[optionOneId].removeEventListener('click', flipCard)
+            cards[optionTwoId].removeEventListener('click', flipCard)
             cardsWon.push(cardsChosen)
 
         } else {
