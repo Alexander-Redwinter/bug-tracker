@@ -1,0 +1,29 @@
+﻿@model BugTracker.Models.Project
+
+<p>
+    <a class="btn btn-secondary" asp-action="Index">@Localizer["Go Back"]</a>
+</p>
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="h6 text-uppercase mb-0">@Model.Name</h3>
+            <a class="btn btn-success ml-3" asp-action="Create" asp-controller="Ticket" asp-route-projectId="@Model.Id">@Localizer["Add Ticket"]</a>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="DT_TicketsLoad" class="table table-striped card-text" style="width:100%">
+            <thead>
+                <tr>
+                    <th>@Localizer["Title"]</th>
+                    <th>@Localizer["Description"]</th>
+                    <th>@Localizer["Created"]</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section scripts{
+    <partial name="_ProjectTicketListPartial" />
+}

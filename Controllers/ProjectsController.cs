@@ -55,6 +55,23 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
+        public async Task<IActionResult> Tickets(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await _DbContext.Projects
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            return View(project);
+        }
+
         [Authorize(Roles = "Admin,Project Manager,Demo")]
         public IActionResult Create()
         {

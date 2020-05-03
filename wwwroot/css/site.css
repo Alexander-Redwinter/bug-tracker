@@ -27,14 +27,16 @@ td, td * {
 
 a {
     font-family: 'Roboto', sans-serif;
-    color: #32b67a;
+
+    color: #227a52;
     text-decoration: none;
 }
 
     a:hover, a:focus {
-        color: #227a52;
+        color: #32b67a;
         text-decoration: underline;
     }
+
 
 
 .shadow {
@@ -1253,6 +1255,7 @@ button {
 .navbar .navbar-brand {
     position: absolute;
     top: 50%;
+    color: #32b67a;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);

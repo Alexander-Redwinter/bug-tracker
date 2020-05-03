@@ -35,32 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="h6 text-uppercase mb-0">@Localizer["Tickets"]</h3>
-                    <a class="btn btn-success ml-3" asp-action="Create" asp-controller="Ticket" asp-route-projectId="@Model.Id">@Localizer["Add Ticket"]</a>
-
-                </div>
-            </div>
-            <div class="card-body">
-                <table id="DT_TicketsLoad" class="table table-striped card-text" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>@Localizer["Title"]</th>
-                            <th>@Localizer["Description"]</th>
-                            <th>@Localizer["Created"]</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
 </div>
 
-@section scripts{
-    <partial name="_ProjectTicketListPartial" />
-}
+
 

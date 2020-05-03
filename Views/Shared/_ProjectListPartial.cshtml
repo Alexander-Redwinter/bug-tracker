@@ -20,6 +20,11 @@ function loadDataTable() {
                     return `<a href="/Projects/Details/${data}" >` + row.name + `</a>`
                 }
             },
+            {
+                "data": "id", "render": function (data, type, row) {
+                    return `<a href="/Projects/Tickets/${data}" > @Localizer["Tickets"] </a>`
+                }
+            },
             { "data": "description"},
             {
                 "data": "id","render": function (data) {
