@@ -444,6 +444,7 @@ namespace BugTracker.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
             ticket.TicketStatus = TicketStatus.Resolved;
+            ticket.LastResolveDate = DateTime.Now;
             _DbContext.Tickets.Update(ticket);
             await _DbContext.SaveChangesAsync();
             //TODO LOCALIZE ME

@@ -28,11 +28,20 @@ function loadDataTable() {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description", "visible" : false},
-            {
+            { "data": "description", "visible": false },
 
+
+            {
                 "data": "created", "render": function (data, type, full, meta) {
-                    if(type == 'display')
+                 if (type == 'display')
+                    return moment(data).calendar();
+                else
+                    return data;
+                }
+            },
+            {
+                "data": "lastResolveDate", "render": function (data, type, full, meta) {
+                    if (type == 'display')
                         return moment(data).calendar();
                     else
                         return data;
@@ -69,7 +78,25 @@ function loadDataTable() {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description", "visible" : false},
+            { "data": "description", "visible": false },
+
+
+            {
+                "data": "created", "render": function (data, type, full, meta) {
+                    if (type == 'display')
+                        return moment(data).calendar();
+                    else
+                        return data;
+                }
+            },
+            {
+                "data": "lastResolveDate", "render": function (data, type, full, meta) {
+                    if (type == 'display')
+                        return moment(data).calendar();
+                    else
+                        return data;
+                }
+            },
             {
                 "data": "created", "render": function (data, type, full, meta) {
                     if(type == 'display')

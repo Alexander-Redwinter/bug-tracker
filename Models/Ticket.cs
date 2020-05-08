@@ -22,6 +22,7 @@ namespace BugTracker.Models
         [Required]
         public DateTime Created { get; set; }
 
+        public DateTime LastResolveDate { get; set; }
 
 
         public TicketPriority TicketPriority { get; set; } = TicketPriority.High;
