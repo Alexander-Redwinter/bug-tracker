@@ -9,6 +9,7 @@ using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using BugTracker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using BugTracker.Enums;
 
 namespace BugTracker.Controllers
 {
@@ -191,8 +192,23 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-            var model = project.Tickets;
-            return Json(new { data = model });
+            List<Ticket> sorted = new List<Ticket>();
+            foreach (Ticket t in project.Tickets)
+            {
+
+                if (t.TicketStatus != TicketStatus.Resolved)
+                {
+                    t.TicketApplicationUsers = null;
+                    t.Project = null;
+                    t.TicketAttachments = null;
+                    t.TicketHistories = null;
+                    t.TicketComments = null;
+
+                    sorted.Add(t);
+                }
+
+            }
+            return Json(new { data = sorted });
         }
 
         [HttpPost]

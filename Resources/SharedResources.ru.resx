@@ -288,6 +288,9 @@
   <data name="Resolve" xml:space="preserve">
     <value>Закрыть</value>
   </data>
+  <data name="Resolved" xml:space="preserve">
+    <value>Завершенные</value>
+  </data>
   <data name="Resolved Tickets" xml:space="preserve">
     <value>Закрытые Заявки</value>
   </data>

@@ -21,7 +21,7 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
-        "order": [[2, "desc"]],
+        "order": [[3, "desc"]],
         "columns": [
             {
                 "data": "id", "render": function (data, type, row) {
@@ -29,8 +29,6 @@ function loadDataTable() {
                 }
             },
             { "data": "description", "visible": false },
-
-
             {
                 "data": "created", "render": function (data, type, full, meta) {
                  if (type == 'display')
@@ -71,7 +69,7 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
-        "order": [[2, "desc"]],
+        "order": [[3, "desc"]],
         "columns": [
             {
                 "data": "id", "render": function (data, type, row) {
