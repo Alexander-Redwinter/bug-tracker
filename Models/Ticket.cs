@@ -22,6 +22,8 @@ namespace BugTracker.Models
         [Required]
         public DateTime Created { get; set; }
 
+
+
         public TicketPriority TicketPriority { get; set; } = TicketPriority.High;
         public TicketStatus TicketStatus { get; set; } = TicketStatus.Open;
         public TicketType TicketType { get; set; } = TicketType.BugError;

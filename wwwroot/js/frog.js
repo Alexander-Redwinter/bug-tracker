@@ -9,7 +9,7 @@ let result = 0;
 let currentTime = timeLeft.textContent;
 var canClick = true;
 var gameOver = false;
-
+var timeToReact;
 
 function randomSquare() {
     canClick = true;
@@ -38,41 +38,35 @@ square.forEach(id => {
                 canClick = false;
                 result++;
                 score.textContent = result;
+                clearInterval(timeToReact);
+                setTimeout(function () { timeToReact = setInterval(randomSquare, 500)}, 250);
             }
         }
     })
 })
+
+
+
+moveFrog();
 
 function moveFrog() {
     preloadImage('/img/frog/frog.png')
     preloadImage('/img/frog/frog-frozen.png')
 
     let timerId = null
-    loop();
+    timeToReact = setInterval(randomSquare, 500);
 
 }
-
-function loop() {
-    if (!gameOver) {
-        
-        var rand = 1000;
-        setTimeout(function () {
-            randomSquare();
-            loop();
-        }, rand);
-    }
-
-};
-
-moveFrog();
 
 function countDown() {
     currentTime--
     timeLeft.textContent = currentTime;
     if (currentTime === 0) {
         gameOver = true;
-        alert('game over! score: ' + result)
-        location.reload()
+        score.textContent = 'game over! score: ' + result;
+        clearInterval(timerId);
+        clearInterval(timeToReact);
+
     }
 }
 

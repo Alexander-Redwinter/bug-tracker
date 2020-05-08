@@ -32,5 +32,15 @@ namespace BugTracker.Controllers
         {
             return View();
         }
+
+        public IActionResult Fairy()
+        {
+            return View();
+        }
+
+        public IActionResult Food()
+        {
+            return View();
+        }
     }
 }

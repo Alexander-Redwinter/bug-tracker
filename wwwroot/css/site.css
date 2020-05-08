@@ -27,7 +27,6 @@ td, td * {
 
 a {
     font-family: 'Roboto', sans-serif;
-
     color: #227a52;
     text-decoration: none;
 }
@@ -4138,6 +4137,7 @@ code {
     background-size: cover;
 }
 
+
 .frozen {
     background-image: url("/img/frog/frog-frozen.png");
     background-size: cover;
@@ -4199,5 +4199,39 @@ code {
 
 .gourd {
     background-image: url("/img/gourd/gourd.png");
+    background-size: cover;
+}
+
+.fairy-grid {
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    background-image: url("/img/gourd/background.png");
+    background-size: cover;
+}
+
+    .fairy-grid div {
+        width: 40px;
+        height: 40px;
+    }
+
+.reimu {
+    background-image: url("/img/fairy/reimu.png");
+    background-size: cover;
+}
+
+.fairy {
+    background-image: url("/img/fairy/fairy.png");
+    background-size: cover;
+}
+
+.bullet {
+    background-image: url("/img/fairy/ofuda.png");
+    background-size: cover;
+}
+
+.boom {
+    background-image: url("/img/fairy/boom.png");
     background-size: cover;
 }
