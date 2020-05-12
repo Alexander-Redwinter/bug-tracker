@@ -16,9 +16,7 @@ a {
 
 html, body {
     font-family: 'Roboto', sans-serif;
-    /*using an API to get random background*/
-    background-image: url(https://picsum.photos/1366/768);
-    /*background-image: url('../img/background.png');*/
+    background-image: url('/img/bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;

@@ -282,6 +282,9 @@
   <data name="Projects" xml:space="preserve">
     <value>Проекты</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
   <data name="Remember me" xml:space="preserve">
     <value>Запомнить</value>
   </data>

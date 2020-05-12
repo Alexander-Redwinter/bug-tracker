@@ -30,14 +30,17 @@ namespace BugTracker.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult SetLanguage(string culture)
+        public IActionResult SetLanguage(string culture, string returnUrl = "")
         {
             Response.Cookies.Append(
                  "BugTracker.PrefferedCulture",
                   CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                   new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
 
-            return RedirectToAction("Index", "Profile");
+            if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+            else
+                return RedirectToAction("Index", "Profile");
         }
         public IActionResult ThrowError()
         {
