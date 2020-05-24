@@ -335,13 +335,22 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAll()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.ApplicationUser).ToListAsync();
+
+            var tickets = await _DbContext.Tickets
+                .Where(t => t.TicketStatus != TicketStatus.Resolved)
+                .Include(t => t.ApplicationUser)
+                .Include(t => t.Project)
+                .ToListAsync();
+
             List<Ticket> sortedList = new List<Ticket>();
+
             foreach (Ticket t in tickets)
             {
                 if (t.ApplicationUser == user)
                 {
-
+                    //stub project to only provide name(and prevent cyclic JSON)
+                    Project stubProject = new Project { Name = t.Project.Name };
+                    t.Project = stubProject;
                     sortedList.Add(t);
                 }
             }
@@ -367,6 +376,8 @@ namespace BugTracker.Controllers
             {
                 if (t.ApplicationUser == user)
                 {
+
+
                     sortedList.Add(t);
                 }
             }
@@ -385,7 +396,11 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAllAssigned()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
+            var tickets = await _DbContext.Tickets
+                .Where(t => t.TicketStatus != TicketStatus.Resolved)
+                .Include(t => t.TicketApplicationUsers)
+                .Include(t => t.Project)
+                .ToListAsync();
             List<Ticket> sortedList = new List<Ticket>();
             foreach (Ticket t in tickets)
             {
@@ -393,6 +408,10 @@ namespace BugTracker.Controllers
                 {
                     if (pau.ApplicationUserId == user.Id)
                     {
+                        //stub project to only provide name(and prevent cyclic JSON)
+                        Project stubProject = new Project { Name = t.Project.Name };
+                        t.Project = stubProject;
+
                         sortedList.Add(t);
                     }
                 }
@@ -531,16 +550,21 @@ namespace BugTracker.Controllers
 
         public IActionResult GetHistories(int? id)
         {
+
             var model = _DbContext.TicketHistories.Where(t => t.KeyValue == "{\"Id\":" + id.ToString() + "}").ToList();
+            List<TicketHistoryDto> list = new List<TicketHistoryDto>();
+
             foreach (var m in model)
             {
+                //FIXME histories still look ugly
                 var jdp = new JsonDiffPatch();
-
-                m.OldValue = jdp.Diff(m.OldValue, m.NewValue);
-                
+                string rawString = jdp.Diff(m.OldValue, m.NewValue);
+                m.OldValue = rawString;
             }
             return Json(new { data = model });
         }
+
+
 
         public async Task<IActionResult> GetMadeByCurrentUser()
         {

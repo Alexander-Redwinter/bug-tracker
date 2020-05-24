@@ -9,13 +9,15 @@
     </a>
 </p>
 <div class="row">
-    <div class="col-6 p-3">
+    <div class="col-12 p-3">
         <div class="card">
             <div class="card-header">
-                <h3 class="h6 text-uppercase mb-0">@Localizer["Assigned Tickets"]</h3>
+                <a class="btn btn-primary" data-toggle="collapse" href="#AssignedTicketsTable" aria-expanded="true" aria-controls="test-block">
+                    <h6 class="h6 text-uppercase mb-0">@Localizer["Assigned Tickets"]</h6>
+                </a>
             </div>
 
-            <div class="card-body">
+            <div class="card-body collapse" id="AssignedTicketsTable">
 
                 <table id="DT_AssignedTicketsLoad" class="table table-striped card-text table-bordered" style="width:100%">
                     <thead>
@@ -24,22 +26,28 @@
                             <th>@Localizer["Description"]</th>
                             <th>@Localizer["Created"]</th>
                             <th>@Localizer["Priority"]</th>
-
+                            <th>@Localizer["Project"]</th>
                             <th></th>
 
                         </tr>
                     </thead>
                 </table>
             </div>
+            <div class="card-footer">
+            </div>
         </div>
     </div>
-    <div class="col-6 p-3">
+</div>
+<div class="row">
+    <div class="col-12 p-3">
         <div class="card">
             <div class="card-header">
-                <h3 class="h6 text-uppercase mb-0">@Localizer["Your Tickets"]</h3>
-            </div>
+                <a class="btn btn-primary" data-toggle="collapse" href="#TicketsTable" aria-expanded="true" aria-controls="test-block">
+                    <h6 class="h6 text-uppercase mb-0">@Localizer["Your Tickets"]</h6>
+                </a>
 
-            <div class="card-body">
+            </div>
+            <div class="card-body collapse" id="TicketsTable">
                 <table id="DT_TicketsLoad" class="table table-striped card-text table-bordered" style="width:100%">
                     <thead>
                         <tr>
@@ -47,16 +55,19 @@
                             <th>@Localizer["Description"]</th>
                             <th>@Localizer["Created"]</th>
                             <th>@Localizer["Priority"]</th>
+                            <th>@Localizer["Project"]</th>
                             <th></th>
                         </tr>
                     </thead>
                 </table>
             </div>
+            <div class="card-footer">
+            </div>
         </div>
     </div>
 </div>
 
-    @section Scripts{
-        <partial name="_DeleteAlertPartial" />
-        <partial name="_TicketListPartial" />
-    }
+@section Scripts{
+    <partial name="_DeleteAlertPartial" />
+    <partial name="_TicketListPartial" />
+}

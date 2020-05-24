@@ -28,7 +28,7 @@ function loadDataTable() {
                     return `<a href="/Ticket/Details/${data}">` + row.title + `</a>`
                 }
             },
-            { "data": "description", "visible" : false},
+            { "data": "description", "visible": false },
             {
 
                 "data": "created", "render": function (data, type, full, meta) {
@@ -54,7 +54,8 @@ function loadDataTable() {
                     }
                     return data;
                     }
-},
+            },
+            { "data": "project.name", "visible": true },
             {
                 "data": "id",
                 "render": function (data) {
@@ -115,7 +116,8 @@ function loadDataTable() {
                     }
                         return data;
                     }
-                },
+            },
+            { "data": "project.name", "visible": true },
             {
                 "data": "id",
                 "render": function (data) {

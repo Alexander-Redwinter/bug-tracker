@@ -42,5 +42,10 @@ namespace BugTracker.Controllers
         {
             return View();
         }
+
+        public IActionResult Chamber()
+        {
+            return View();
+        }
     }
 }

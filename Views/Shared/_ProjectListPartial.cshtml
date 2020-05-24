@@ -3,7 +3,7 @@ var dataTable;
 
 $(document).ready(function () {
     loadDataTable();
-   
+
 });
 
 function loadDataTable() {
@@ -17,18 +17,17 @@ function loadDataTable() {
         "columns": [
             {
                 "data": "id", "render": function (data, type, row) {
-                    return `<a href="/Projects/Details/${data}" >` + row.name + `</a>`
-                }
-            },
-            {
-                "data": "id", "render": function (data, type, row) {
-                    return `<a href="/Projects/Tickets/${data}" > @Localizer["Tickets"] </a>`
+                    return `<a href="/Projects/Tickets/${data}" > `+ row.name +`</a>`
+
                 }
             },
             { "data": "description"},
             {
-                "data": "id","render": function (data) {
+                "data": "id", "render": function (data, type, row) {
                     return `<div class="text-center">
+                        <a href="/Projects/Details/${data}" >@Localizer["Edit"]</a>
+
+                        </br>
                         <a href='#' style='cursor:pointer;'
                             onclick=Delete('/Projects/Close?id=${data}')>
                             @Localizer["Close Project"]

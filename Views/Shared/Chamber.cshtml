@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/chamber.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <audio controls loop>
+        <source src="~/sound/rain.mp3" type="audio/mpeg" />
+    </audio>
+
+    <a class="go-back" asp-action="Index" >Go Back</a>
+    <div class="rain front-row"></div>
+    <div class="rain back-row"></div>
+    <script>
+        var makeItRain = function () {
+            //clear out everything
+            $('.rain').empty();
+
+            var increment = 0;
+            var drops = "";
+            var backDrops = "";
+
+            while (increment < 100) {
+                var rng1 = (Math.floor(Math.random() * (98 - 1 + 1) + 1));
+                var rng2 = (Math.floor(Math.random() * (5 - 2 + 1) + 2));
+                increment += 1;
+                drops += '<div class="drop" style="left: ' + increment + '%; bottom: ' + (rng2 + rng2 - 1 + 100) + '%; animation-delay: 0.' + rng1 + 's; animation-duration: 0.7' + rng1 + 's;"><div class="stem" style="animation-delay: 0.' + rng1 + 's; animation-duration: 0.7' + rng1 + 's;"></div></div>';
+                backDrops += '<div class="drop" style="right: ' + increment + '%; bottom: ' + (rng2 + rng2 - 1 + 100) + '%; animation-delay: 0.' + rng2 + 's; animation-duration: 0.7' + rng2 + 's;"><div class="stem" style="animation-delay: 0.' + rng2 + 's; animation-duration: 0.7' + rng2 + 's;"></div></div>';
+            }
+
+            $('.rain.front-row').append(drops);
+            $('.rain.back-row').append(backDrops);
+        }
+
+        makeItRain();
+    </script>
+</body>
+</html>
+
+

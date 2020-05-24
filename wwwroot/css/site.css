@@ -9,6 +9,8 @@ td, td * {
     font-size: medium;
 }
 
+
+
 .even {
     background-color: aqua
 }
@@ -2796,9 +2798,10 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
-    background-image: url('../img/background_washed.png');
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image:url(/img/background_washed.png);
+    background-size:cover;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
     height: 100%;
 }
 
