@@ -6,3 +6,6 @@
 
 
 Bug tracker using ASP.NET Core 3.1, Entity Framework Core, Postgre SQL. Bootstrap, JQuery. Is being hosted live at [Heroku](http://redwinter-bugtracker.herokuapp.com/).
+
+
+![Screenshot](Bugtracker.png)
