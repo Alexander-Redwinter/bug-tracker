@@ -1,4 +1,3 @@
-using System.Globalization;
 using BugTracker.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -12,10 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
-using System;
 using Npgsql;
+using System;
+using System.Globalization;
 
 namespace BugTracker
 {
@@ -32,14 +31,17 @@ namespace BugTracker
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configure dependency injection container
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             String databaseUrl;
             if (CurrentEnvironment.IsDevelopment())
             {
                 //local db connection
-                databaseUrl = "postgres://postgres:postgres@localhost:5432/BugTracker";
+                databaseUrl = Configuration.GetConnectionString("DefaultConnection");
             }
             else
             {
@@ -110,7 +112,12 @@ namespace BugTracker
             .AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        /// <summary>
+        /// Configure middleware
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -119,9 +126,7 @@ namespace BugTracker
             }
             else
             {
-
                 app.UseStatusCodePagesWithRedirects("/Error/{0}");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
@@ -131,8 +136,6 @@ namespace BugTracker
             app.UseStaticFiles();
 
             app.UseRouting();
-
-
 
             //who are you
             app.UseAuthentication();
