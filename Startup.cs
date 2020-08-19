@@ -6,13 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Npgsql;
 using System;
 using System.Globalization;
 
@@ -20,16 +18,14 @@ namespace BugTracker
 {
     public class Startup
     {
-
-        private IWebHostEnvironment CurrentEnvironment { get; set; }
+        public IConfiguration Configuration { get; }
+        private IWebHostEnvironment _environment;
 
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             Configuration = configuration;
-            CurrentEnvironment = env;
+            _environment = env;
         }
-
-        public IConfiguration Configuration { get; }
 
         /// <summary>
         /// Configure dependency injection container
@@ -37,45 +33,21 @@ namespace BugTracker
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            String databaseUrl;
-            if (CurrentEnvironment.IsDevelopment())
-            {
-                //local db connection
-                databaseUrl = Configuration.GetConnectionString("DefaultConnection");
-            }
-            else
-            {
-                //heroku db connection
-                databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            }
 
-            var databaseUri = new Uri(databaseUrl);
-            var userInfo = databaseUri.UserInfo.Split(':');
-            string connection = new NpgsqlConnectionStringBuilder
-            {
-                Host = databaseUri.Host,
-                Port = databaseUri.Port,
-                Username = userInfo[0],
-                Password = userInfo[1],
-                Database = databaseUri.LocalPath.TrimStart('/')
-            }.ToString();
-
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseNpgsql(connection));
-
+            //If on remote server, use provided environmental variable to access the database
+            services.AddNpgsqlDataContext(_environment.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection") 
+                : Environment.GetEnvironmentVariable("DATABASE_URL"));
 
             services.AddHttpContextAccessor();
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddLocalization(options => options.ResourcesPath = Configuration.GetSection("Resources").Value);
             services.AddControllersWithViews(config =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
 
             }).AddRazorRuntimeCompilation()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources")
+              .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = Configuration.GetSection("Resources").Value)
               .AddDataAnnotationsLocalization();
-
-
 
             services.AddMvc().AddNewtonsoftJson(o =>
             {
@@ -114,7 +86,7 @@ namespace BugTracker
 
 
         /// <summary>
-        /// Configure middleware
+        /// Configure middleware pipeline
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
@@ -150,5 +122,7 @@ namespace BugTracker
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
     }
 }

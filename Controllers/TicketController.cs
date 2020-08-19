@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using BugTracker.Enums;
+﻿using BugTracker.Enums;
 using BugTracker.Models;
 using BugTracker.ViewModels;
 using JsonDiffPatchDotNet;
@@ -12,14 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace BugTracker.Controllers
+namespace BugTracker
 {
     public class TicketController : Controller
     {
 
-        ApplicationDbContext _DbContext;
+        private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
 
         [BindProperty]
@@ -27,7 +25,7 @@ namespace BugTracker.Controllers
 
         public TicketController(ApplicationDbContext DbContext, UserManager<ApplicationUser> userManager)
         {
-            _DbContext = DbContext;
+            _dbContext = DbContext;
             _userManager = userManager;
         }
         public IActionResult Index()
@@ -40,7 +38,7 @@ namespace BugTracker.Controllers
         {
             CreateTicketViewModel model = new CreateTicketViewModel();
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var allProjects = _DbContext.Projects.Where(p => p.IsOpen).Include(p => p.ProjectApplicationUsers).ToList();
+            var allProjects = _dbContext.Projects.Where(p => p.IsOpen).Include(p => p.ProjectApplicationUsers).ToList();
             if (projectId != null)
             {
                 model.ProjectId = (int)projectId;
@@ -96,7 +94,7 @@ namespace BugTracker.Controllers
                 ticket.TicketType = model.TicketType;
                 ticket.TicketApplicationUsers.Add(tau);
                 ticket.Created = DateTime.Now;
-                ticket.Project = _DbContext.Projects.Find(model.ProjectId);
+                ticket.Project = _dbContext.Projects.Find(model.ProjectId);
 
 
                 foreach (var file in Request.Form.Files)
@@ -112,8 +110,8 @@ namespace BugTracker.Controllers
 
                     ticket.TicketAttachments.Add(attachment);
                 }
-                _DbContext.Tickets.Add(ticket);
-                _DbContext.SaveChanges();
+                _dbContext.Tickets.Add(ticket);
+                _dbContext.SaveChanges();
                 return View("Index");
             }
             return BadRequest();
@@ -126,7 +124,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            var ticket = await _DbContext.Tickets.FindAsync(id);
+            var ticket = await _dbContext.Tickets.FindAsync(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -145,15 +143,15 @@ namespace BugTracker.Controllers
 
             if (ModelState.IsValid)
             {
-                var transfer = _DbContext.Tickets.Single(t => t.Id == id);
+                var transfer = _dbContext.Tickets.Single(t => t.Id == id);
                 transfer.Title = ticket.Title;
                 transfer.TicketType = ticket.TicketType;
                 transfer.TicketStatus = ticket.TicketStatus;
                 transfer.TicketPriority = ticket.TicketPriority;
                 transfer.Description = ticket.Description;
                 transfer.Created = ticket.Created;
-                _DbContext.Update(transfer);
-                await _DbContext.SaveChangesAsync();
+                _dbContext.Update(transfer);
+                await _dbContext.SaveChangesAsync();
                 return View("Index");
             }
             return View(ticket);
@@ -164,7 +162,7 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-            TicketAttachment img = _DbContext.TicketAttachments.Where(ta => ta.Id == id).Include(a => a.ApplicationUser).Include(a => a.Ticket).SingleOrDefault();
+            TicketAttachment img = _dbContext.TicketAttachments.Where(ta => ta.Id == id).Include(a => a.ApplicationUser).Include(a => a.Ticket).SingleOrDefault();
             if (img == null)
             {
                 return NotFound();
@@ -187,7 +185,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> CreateAttachment(int id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            Ticket ticket = _DbContext.Tickets.Find(id);
+            Ticket ticket = _dbContext.Tickets.Find(id);
             foreach (var file in Request.Form.Files)
             {
 
@@ -200,10 +198,10 @@ namespace BugTracker.Controllers
                 file.CopyTo(ms);
                 attachment.Image = ms.ToArray();
 
-                _DbContext.TicketAttachments.Add(attachment);
+                _dbContext.TicketAttachments.Add(attachment);
 
             }
-            _DbContext.SaveChanges();
+            _dbContext.SaveChanges();
             //TODO ADD TOASTER NOTIF
             return RedirectToAction("Details", new { id });
         }
@@ -214,7 +212,7 @@ namespace BugTracker.Controllers
         {
             ViewBag.ticketId = id;
 
-            var ticket = _DbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketApplicationUsers).FirstOrDefault();
+            var ticket = _dbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketApplicationUsers).FirstOrDefault();
 
             if (ticket == null)
             {
@@ -246,7 +244,7 @@ namespace BugTracker.Controllers
             try
             {
 
-                var ticket = _DbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketApplicationUsers).SingleOrDefault();
+                var ticket = _dbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketApplicationUsers).SingleOrDefault();
                 if (ticket == null)
                 {
                     return NotFound("No ticket ID provided. This might be bad.");
@@ -268,9 +266,9 @@ namespace BugTracker.Controllers
                         tau.Ticket = ticket;
 
                         ticket.TicketApplicationUsers.Add(tau);
-                        _DbContext.Tickets.Update(ticket);
+                        _dbContext.Tickets.Update(ticket);
                         //maybe better to put it before return, im too tired and afraid at this point to optimize
-                        _DbContext.SaveChanges();
+                        _dbContext.SaveChanges();
 
                     }
                     else if (!model[i].IsSelected && ticket.TicketApplicationUsers.Any(tau => tau.ApplicationUser == user))
@@ -278,9 +276,9 @@ namespace BugTracker.Controllers
                         //not even going in here
                         var found = ticket.TicketApplicationUsers.FirstOrDefault(x => x.ApplicationUser == user);
                         if (found != null) ticket.TicketApplicationUsers.Remove(found);
-                        _DbContext.Tickets.Update(ticket);
+                        _dbContext.Tickets.Update(ticket);
                         //maybe better to put it before return, im too tired and afraid at this point to optimize
-                        _DbContext.SaveChanges();
+                        _dbContext.SaveChanges();
                     }
                     else
                     {
@@ -303,12 +301,12 @@ namespace BugTracker.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             TicketComment comm = new TicketComment();
-            comm.Ticket = _DbContext.Tickets.Find(id);
+            comm.Ticket = _dbContext.Tickets.Find(id);
             comm.Comment = comment;
             comm.Created = DateTime.Now;
             comm.ApplicationUser = user;
-            _DbContext.TicketComments.Add(comm);
-            _DbContext.SaveChanges();
+            _dbContext.TicketComments.Add(comm);
+            _dbContext.SaveChanges();
             //TODO ADD TOASTER NOTIF
             return RedirectToAction("Details", new { id });
         }
@@ -320,7 +318,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            var ticket = await _DbContext.Tickets.Where(m => m.Id == id).Include(t => t.Project).FirstOrDefaultAsync();
+            var ticket = await _dbContext.Tickets.Where(m => m.Id == id).Include(t => t.Project).FirstOrDefaultAsync();
             if (ticket == null)
             {
                 return NotFound();
@@ -336,7 +334,7 @@ namespace BugTracker.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var tickets = await _DbContext.Tickets
+            var tickets = await _dbContext.Tickets
                 .Where(t => t.TicketStatus != TicketStatus.Resolved)
                 .Include(t => t.ApplicationUser)
                 .Include(t => t.Project)
@@ -370,7 +368,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAllResolved()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus == TicketStatus.Resolved).Include(t => t.ApplicationUser).ToListAsync();
+            var tickets = await _dbContext.Tickets.Where(t => t.TicketStatus == TicketStatus.Resolved).Include(t => t.ApplicationUser).ToListAsync();
             List<Ticket> sortedList = new List<Ticket>();
             foreach (Ticket t in tickets)
             {
@@ -396,7 +394,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAllAssigned()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = await _DbContext.Tickets
+            var tickets = await _dbContext.Tickets
                 .Where(t => t.TicketStatus != TicketStatus.Resolved)
                 .Include(t => t.TicketApplicationUsers)
                 .Include(t => t.Project)
@@ -431,7 +429,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAllResolvedAssigned()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus == TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
+            var tickets = await _dbContext.Tickets.Where(t => t.TicketStatus == TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
             List<Ticket> sortedList = new List<Ticket>();
             foreach (Ticket t in tickets)
             {
@@ -457,15 +455,15 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Resolve(int id)
         {
-            var ticket = await _DbContext.Tickets.FirstOrDefaultAsync(u => u.Id == id);
+            var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(u => u.Id == id);
             if (ticket == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
             ticket.TicketStatus = TicketStatus.Resolved;
             ticket.LastResolveDate = DateTime.Now;
-            _DbContext.Tickets.Update(ticket);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Tickets.Update(ticket);
+            await _dbContext.SaveChangesAsync();
             //TODO LOCALIZE ME
             return Json(new { success = true, message = "Ticket Resolved" });
         }
@@ -474,13 +472,13 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin,Project Manager,Developer,Tester")]
         public async Task<IActionResult> DeleteAttachment(int id)
         {
-            var attachment = await _DbContext.TicketAttachments.FirstOrDefaultAsync(u => u.Id == id);
+            var attachment = await _dbContext.TicketAttachments.FirstOrDefaultAsync(u => u.Id == id);
             if (attachment == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            _DbContext.TicketAttachments.Remove(attachment);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.TicketAttachments.Remove(attachment);
+            await _dbContext.SaveChangesAsync();
             //TODO LOCALIZE ME
             return Json(new { success = true, message = "Attachment Deleted" });
         }
@@ -490,13 +488,13 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> DeleteComment(int id)
         {
-            var comment = await _DbContext.TicketComments.FirstOrDefaultAsync(u => u.Id == id);
+            var comment = await _dbContext.TicketComments.FirstOrDefaultAsync(u => u.Id == id);
             if (comment == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            _DbContext.TicketComments.Remove(comment);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.TicketComments.Remove(comment);
+            await _dbContext.SaveChangesAsync();
             //TODO LOCALIZE ME
             return Json(new { success = true, message = "Comment Deleted" });
         }
@@ -506,7 +504,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin,Project Manager")]
         public async Task<IActionResult> Delete(int id)
         {
-            var ticket = _DbContext.Tickets.Where(u => u.Id == id).Include(t => t.TicketAttachments)
+            var ticket = _dbContext.Tickets.Where(u => u.Id == id).Include(t => t.TicketAttachments)
                 .Include(t => t.TicketComments).SingleOrDefault();
             if (ticket == null)
             {
@@ -514,21 +512,21 @@ namespace BugTracker.Controllers
             }
             foreach (TicketAttachment ta in ticket.TicketAttachments)
             {
-                _DbContext.TicketAttachments.Remove(ta);
+                _dbContext.TicketAttachments.Remove(ta);
             }
             foreach (TicketComment tc in ticket.TicketComments)
             {
-                _DbContext.TicketComments.Remove(tc);
+                _dbContext.TicketComments.Remove(tc);
             }
-            await _DbContext.SaveChangesAsync();
-            _DbContext.Tickets.Remove(ticket);
-            await _DbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
+            _dbContext.Tickets.Remove(ticket);
+            await _dbContext.SaveChangesAsync();
             return Json(new { success = true, message = "Delete Successful" });
         }
 
         public IActionResult GetComments(int? id)
         {
-            var ticket = _DbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketComments).SingleOrDefault();
+            var ticket = _dbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketComments).SingleOrDefault();
             if (ticket == null)
             {
                 return NotFound();
@@ -539,7 +537,7 @@ namespace BugTracker.Controllers
 
         public IActionResult GetAttachments(int? id)
         {
-            var ticket = _DbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketAttachments).SingleOrDefault();
+            var ticket = _dbContext.Tickets.Where(t => t.Id == id).Include(t => t.TicketAttachments).SingleOrDefault();
             if (ticket == null)
             {
                 return NotFound();
@@ -551,7 +549,7 @@ namespace BugTracker.Controllers
         public IActionResult GetHistories(int? id)
         {
 
-            var model = _DbContext.TicketHistories.Where(t => t.KeyValue == "{\"Id\":" + id.ToString() + "}").ToList();
+            var model = _dbContext.TicketHistories.Where(t => t.KeyValue == "{\"Id\":" + id.ToString() + "}").ToList();
             List<TicketHistoryDto> list = new List<TicketHistoryDto>();
 
             foreach (var m in model)
@@ -569,7 +567,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetMadeByCurrentUser()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = _DbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.ApplicationUser).ToList();
+            var tickets = _dbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.ApplicationUser).ToList();
             List<Ticket> sorted = new List<Ticket>();
 
             //there's gotta be a better way to sort
@@ -589,7 +587,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAssignedToCurrentUser()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = _DbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.TicketApplicationUsers).ToList();
+            var tickets = _dbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.TicketApplicationUsers).ToList();
 
 
             //there's gotta be a better way to sort
@@ -610,7 +608,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAllAssignedStatus()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
+            var tickets = await _dbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
 
             List<Ticket> sortedList = new List<Ticket>();
             foreach (Ticket t in tickets)
@@ -657,7 +655,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> GetAllAssignedPriority()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var tickets = await _DbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
+            var tickets = await _dbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
 
             List<Ticket> sortedList = new List<Ticket>();
             foreach (Ticket t in tickets)

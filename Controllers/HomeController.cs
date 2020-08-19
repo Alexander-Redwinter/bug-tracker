@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using BugTracker.Models;
-using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Http;
+using System;
 
-namespace BugTracker.Controllers
+namespace BugTracker
 {
     public class HomeController : Controller
     {
@@ -41,10 +33,6 @@ namespace BugTracker.Controllers
                 return Redirect(returnUrl);
             else
                 return RedirectToAction("Index", "Profile");
-        }
-        public IActionResult ThrowError()
-        {
-            return BadRequest();
         }
     }
 }
