@@ -213,6 +213,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Email Is In Use" xml:space="preserve">
+    <value>Почта уже используется</value>
+  </data>
   <data name="for ticket" xml:space="preserve">
     <value>для заявки</value>
   </data>

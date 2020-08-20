@@ -60,6 +60,10 @@ namespace BugTracker.Controllers
             }
             return View(model);
         }
+
+
+
+
         public IActionResult Login()
         {
             if (_signInManager.IsSignedIn(User))
@@ -100,10 +104,10 @@ namespace BugTracker.Controllers
 
             var result = await _signInManager.PasswordSignInAsync("Demo", "demodemo", false, false);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return BadRequest();
         }
@@ -126,16 +130,14 @@ namespace BugTracker.Controllers
         #region APICalls
         //Remote validation
         [AcceptVerbs("Get", "Post")]
-        public async Task<IActionResult> IsEmailInUse(string Email)
+        [AllowAnonymous]
+        public async Task<IActionResult> IsEmailInUse(string email)
         {
-            var user = await _userManager.FindByEmailAsync(Email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
-            {
                 return Json(true);
-            }
-            //TODO Add localization
-            return Json("Email is already in use");
+            return Json("Email Is In Use");
         }
         #endregion
     }

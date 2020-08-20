@@ -5,11 +5,9 @@ namespace BugTracker.ViewModels
 {
     public class RegisterViewModel
     {
-
-
         [Required]
         [EmailAddress]
-        [Remote(action:"IsEmailInUse","Account")]
+        [Remote(action:"IsEmailInUse",controller:"Account")]
         public string Email { get; set; }
 
         [Required]
