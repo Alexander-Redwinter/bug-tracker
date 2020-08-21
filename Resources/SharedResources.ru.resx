@@ -228,6 +228,9 @@
   <data name="Feature Request" xml:space="preserve">
     <value>Расширение Функционала</value>
   </data>
+  <data name="Find by ID" xml:space="preserve">
+    <value>Найти по ID</value>
+  </data>
   <data name="for ticket" xml:space="preserve">
     <value>для заявки</value>
   </data>

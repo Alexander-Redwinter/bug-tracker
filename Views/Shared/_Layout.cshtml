@@ -27,17 +27,15 @@
     <!-- navbar-->
     <header class="header">
         <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
-            <a href="http://seichirino.github.io">Alexander Redwinter</a>
+            <form method="get" asp-controller="Ticket" asp-action="Details" class="btn btn-outline-primary disabled">
+                <input type="text" name="id" style="width:80px" required />
+                <button type="submit" class="text-sm btn btn-primary">@Localizer["Find by ID"]</button>
+            </form>
 
             <a asp-controller="Home" asp-action="Index" class="navbar-brand font-weight-bold"><i class="fas fa-bug mr-4"></i>@Localizer["BugTracker"]</a>
 
             <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
-                <li>
-                    <form method="get" asp-controller="Ticket" asp-action="Details">
-                        <input type="text" name="id" style="width:80px" required="true"/>
-                        <button type="submit">Ok</button>
-                    </form>
-                </li>
+
                 <li class="nav-item ml-auto">
 
                     <a id="userInfo" asp-controller="Profile" asp-action="Index" aria-haspopup="true" aria-expanded="false" class="nav-link"><span class="text-muted">@Localizer["Logged in as"]: </span> @User.Identity.Name</a>
