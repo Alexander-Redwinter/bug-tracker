@@ -7,6 +7,9 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#DT_UsersLoad').DataTable({
+        "language": {
+            "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+        },
         "ajax": {
             "url": "/Administration/GetUserList",
             "type": "GET",
@@ -28,10 +31,6 @@ function loadDataTable() {
                 }
             }
         ],
-        "language": {
-            "emptyTable": "@Localizer["Nothing yet"]",
-                "loadingRecords" : "Please wait warmly"
-        },
         "width": "100%"
     });
 }

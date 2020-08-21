@@ -11,6 +11,9 @@
             paging: false,
             info: false,
             ordering: false,
+            "language": {
+                "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+            },
             "ajax": {
                 "url": "/Administration/GetRolesList",
                 "type": "GET",
@@ -29,10 +32,6 @@
                     }
                 }
             ],
-            "language": {
-                "emptyTable": "@Localizer["Nothing yet"]",
-                "loadingRecords" : "Please wait warmly"
-            },
             "width": "100%"
         });
     }

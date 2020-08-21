@@ -50,6 +50,7 @@ namespace BugTracker.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Developer");
                     await _signInManager.SignInAsync(user, true);
                     return RedirectToAction("Index", "Home");
                 }

@@ -8,12 +8,14 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#DT_ProjectsLoad').DataTable({
+        "language": {
+            "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+        },
         "ajax": {
             "url": "/Projects/GetProjects",
             "type": "GET",
             "datatype": "json"
         },
-
         "columns": [
             {
                 "data": "id", "render": function (data, type, row) {
@@ -36,9 +38,6 @@ function loadDataTable() {
                 }
             }
         ],
-        "language": {
-            "emptyTable": "@Localizer["Nothing yet"]"
-        },
         "width": "100%"
     });
 }

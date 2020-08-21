@@ -16,6 +16,9 @@
 
 function loadDataTable() {
     dataTable = $('#DT_ResolvedTicketsLoad').DataTable({
+        "language": {
+            "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+        },
         "ajax": {
             "url": "/Ticket/GetAllResolved",
             "type": "GET",
@@ -53,17 +56,16 @@ function loadDataTable() {
                 }
             }
         ],
-                    "createdRow": function ( row, data, index ) {
-        $("td", row).attr("title", data.description);
-    },
-        "language": {
-            "emptyTable": "@Localizer["Nothing yet"]",
-                "loadingRecords" : "Please wait warmly"
+        "createdRow": function ( row, data, index ) {
+                $("td", row).attr("title", data.description);
         },
         "width": "100%"
     });
 
     dataTableAssigned = $('#DT_ResolvedAssignedTicketsLoad').DataTable({
+        "language": {
+            "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+        },
         "ajax": {
             "url": "/Ticket/GetAllResolvedAssigned",
             "type": "GET",
@@ -104,12 +106,8 @@ function loadDataTable() {
                 }
             },
         ],
-                    "createdRow": function ( row, data, index ) {
-        $("td", row).attr("title", data.description);
-    },
-        "language": {
-            "emptyTable": "@Localizer["Nothing yet"]",
-                "loadingRecords" : "Please wait warmly"
+        "createdRow": function ( row, data, index ) {
+            $("td", row).attr("title", data.description);
         },
         "width": "100%"
     });

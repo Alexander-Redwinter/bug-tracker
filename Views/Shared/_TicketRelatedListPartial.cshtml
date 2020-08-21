@@ -20,6 +20,9 @@ function loadDataTable() {
 
 
     dataTableComments = $('#DT_CommentsLoad').DataTable({
+        "language": {
+            "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+        },
         "ajax": {
             "url": "/Ticket/GetComments/@Model.Id",
             "type": "GET",
@@ -47,14 +50,13 @@ function loadDataTable() {
                 }
             }
         ],
-        "language": {
-            "emptyTable": "@Localizer["Nothing yet"]",
-                "loadingRecords" : "Please wait warmly"
-        },
         "width": "100%"
     });
 
-        dataTableAttachments = $('#DT_AttachmentsLoad').DataTable({
+    dataTableAttachments = $('#DT_AttachmentsLoad').DataTable({
+        "language": {
+            "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+        },
         "ajax": {
             "url": "/Ticket/GetAttachments/@Model.Id",
             "type": "GET",
@@ -76,14 +78,13 @@ function loadDataTable() {
                 }
             }
         ],
-        "language": {
-            "emptyTable": "@Localizer["Nothing yet"]",
-                "loadingRecords" : "Please wait warmly"
-        },
         "width": "100%"
     });
 
     dataTableHistories = $('#DT_HistoriesLoad').DataTable({
+        "language": {
+            "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
+        },
         "ajax": {
             "url": "/Ticket/GetHistories/@Model.Id",
             "type": "GET",
@@ -104,10 +105,6 @@ function loadDataTable() {
                 }
             },
         ],
-        "language": {
-            "emptyTable": "@Localizer["No changes since creation"]",
-                "loadingRecords" : "Please wait warmly"
-        },
         "width": "100%"
     });
 }
