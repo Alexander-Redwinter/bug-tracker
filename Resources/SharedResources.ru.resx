@@ -156,6 +156,9 @@
   <data name="Assigned Tickets" xml:space="preserve">
     <value>Назначенные Заявки</value>
   </data>
+  <data name="Assistance Request" xml:space="preserve">
+    <value>Запрос Консультации</value>
+  </data>
   <data name="Attachment" xml:space="preserve">
     <value>Приложение</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="Attachments" xml:space="preserve">
     <value>Приложения</value>
+  </data>
+  <data name="Bug/Error" xml:space="preserve">
+    <value>Баг/Ошибка</value>
   </data>
   <data name="BugTracker" xml:space="preserve">
     <value>Багтракер</value>
@@ -219,6 +225,9 @@
   <data name="Email Is In Use" xml:space="preserve">
     <value>Почта уже используется</value>
   </data>
+  <data name="Feature Request" xml:space="preserve">
+    <value>Расширение Функционала</value>
+  </data>
   <data name="for ticket" xml:space="preserve">
     <value>для заявки</value>
   </data>
@@ -230,6 +239,9 @@
   </data>
   <data name="History" xml:space="preserve">
     <value>История</value>
+  </data>
+  <data name="In Progress" xml:space="preserve">
+    <value>В Процессе</value>
   </data>
   <data name="Locale" xml:space="preserve">
     <value>Локаль</value>
@@ -273,6 +285,9 @@
   <data name="Open Projects" xml:space="preserve">
     <value>Открытые Проекты</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Другое</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
@@ -293,6 +308,9 @@
   </data>
   <data name="Remember me" xml:space="preserve">
     <value>Запомнить</value>
+  </data>
+  <data name="Require Additional Info" xml:space="preserve">
+    <value>Необходима Дополнительная Информация</value>
   </data>
   <data name="Resolve" xml:space="preserve">
     <value>Закрыть</value>
@@ -344,6 +362,9 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Тип</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Неизвестно</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Обновить</value>

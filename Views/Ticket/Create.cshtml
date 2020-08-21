@@ -42,7 +42,8 @@
                     <label class="col-md-3 form-control-label text-nowrap">@Localizer["Priority"]</label>
 
                     <div class="col-md-9">
-                        <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<TicketPriority>()" class="form-control"></select>
+                        <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<TicketPriority>()" class="form-control">
+                        </select>
                         <span asp-validation-for="TicketPriority" class="text-danger"></span>
                     </div>
                 </div>

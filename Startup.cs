@@ -35,7 +35,7 @@ namespace BugTracker
         {
 
             //If on remote server, use provided environmental variable to access the database
-            services.AddNpgsqlDataContext(_environment.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection") 
+            services.AddNpgsqlDataContext(_environment.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection")
                 : Environment.GetEnvironmentVariable("DATABASE_URL"));
 
             services.AddHttpContextAccessor();
@@ -46,13 +46,15 @@ namespace BugTracker
                 config.Filters.Add(new AuthorizeFilter(policy));
 
             }).AddRazorRuntimeCompilation()
-              .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = Configuration.GetSection("Resources").Value)
-              .AddDataAnnotationsLocalization();
+              .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = Configuration.GetSection("Resources").Value);
 
             services.AddMvc().AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            }).AddDataAnnotationsLocalization(o => o.DataAnnotationLocalizerProvider = (type, factory) =>
+            {
+                return factory.Create(typeof(SharedResources));
             });
 
 
