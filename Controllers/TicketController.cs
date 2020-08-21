@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,14 +20,16 @@ namespace BugTracker
 
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IStringLocalizer<SharedResources> _localizer;
 
         [BindProperty]
         public Ticket Ticket { get; set; }
 
-        public TicketController(ApplicationDbContext DbContext, UserManager<ApplicationUser> userManager)
+        public TicketController(ApplicationDbContext DbContext, UserManager<ApplicationUser> userManager, IStringLocalizer<SharedResources> localizer)
         {
             _dbContext = DbContext;
             _userManager = userManager;
+            _localizer = localizer;
         }
         public IActionResult Index()
         {
@@ -646,10 +649,10 @@ namespace BugTracker
 
             }
             List<JsonDto> list = new List<JsonDto>();
-            list.Add(new JsonDto() { title = "Open", value = open.ToString() });
-            list.Add(new JsonDto() { title = "In Progress", value = inprogress.ToString() });
-            list.Add(new JsonDto() { title = "Additional Info Required", value = requireadditionalinfo.ToString() });
-            list.Add(new JsonDto() { title = "Unknown", value = unknown.ToString() });
+            list.Add(new JsonDto() { title = _localizer["Open"], value = open.ToString() });
+            list.Add(new JsonDto() { title = _localizer["In Progress"], value = inprogress.ToString() });
+            list.Add(new JsonDto() { title = _localizer["Require Additional Info"], value = requireadditionalinfo.ToString() });
+            list.Add(new JsonDto() { title = _localizer["Unknown"], value = unknown.ToString() });
             return Json(new { data = list });
         }
         public async Task<IActionResult> GetAllAssignedPriority()
@@ -692,10 +695,10 @@ namespace BugTracker
 
             }
             List<JsonDto> list = new List<JsonDto>();
-            list.Add(new JsonDto() { title = "Low", value = low.ToString() });
-            list.Add(new JsonDto() { title = "Medium", value = medium.ToString() });
-            list.Add(new JsonDto() { title = "High", value = high.ToString() });
-            list.Add(new JsonDto() { title = "None", value = none.ToString() });
+            list.Add(new JsonDto() { title = _localizer["Low"], value = low.ToString() });
+            list.Add(new JsonDto() { title = _localizer["Medium"], value = medium.ToString() });
+            list.Add(new JsonDto() { title = _localizer["High"], value = high.ToString() });
+            list.Add(new JsonDto() { title = _localizer["None"], value = none.ToString() });
             return Json(new { data = list });
         }
         #endregion
