@@ -50,12 +50,6 @@ namespace BugTracker
             }).AddRazorRuntimeCompilation()
               .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = Configuration.GetSection("Resources").Value);
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.AccessDeniedPath = new PathString("/Account/AccessDenied");
-            });
-
-            services.ConfigureNonBreakingSameSiteCookies();
 
             services.AddMvc().AddNewtonsoftJson(o =>
             {
@@ -70,6 +64,13 @@ namespace BugTracker
             {
                 options.ClientId = Configuration.GetSection("ClientId").Value;
                 options.ClientSecret = Configuration.GetSection("ClientSecret").Value;
+            });
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.OnAppendCookie = cookieContext => CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+                options.OnDeleteCookie = cookieContext => CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
             });
 
             var provider = new CookieRequestCultureProvider()
@@ -140,6 +141,17 @@ namespace BugTracker
             });
         }
 
+        private static void CheckSameSite(HttpContext httpContext, CookieOptions options)
+        {
+            if (options.SameSite == SameSiteMode.None)
+            {
+                var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
 
+                if (DisallowsSameSiteNone(userAgent))
+                {
+                    options.SameSite = Unspecified;
+                }
+            }
+        }
     }
 }
