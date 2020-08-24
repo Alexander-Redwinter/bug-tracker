@@ -68,9 +68,11 @@ namespace BugTracker
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-                options.OnAppendCookie = cookieContext => CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
-                options.OnDeleteCookie = cookieContext => CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+                options.OnAppendCookie = cookieContext =>
+                        cookieContext.CookieOptions.SameSite = SameSiteMode.None;
+                options.OnDeleteCookie = cookieContext =>
+                        cookieContext.CookieOptions.SameSite = SameSiteMode.None;
             });
 
             var provider = new CookieRequestCultureProvider()
@@ -141,12 +143,5 @@ namespace BugTracker
             });
         }
 
-        private static void CheckSameSite(HttpContext httpContext, CookieOptions options)
-        {
-            if (options.SameSite == SameSiteMode.None)
-            {
-                var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
-            }
-        }
     }
 }
