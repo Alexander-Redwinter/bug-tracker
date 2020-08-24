@@ -168,8 +168,7 @@ namespace BugTracker.Controllers
                     return LocalRedirect(returnUrl);
                 }
 
-                ViewBag.ErrorMessage = "Email not received from external provider";
-                return View("Error");
+                return Content("Email not received");
             }
         }
 
