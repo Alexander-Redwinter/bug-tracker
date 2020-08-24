@@ -55,6 +55,8 @@ namespace BugTracker
                 options.AccessDeniedPath = new PathString("/Account/AccessDenied");
             });
 
+            services.ConfigureNonBreakingSameSiteCookies();
+
             services.AddMvc().AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -115,6 +117,7 @@ namespace BugTracker
                 app.UseStatusCodePagesWithRedirects("/Error/{0}");
                 app.UseHsts();
             }
+            app.UseCookiePolicy();
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
 
