@@ -146,11 +146,6 @@ namespace BugTracker
             if (options.SameSite == SameSiteMode.None)
             {
                 var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
-
-                if (DisallowsSameSiteNone(userAgent))
-                {
-                    options.SameSite = Unspecified;
-                }
             }
         }
     }
