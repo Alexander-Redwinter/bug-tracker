@@ -106,15 +106,15 @@ namespace BugTracker
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseStatusCodePagesWithRedirects("/Error/{0}");
-            //    app.UseHsts();
-            //}
+            }
+            else
+            {
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
+                app.UseHsts();
+            }
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
 
