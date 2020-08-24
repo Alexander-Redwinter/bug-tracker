@@ -258,6 +258,9 @@
   <data name="Login as Demo" xml:space="preserve">
     <value>Демо Аккаунт</value>
   </data>
+  <data name="Login using Google" xml:space="preserve">
+    <value>Зайти используя Google</value>
+  </data>
   <data name="Low" xml:space="preserve">
     <value>Низкий</value>
   </data>

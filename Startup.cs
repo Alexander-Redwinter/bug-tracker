@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -54,7 +55,6 @@ namespace BugTracker
                 options.AccessDeniedPath = new PathString("/Account/AccessDenied");
             });
 
-
             services.AddMvc().AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -62,6 +62,12 @@ namespace BugTracker
             }).AddDataAnnotationsLocalization(o => o.DataAnnotationLocalizerProvider = (type, factory) =>
             {
                 return factory.Create(typeof(SharedResources));
+            });
+
+            services.AddAuthentication().AddGoogle(options => 
+            {
+                options.ClientId = Configuration.GetSection("ClientId").Value;
+                options.ClientSecret = Configuration.GetSection("ClientSecret").Value;
             });
 
             var provider = new CookieRequestCultureProvider()
