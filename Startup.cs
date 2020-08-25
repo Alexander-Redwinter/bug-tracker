@@ -60,11 +60,12 @@ namespace BugTracker
                 return factory.Create(typeof(SharedResources));
             });
 
-            services.AddAuthentication().AddGoogle(options =>
-            {
-                options.ClientId = Configuration.GetSection("ClientId").Value;
-                options.ClientSecret = Configuration.GetSection("ClientSecret").Value;
-            });
+            //Google Chrome requires SSL for OAuth, and free Heroku dynos are only httpm so OAth impossible to implement for Chrome for now
+            //services.AddAuthentication().AddGoogle(options =>
+            //{
+            //    options.ClientId = Configuration.GetSection("ClientId").Value;
+            //    options.ClientSecret = Configuration.GetSection("ClientSecret").Value;
+            //});
 
             var provider = new CookieRequestCultureProvider()
             {
@@ -90,6 +91,8 @@ namespace BugTracker
                 config.Password.RequireDigit = false;
                 config.Password.RequireUppercase = false;
                 config.Password.RequiredUniqueChars = 2;
+
+
             })
             .AddEntityFrameworkStores<ApplicationDbContext>();
         }
@@ -102,15 +105,15 @@ namespace BugTracker
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseStatusCodePagesWithRedirects("/Error/{0}");
-            //    app.UseHsts();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
+                app.UseHsts();
+            }
             app.UseCookiePolicy();
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);

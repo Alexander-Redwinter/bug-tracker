@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.Localization;
 
 namespace BugTracker.Controllers
@@ -18,9 +20,6 @@ namespace BugTracker.Controllers
         private readonly IStringLocalizer<SharedResources> _localizer;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
-
-
 
         public AccountController(UserManager<ApplicationUser> userManager
             , SignInManager<ApplicationUser> signInManager
@@ -84,6 +83,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
@@ -98,10 +98,14 @@ namespace BugTracker.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 //TODO Add localization
-                ModelState.AddModelError("", "No such combination of name/password found");
+                ModelState.AddModelError("", "Invalid Login");
             }
             return View(model);
         }
+
+
+        #region OAuth
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -138,6 +142,21 @@ namespace BugTracker.Controllers
                 return View("Login", loginViewModel);
             }
 
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            ApplicationUser user = null;
+
+            if (email != null)
+            {
+                user = await _userManager.FindByEmailAsync(email);
+
+                if (user != null && !user.EmailConfirmed)
+                {
+                    ModelState.AddModelError(string.Empty, "Email not confirmed");
+                    return View("Login", loginViewModel);
+                }
+            }
+
+
             var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true, bypassTwoFactor: true);
 
             if (signInResult.Succeeded)
@@ -146,11 +165,8 @@ namespace BugTracker.Controllers
             }
             else
             {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
                 if (email != null)
                 {
-                    var user = await _userManager.FindByEmailAsync(email);
-
                     if (user == null)
                     {
                         user = new ApplicationUser()
@@ -171,7 +187,7 @@ namespace BugTracker.Controllers
                 return Content("Email not received");
             }
         }
-
+        #endregion
         public async Task<IActionResult> LoginAsDemo()
         {
             if (_signInManager.IsSignedIn(User))
