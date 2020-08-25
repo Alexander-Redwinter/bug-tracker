@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
+//https://www.thinktecture.com/en/identity/samesite/prepare-your-identityserver/
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SameSiteCookiesServiceCollectionExtensions

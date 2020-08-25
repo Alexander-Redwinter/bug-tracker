@@ -35,11 +35,11 @@
                     <a asp-action="LoginAsDemo" class="btn btn-info">@Localizer["Login as Demo"]</a>
                 </div>
             </form>
-            <div class="d-flex justify-content-center">
+            @*<div class="d-flex justify-content-center">
                 <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
                     <button type="submit" class="btn btn-secondary" name="provider" value="Google" title="@Localizer["Login using Google"]"><i class="fab fa-google"></i></button>
                 </form>
-            </div>
+            </div>*@
         </div>
         <div class="card-footer ">
             <div class="d-flex justify-content-center">
