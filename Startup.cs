@@ -39,7 +39,7 @@ namespace BugTracker
             //If on remote server, use provided environmental variable to access the database
             services.AddNpgsqlDataContext(_environment.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection")
                 : Environment.GetEnvironmentVariable("DATABASE_URL"));
-
+            services.ConfigureNonBreakingSameSiteCookies();
             services.AddHttpContextAccessor();
             services.AddLocalization(options => options.ResourcesPath = Configuration.GetSection("Resources").Value);
             services.AddControllersWithViews(config =>
@@ -111,6 +111,7 @@ namespace BugTracker
             //    app.UseStatusCodePagesWithRedirects("/Error/{0}");
             //    app.UseHsts();
             //}
+            app.UseCookiePolicy();
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
 
