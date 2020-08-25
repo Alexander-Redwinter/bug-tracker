@@ -60,7 +60,7 @@ namespace BugTracker
                 return factory.Create(typeof(SharedResources));
             });
 
-            services.AddAuthentication().AddGoogle(options => 
+            services.AddAuthentication().AddGoogle(options =>
             {
                 options.ClientId = Configuration.GetSection("ClientId").Value;
                 options.ClientSecret = Configuration.GetSection("ClientSecret").Value;
@@ -71,8 +71,12 @@ namespace BugTracker
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
                 options.OnAppendCookie = cookieContext =>
                         cookieContext.CookieOptions.SameSite = SameSiteMode.None;
+                options.OnAppendCookie = cookieContext =>
+                        cookieContext.CookieOptions.Secure = true;
                 options.OnDeleteCookie = cookieContext =>
                         cookieContext.CookieOptions.SameSite = SameSiteMode.None;
+                options.OnDeleteCookie = cookieContext =>
+                        cookieContext.CookieOptions.Secure = true;
             });
 
             var provider = new CookieRequestCultureProvider()
@@ -113,7 +117,7 @@ namespace BugTracker
         {
             //if (env.IsDevelopment())
             //{
-                app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
             //}
             //else
             //{
