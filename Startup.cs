@@ -71,12 +71,8 @@ namespace BugTracker
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
                 options.OnAppendCookie = cookieContext =>
                         cookieContext.CookieOptions.SameSite = SameSiteMode.None;
-                options.OnAppendCookie = cookieContext =>
-                        cookieContext.CookieOptions.Secure = true;
                 options.OnDeleteCookie = cookieContext =>
                         cookieContext.CookieOptions.SameSite = SameSiteMode.None;
-                options.OnDeleteCookie = cookieContext =>
-                        cookieContext.CookieOptions.Secure = true;
             });
 
             var provider = new CookieRequestCultureProvider()
