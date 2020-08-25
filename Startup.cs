@@ -66,15 +66,6 @@ namespace BugTracker
                 options.ClientSecret = Configuration.GetSection("ClientSecret").Value;
             });
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
-                options.OnAppendCookie = cookieContext =>
-                        cookieContext.CookieOptions.SameSite = SameSiteMode.None;
-                options.OnDeleteCookie = cookieContext =>
-                        cookieContext.CookieOptions.SameSite = SameSiteMode.None;
-            });
-
             var provider = new CookieRequestCultureProvider()
             {
                 CookieName = "BugTracker.PrefferedCulture"
@@ -120,7 +111,6 @@ namespace BugTracker
             //    app.UseStatusCodePagesWithRedirects("/Error/{0}");
             //    app.UseHsts();
             //}
-            app.UseCookiePolicy();
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
 
