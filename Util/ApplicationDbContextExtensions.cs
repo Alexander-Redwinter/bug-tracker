@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace BugTracker
 {
+    /// <summary>
+    /// Extensions for <see cref="ApplicationDbContext"/>. Purpose is to have complex DB access logic in one place
+    /// </summary>
     public static class ApplicationDbContextExtensions
     {
         public static async Task<List<Project>> GetProjectsVisibleForUserAsync(this ApplicationDbContext context, ApplicationUser user, UserManager<ApplicationUser> userManager, bool closed = false)

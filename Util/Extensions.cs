@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BugTracker.Util
+namespace BugTracker
 {
     public static class Extensions
     {
