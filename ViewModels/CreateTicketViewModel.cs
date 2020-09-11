@@ -1,12 +1,8 @@
 ﻿using BugTracker.Enums;
-using BugTracker.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BugTracker.ViewModels
+namespace BugTracker
 {
     public class CreateTicketViewModel
     {
@@ -26,6 +22,8 @@ namespace BugTracker.ViewModels
         public int ProjectId { get; set; }
 
         public byte[] Image { get; set; }
+
+        public bool returnToProject { get; set; } = false;
 
     }
 }

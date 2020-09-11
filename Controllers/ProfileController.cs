@@ -1,9 +1,8 @@
-﻿using BugTracker.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace BugTracker.Controllers
+namespace BugTracker
 {
     public class ProfileController : Controller
     {

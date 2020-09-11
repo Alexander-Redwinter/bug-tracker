@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace BugTracker.Controllers
+namespace BugTracker
 {
     public class SecretController : Controller
     {

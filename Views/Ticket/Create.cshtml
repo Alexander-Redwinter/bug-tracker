@@ -10,9 +10,7 @@
             <form method="post" asp-action="Create" enctype="multipart/form-data" >
                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
-
-
-
+                <input asp-for="returnToProject" type="hidden" />
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label text-nowrap">@Localizer["Project"]</label>
                     <div class="col-md-9">

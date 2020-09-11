@@ -1,0 +1,71 @@
+﻿@* Partial view to enable chart.js graphs *@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+
+        $.getJSON('/Ticket/GetAllAssignedStatus', function (jsonarray) {
+            var labels = jsonarray.data.map(function (e) {
+                return e.key;
+            });
+            var data = jsonarray.data.map(function (e) {
+                return e.value;
+            });;
+            var chartStatus = document.getElementById('ChartStatus').getContext('2d');
+            var chartStatus = new Chart(chartStatus, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: labels,
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                        ]
+                    }]
+                }
+            });
+        }
+        )
+
+        $.getJSON('/Ticket/GetAllAssignedPriority', function (jsonarray) {
+            var labels = jsonarray.data.map(function (e) {
+                return e.key;
+            });
+            var data = jsonarray.data.map(function (e) {
+                return e.value;
+            });;
+            var chartPriority = document.getElementById('ChartPriority').getContext('2d');
+            var chartPriority = new Chart(chartPriority, {
+                type: 'bar',
+                options: {
+                    legend: false,
+                        scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                },
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: " ",
+                        data: data,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(75, 192, 192, 1)',
+                        ]
+                    }]
+                }
+            });
+        }
+        )
+
+
+
+</script>

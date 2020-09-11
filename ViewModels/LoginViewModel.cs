@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BugTracker.ViewModels
+namespace BugTracker
 {
     public class LoginViewModel
     {

@@ -1,6 +1,4 @@
-﻿using BugTracker.Models;
-using BugTracker.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -8,7 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace BugTracker.Controllers
+namespace BugTracker
 {
     [AllowAnonymous]
     public class AccountController : Controller

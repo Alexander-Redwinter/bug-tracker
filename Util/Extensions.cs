@@ -7,7 +7,7 @@ namespace BugTracker.Util
     public static class Extensions
     {
         #region IDictionary Extensions
-        //from https://dejanstojanovic.net/aspnet/2018/november/tracking-data-changes-with-entity-framework-core/ . Thanks!
+        //from https://dejanstojanovic.net/aspnet/2018/november/tracking-data-changes-with-entity-framework-core/
         public static IDictionary<TKey, TValue> NullIfEmpty<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null || !dictionary.Any())

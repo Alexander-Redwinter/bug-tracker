@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BugTracker.Models
+﻿namespace BugTracker
 {
+    /// <summary>
+    /// Class for simple JSON operations
+    /// </summary>
     public class JsonDto
     {
-        public string title;
+        public string key;
         public string value;
     }
 }

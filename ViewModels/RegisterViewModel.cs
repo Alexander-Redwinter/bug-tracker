@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace BugTracker.ViewModels
+namespace BugTracker
 {
     public class RegisterViewModel
     {

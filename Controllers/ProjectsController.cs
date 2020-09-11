@@ -1,17 +1,14 @@
-﻿using System;
+﻿using BugTracker.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BugTracker.Models;
-using Microsoft.AspNetCore.Identity;
-using BugTracker.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using BugTracker.Enums;
 
-namespace BugTracker.Controllers
+namespace BugTracker
 {
 
     public class ProjectsController : Controller
@@ -333,86 +330,37 @@ namespace BugTracker.Controllers
 
         }
 
+        
+
         public async Task<IActionResult> GetProjects()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var allProjects = _DbContext.Projects.Where(p => p.IsOpen).Include(p => p.ProjectApplicationUsers).ToList();
 
+            var sortedProjects = await _DbContext.GetProjectsVisibleForUserAsync(user, _userManager);
 
-            //Admin and PM can see all projects
-            if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Project Manager"))
-            {
-                //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
-                foreach (Project p in allProjects)
-                {
-                    p.ProjectApplicationUsers.Clear();
-                }
-                return Json(new { data = allProjects });
-            }
-            //Everyone else sees only projects they are assigned to
-            //there's gotta be a better way to sort
-            List<Project> sortedProjects = new List<Project>();
-            foreach (Project p in allProjects)
-            {
-                foreach (ProjectApplicationUser pau in p.ProjectApplicationUsers)
-                {
-                    if (pau.ApplicationUserId == user.Id)
-                    {
-                        sortedProjects.Add(p);
-                    }
-                }
-
-            }
-            //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
-            foreach (Project p in allProjects)
+            //"Unloading" related user data for simplier JSON
+            foreach (Project p in sortedProjects)
             {
                 p.ProjectApplicationUsers.Clear();
             }
+
             return Json(new { data = sortedProjects });
         }
 
         public async Task<IActionResult> GetClosedProjects()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var allProjects = _DbContext.Projects.Where(p => !p.IsOpen).Include(p => p.ProjectApplicationUsers).ToList();
 
-            //Admin and PM can see all projects
-            if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Project Manager"))
-            {
-                //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
-                foreach (Project p in allProjects)
-                {
-                    p.ProjectApplicationUsers.Clear();
-                }
-                return Json(new { data = allProjects });
-            }
-            //Everyone else sees only projects they are assigned to
-            else
-            {
-                //there's gotta be a better way to sort
-                List<Project> sortedProjects = new List<Project>();
-                foreach (Project p in allProjects)
-                {
-                    foreach (ProjectApplicationUser pau in p.ProjectApplicationUsers)
-                    {
-                        if (pau.ApplicationUserId == user.Id)
-                        {
-                            sortedProjects.Add(p);
-                        }
-                    }
+            var sortedProjects = await _DbContext.GetProjectsVisibleForUserAsync(user, _userManager, true);
 
-                }
-                //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
-                foreach (Project p in sortedProjects)
-                {
-                    p.ProjectApplicationUsers.Clear();
-                }
-                return Json(new { data = sortedProjects });
+            //"Unloading" related user data for simplier JSON
+            foreach (Project p in sortedProjects)
+            {
+                p.ProjectApplicationUsers.Clear();
             }
+
+            return Json(new { data = sortedProjects });
+        }
         }
 
     }
-
-
-
-}
