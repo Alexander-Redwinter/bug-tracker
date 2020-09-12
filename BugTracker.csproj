@@ -38,5 +38,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\dino\" />
+  </ItemGroup>
+
 
 </Project>

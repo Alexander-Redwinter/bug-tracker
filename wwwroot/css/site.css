@@ -950,3 +950,46 @@ h6,
     background-image: url("/img/fairy/boom.png");
     background-size: cover;
 }
+
+.dino {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url("/img/dino/dino.png");
+    left: 120px;
+    bottom: 5px;
+    z-index:1;
+}
+
+.dino.running {
+    background-image: url("/img/dino/dino.gif");
+}
+
+.dino-dead {
+    background-image: url("/img/dino/dino-dead.png");
+}
+
+.dino-shadow {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url("/img/dino/shadow.png");
+    left: 120px;
+    bottom: 5px;
+}
+
+.obstacle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url("/img/dino/obstacle.png");
+    bottom: 5px;
+}
+
+.start-button{
+    position:absolute;
+    font-size:3rem;
+    left:45%;
+    bottom:50%;
+}
+

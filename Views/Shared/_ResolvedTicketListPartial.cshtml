@@ -16,6 +16,10 @@
 
 function loadDataTable() {
     dataTable = $('#DT_ResolvedTicketsLoad').DataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+            "<'row'<'col-sm-12'i>>" +
+            "<'row'<'col-sm-12'p>>" +
+            "<'row'<'col-sm-12'tr>>",
         "language": {
             "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
         },
@@ -63,6 +67,10 @@ function loadDataTable() {
     });
 
     dataTableAssigned = $('#DT_ResolvedAssignedTicketsLoad').DataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+            "<'row'<'col-sm-12'i>>" +
+            "<'row'<'col-sm-12'p>>" +
+            "<'row'<'col-sm-12'tr>>",
         "language": {
             "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
         },

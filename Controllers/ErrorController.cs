@@ -9,15 +9,10 @@ namespace BugTracker
         {
             if (statusCode == 404)
             {
-                return RedirectToAction("Error404");
+                return View("Error404");
             }
             ViewBag.StatusCode = statusCode;
             return View("Error");
-        }
-
-        public IActionResult Error404()
-        {
-            return View();
         }
 
 

@@ -330,6 +330,9 @@
   <data name="Resolved Tickets" xml:space="preserve">
     <value>Закрытые Заявки</value>
   </data>
+  <data name="Resource Not Found" xml:space="preserve">
+    <value>Ресурс не найден</value>
+  </data>
   <data name="Roles" xml:space="preserve">
     <value>Роли</value>
   </data>
