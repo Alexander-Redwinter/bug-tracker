@@ -67,7 +67,8 @@ namespace BugTracker
                 var supportedCultures = new[]
                 {
                 new CultureInfo("en"),
-                new CultureInfo("ru")
+                new CultureInfo("ru"),
+                new CultureInfo("ja")
                 };
                 options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
                 options.SupportedCultures = supportedCultures;
