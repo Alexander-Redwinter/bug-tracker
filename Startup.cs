@@ -1,6 +1,9 @@
+using JavaScriptEngineSwitcher.ChakraCore;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -10,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using React.AspNet;
 using System;
 using System.Globalization;
 
@@ -92,6 +96,11 @@ namespace BugTracker
 
             })
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddReact();
+
+            services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName).AddChakraCore();
         }
 
 
@@ -100,6 +109,7 @@ namespace BugTracker
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
+        /// /////
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -125,6 +135,8 @@ namespace BugTracker
 
             //are you allowed
             app.UseAuthorization();
+
+            app.UseReact(config => { });
 
             app.UseEndpoints(endpoints =>
             {
