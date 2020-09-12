@@ -57,6 +57,7 @@ function loadDataTable() {
         "language": {
             "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
         },
+        "order": [[1, "desc"]],
         "ajax": {
             "url": "/Ticket/GetAttachments/@Model.Id",
             "type": "GET",

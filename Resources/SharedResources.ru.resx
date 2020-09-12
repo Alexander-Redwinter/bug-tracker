@@ -216,6 +216,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
+  <data name="Delete Forever" xml:space="preserve">
+    <value>Удалить Навсегда</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>

@@ -15,6 +15,10 @@
 
 function loadDataTable() {
     dataTable = $('#DT_TicketsLoad').DataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+            "<'row'<'col-sm-12'i>>" +
+            "<'row'<'col-sm-12'p>>" +
+            "<'row'<'col-sm-12'tr>>",
         "language": {
             "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
         },
@@ -23,6 +27,7 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
+        "order": [[3, "desc"], [2, "desc"]],
         "columns": [
             {
                 "data": "id", "render": function (data, type, row) {
@@ -36,6 +41,24 @@ function loadDataTable() {
                     var date = moment(data).calendar();
                     return date;
                 }
+            },
+            {
+                "data": "ticketPriority", "render": function (data, type, full, meta) {
+                    if (type == 'display')
+                    {
+                        if (data === 3) {
+                            return `<span class='priority high'>@Localizer["High"]</span>`;
+                        }
+                        if (data === 2) {
+                            return `<span class='priority medium'>@Localizer["Medium"]</span>`;
+                        }
+                        if (data === 1) {
+                            return `<span class='priority low'>@Localizer["Low"]</span>`;
+                        }
+                            return `<span class='priority none'>@Localizer["None"]</span>`;
+                    }
+                        return data;
+                    }
             },
             {
                 "data": "id",

@@ -17,6 +17,11 @@ table {
     margin-top: 10px;
 }
 
+.sorting_asc{
+    background-color:lightskyblue;
+}
+
+
 .paginate_button {
     font-weight: 400;
     border: 1px solid transparent;

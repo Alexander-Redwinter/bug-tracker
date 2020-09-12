@@ -1,7 +1,7 @@
 ﻿<script>
 function Delete(url) {
     Swal.fire({
-        title: '@Localizer["Confirm Action"]',
+        title: url.includes('Resolve') ? '@Localizer["Resolve"]?' : '@Localizer["Delete"]?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
