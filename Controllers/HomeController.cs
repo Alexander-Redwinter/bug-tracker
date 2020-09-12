@@ -34,5 +34,15 @@ namespace BugTracker
             else
                 return RedirectToAction("Index", "Profile");
         }
+
+        [AllowAnonymous]
+        public void SetLanguageSlider(string culture)
+        {
+            Response.Cookies.Append(
+                 "BugTracker.PrefferedCulture",
+                  CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                  new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+
+        }
     }
 }

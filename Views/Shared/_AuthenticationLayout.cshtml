@@ -15,12 +15,19 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <partial name="_LanguageSliderPartial" />
     <link rel="icon" href="~/img/icon.png" type="image/x-icon">
 </head>
 <body style="background-color:darkslategray">
-    <div class="container">
-        @RenderBody()
-    </div>
+        <div class="language-changer">
+            <label class="switch">
+                <input class="slider" type="checkbox" checked="@(Localizer["BugTracker"] == "BugTracker" ? true : false)" onchange="select_language(this.checked ? 'en' : 'ru')">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="container">
+            @RenderBody()
+        </div>
 </body>
 </html>
 

@@ -10,6 +10,7 @@
     let time = 0;
     let timerInterval;
     let arr = [];
+    let timeout;
 
     function control(e) {
         if (e.keyCode === 32) {
@@ -42,7 +43,9 @@
 
     function generateObstacles() {
         if (!isGameOver) {
-        let randomTime = 600 - obstacleSpeed + Math.random() * 1750
+            let randomTime = 600 - obstacleSpeed + Math.random() * 1750
+            timeout = setTimeout(generateObstacles, randomTime)
+
         let obstaclePosition = window.screen.width - 65;
         let obstacle = document.createElement('div')
          obstacle.classList.add('obstacle')
@@ -59,6 +62,7 @@
                 canJump = false;
                 isGameOver = true
                 clearInterval(timerInterval);
+                clearTimeout(timeout);
                 dino.classList.remove("running");
                 dino.classList.add("dino-dead");
                 startButton.style.display = "block";
@@ -72,8 +76,6 @@
             }
         }, 20);
         arr.push(timerId);
-
-            if (!isGameOver) setTimeout(generateObstacles, randomTime)
         }
     }
 

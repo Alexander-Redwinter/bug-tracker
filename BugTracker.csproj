@@ -33,13 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\SharedResources.ru.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
+    <Folder Include="wwwroot\img\dino\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\img\dino\" />
+    <EmbeddedResource Update="Resources\SharedResources.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 
