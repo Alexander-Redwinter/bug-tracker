@@ -57,12 +57,6 @@ namespace BugTracker
                 return factory.Create(typeof(SharedResources));
             });
 
-            //Google Chrome requires SSL for OAuth, and free Heroku dynos are only httpm so OAth impossible to implement for Chrome for now
-            //services.AddAuthentication().AddGoogle(options =>
-            //{
-            //    options.ClientId = Configuration.GetSection("ClientId").Value;
-            //    options.ClientSecret = Configuration.GetSection("ClientSecret").Value;
-            //});
 
             var provider = new CookieRequestCultureProvider()
             {
