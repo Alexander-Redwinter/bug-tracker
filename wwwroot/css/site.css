@@ -6,7 +6,65 @@ td, td * {
     font-size: medium;
 }
 
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
+.dataTables_paginate {
+    margin-top: 10px;
+}
+
+.paginate_button {
+    font-weight: 400;
+    border: 1px solid transparent;
+    cursor: pointer;
+    padding: 0.4rem;
+    font-size: medium;
+    line-height: 1;
+    width: auto;
+    margin: 3px;
+    border-radius: 2rem;
+    -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    color: #fff;
+    background-color: #32b67a;
+    border-color: #32b67a;
+}
+
+    .paginate_button:hover {
+        color: #fff;
+        background-color: #2a9866;
+        border-color: #278e5f;
+    }
+
+    .paginate_button:focus, .paginate_button.focus {
+        -webkit-box-shadow: 0 0 0 0.2rem rgba(50, 182, 122, 0.5);
+        box-shadow: 0 0 0 0.2rem rgba(50, 182, 122, 0.5);
+    }
+
+    .paginate_button:not(:disabled):not(.disabled):active, .paginate_button:not(:disabled):not(.disabled).active,
+    .show > .paginate_button.dropdown-toggle {
+        color: #fff;
+        background-color: #278e5f;
+        border-color: #248458;
+    }
+
+        .paginate_button:not(:disabled):not(.disabled):active:focus, .paginate_button:not(:disabled):not(.disabled).active:focus,
+        .show > .paginate_button.dropdown-toggle:focus {
+            -webkit-box-shadow: 0 0 0 0.2rem rgba(50, 182, 122, 0.5);
+            box-shadow: 0 0 0 0.2rem rgba(50, 182, 122, 0.5);
+        }
+
+    .paginate_button.current {
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+    }
 
 .even {
     background-color: aqua
@@ -20,9 +78,29 @@ td, td * {
     margin: 3px
 }
 
-.paginate_button {
-    margin: 3px
+.dataTables_empty{
+   color:lightgrey;
 }
+
+.priority {
+    border-radius: 3px;
+    padding:1px;
+}
+
+.priority.high {
+    color: #fff;
+    background-color: crimson;
+}
+
+    .priority.medium {
+        color: #fff;
+        background-color: coral;
+    }
+
+    .priority.low {
+        color: #fff;
+        background-color: dodgerblue;
+    }
 
 a {
     font-family: 'Roboto', sans-serif;
@@ -587,10 +665,10 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
-    background-image:url(/img/background_washed.png);
-    background-size:cover;
-    background-attachment:fixed;
-    background-repeat:no-repeat;
+    background-image: url(/img/background_washed.png);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     height: 100%;
 }
 

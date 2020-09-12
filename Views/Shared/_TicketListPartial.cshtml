@@ -16,6 +16,10 @@
 
 function loadDataTable() {
     dataTable = $('#DT_TicketsLoad').DataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+            "<'row'<'col-sm-12'i>>" +
+            "<'row'<'col-sm-12'p>>" +
+            "<'row'<'col-sm-12'tr>>",
             "language": {
                 "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
             },
@@ -43,19 +47,20 @@ function loadDataTable() {
             },
             {
                 "data": "ticketPriority", "render": function (data, type, full, meta) {
-                    if (type == 'display') {
-                                        if (data === 3) {
-                    return "@Localizer["High"]";
-                }
-                if (data === 2) {
-                    return "@Localizer["Medium"]";
-                }
-                                if (data === 1) {
-                    return "@Localizer["Low"]";
-                }
-                    return "@Localizer["None"]";
+                    if (type == 'display')
+                    {
+                        if (data === 3) {
+                            return `<span class='priority high'>@Localizer["High"]</span>`;
+                        }
+                        if (data === 2) {
+                            return `<span class='priority medium'>@Localizer["Medium"]</span>`;
+                        }
+                        if (data === 1) {
+                            return `<span class='priority low'>@Localizer["Low"]</span>`;
+                        }
+                            return `<span class='priority none'>@Localizer["None"]</span>`;
                     }
-                    return data;
+                        return data;
                     }
             },
             { "data": "project.name", "visible": true },
@@ -76,6 +81,10 @@ function loadDataTable() {
     });
 
     dataTableAssigned = $('#DT_AssignedTicketsLoad').DataTable({
+        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+            "<'row'<'col-sm-12'i>>" +
+            "<'row'<'col-sm-12'p>>" +
+            "<'row'<'col-sm-12'tr>>",
         "language": {
             "url": "@Localizer["//cdn.datatables.net/plug-ins/1.10.18/i18n/English.json"]"
         },
@@ -106,15 +115,15 @@ function loadDataTable() {
                     if (type == 'display')
                     {
                         if (data === 3) {
-                            return "@Localizer["High"]";
+                            return `<span class='priority high'>@Localizer["High"]</span>`;
                         }
                         if (data === 2) {
-                            return "@Localizer["Medium"]";
+                            return `<span class='priority medium'>@Localizer["Medium"]</span>`;
                         }
                         if (data === 1) {
-                            return "@Localizer["Low"]";
+                            return `<span class='priority low'>@Localizer["Low"]</span>`;
                         }
-                        return "@Localizer["None"]";
+                            return `<span class='priority none'>@Localizer["None"]</span>`;
                     }
                         return data;
                     }
