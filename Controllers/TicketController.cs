@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -361,7 +362,7 @@ namespace BugTracker
             return View(ticket);
         }
 
-        
+
 
         #region APICalls
         [HttpGet]
@@ -582,155 +583,233 @@ namespace BugTracker
         {
 
             var model = dbContext.TicketHistories.Where(t => t.KeyValue == "{\"Id\":" + id.ToString() + "}").ToList();
-            List<TicketHistoryDto> list = new List<TicketHistoryDto>();
+
+            var list = new List<JsonHistoriesDto>();
 
             foreach (var m in model)
             {
                 //FIXME histories still look ugly
-                var jdp = new JsonDiffPatch();
-                string rawString = jdp.Diff(m.OldValue, m.NewValue);
-                m.OldValue = rawString;
-            }
-            return Json(new { data = model });
-        }
+                string rawString = new JsonDiffPatch().Diff(m.OldValue, m.NewValue);
+                TicketHistoriesJSON jsonObject = JsonConvert.DeserializeObject<TicketHistoriesJSON>(rawString);
 
-
-
-        public async Task<IActionResult> GetMadeByCurrentUser()
-        {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var tickets = dbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.ApplicationUser).ToList();
-            List<Ticket> sorted = new List<Ticket>();
-
-            //there's gotta be a better way to sort
-            List<Project> sortedProjects = new List<Project>();
-            foreach (Ticket t in tickets)
-            {
-
-                if (t.ApplicationUser.Id == user.Id)
+                if (jsonObject.Title != null)
                 {
-                    sorted.Add(t);
+                    list.Add(new JsonHistoriesDto()
+                    {
+                        Title = "Title",
+                        OldValue = jsonObject.Title[0],
+                        NewValue = jsonObject.Title[1],
+                        When = m.When
+                    });
                 }
 
-            }
-            return Json(new { data = sortedProjects });
-        }
-
-        public async Task<IActionResult> GetAssignedToCurrentUser()
-        {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var tickets = dbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.TicketApplicationUsers).ToList();
-
-
-            //there's gotta be a better way to sort
-            List<Ticket> sorted = new List<Ticket>();
-            foreach (Ticket t in tickets)
-            {
-                foreach (TicketApplicationUser tap in t.TicketApplicationUsers)
+                if (jsonObject.Description != null)
                 {
-                    if (tap.ApplicationUserId == user.Id)
+                    list.Add(new JsonHistoriesDto()
+                    {
+                        Title = "Description",
+                        OldValue = jsonObject.Description[0],
+                        NewValue = jsonObject.Description[1],
+                        When = m.When
+
+                    }); ;
+                }
+                if (jsonObject.Created != null)
+                {
+                    list.Add(new JsonHistoriesDto()
+                    {
+                        Title = "Created",
+                        OldValue = jsonObject.Created[0],
+                        NewValue = jsonObject.Created[1],
+                        When = m.When
+
+                    }); ;
+                }
+                if (jsonObject.LastResolveDate != null)
+                {
+                    list.Add(new JsonHistoriesDto()
+                    {
+                        Title = "LastResolveDate",
+                        OldValue = jsonObject.LastResolveDate[0],
+                        NewValue = jsonObject.LastResolveDate[1],
+                        When = m.When
+
+                    }); ;
+                }
+                if (jsonObject.TicketPriority != null)
+                {
+                    list.Add(new JsonHistoriesDto()
+                    {
+                        Title = "TicketPriority",
+                        OldValue = ((TicketPriority)jsonObject.TicketPriority[0]).ToString(),
+                        NewValue = ((TicketPriority)jsonObject.TicketPriority[1]).ToString(),
+                        When = m.When
+
+                    }); ;
+                }
+                if (jsonObject.TicketStatus != null)
+                {
+                    list.Add(new JsonHistoriesDto()
+                    {
+                        Title = "TicketStatus",
+                        OldValue = ((TicketStatus)jsonObject.TicketStatus[0]).ToString(),
+                        NewValue = ((TicketStatus)jsonObject.TicketStatus[1]).ToString(),
+                        When = m.When
+
+                    }); ;
+                }
+                if (jsonObject.TicketType != null)
+                {
+                    list.Add(new JsonHistoriesDto()
+                    {
+                        Title = "TicketType",
+                        OldValue = ((TicketType)jsonObject.TicketType[0]).ToString(),
+                        NewValue = ((TicketType)jsonObject.TicketType[1]).ToString(),
+                        When = m.When
+
+                    }); ;
+                }
+            }
+                return Json(new { data = list });
+            }
+
+
+
+            public async Task<IActionResult> GetMadeByCurrentUser()
+            {
+                var user = await userManager.GetUserAsync(HttpContext.User);
+                var tickets = dbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.ApplicationUser).ToList();
+                List<Ticket> sorted = new List<Ticket>();
+
+                //there's gotta be a better way to sort
+                List<Project> sortedProjects = new List<Project>();
+                foreach (Ticket t in tickets)
+                {
+
+                    if (t.ApplicationUser.Id == user.Id)
                     {
                         sorted.Add(t);
                     }
+
                 }
+                return Json(new { data = sortedProjects });
             }
-            return Json(new { data = sorted });
-        }
 
-        public async Task<IActionResult> GetAllAssignedStatus()
-        {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var tickets = await dbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
-
-            List<Ticket> sortedList = new List<Ticket>();
-            foreach (Ticket t in tickets)
+            public async Task<IActionResult> GetAssignedToCurrentUser()
             {
-                foreach (TicketApplicationUser pau in t.TicketApplicationUsers)
+                var user = await userManager.GetUserAsync(HttpContext.User);
+                var tickets = dbContext.Tickets.Where(p => p.TicketStatus != TicketStatus.Resolved).Include(p => p.TicketApplicationUsers).ToList();
+
+
+                //there's gotta be a better way to sort
+                List<Ticket> sorted = new List<Ticket>();
+                foreach (Ticket t in tickets)
                 {
-                    if (pau.ApplicationUserId == user.Id)
+                    foreach (TicketApplicationUser tap in t.TicketApplicationUsers)
                     {
-                        sortedList.Add(t);
+                        if (tap.ApplicationUserId == user.Id)
+                        {
+                            sorted.Add(t);
+                        }
                     }
                 }
+                return Json(new { data = sorted });
             }
-            int open = 0;
-            int inprogress = 0;
-            int requireadditionalinfo = 0;
-            int unknown = 0;
-            //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
-            foreach (Ticket t in sortedList)
-            {
-                switch (t.TicketStatus)
-                {
-                    case TicketStatus.Open:
-                        open++;
-                        break;
-                    case TicketStatus.InProgress:
-                        inprogress++;
-                        break;
-                    case TicketStatus.RequireAdditionalInfo:
-                        requireadditionalinfo++;
-                        break;
-                    case TicketStatus.Unknown:
-                        unknown++;
-                        break;
-                }
 
-            }
-            List<JsonDto> list = new List<JsonDto>();
-            list.Add(new JsonDto() { key = localizer["Open"], value = open.ToString() });
-            list.Add(new JsonDto() { key = localizer["In Progress"], value = inprogress.ToString() });
-            list.Add(new JsonDto() { key = localizer["Require Additional Info"], value = requireadditionalinfo.ToString() });
-            list.Add(new JsonDto() { key = localizer["Unknown"], value = unknown.ToString() });
-            return Json(new { data = list });
-        }
-        public async Task<IActionResult> GetAllAssignedPriority()
-        {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var tickets = await dbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
-
-            List<Ticket> sortedList = new List<Ticket>();
-            foreach (Ticket t in tickets)
+            public async Task<IActionResult> GetAllAssignedStatus()
             {
-                foreach (TicketApplicationUser pau in t.TicketApplicationUsers)
+                var user = await userManager.GetUserAsync(HttpContext.User);
+                var tickets = await dbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
+
+                List<Ticket> sortedList = new List<Ticket>();
+                foreach (Ticket t in tickets)
                 {
-                    if (pau.ApplicationUserId == user.Id)
+                    foreach (TicketApplicationUser pau in t.TicketApplicationUsers)
                     {
-                        sortedList.Add(t);
+                        if (pau.ApplicationUserId == user.Id)
+                        {
+                            sortedList.Add(t);
+                        }
                     }
                 }
-            }
-            int low = 0;
-            int medium = 0;
-            int high = 0;
-            int none = 0;
-            foreach (Ticket t in sortedList)
-            {
-                switch (t.TicketPriority)
+                int open = 0;
+                int inprogress = 0;
+                int requireadditionalinfo = 0;
+                int unknown = 0;
+                //"Unloading" related data because EF insists on bringing it and it makes JSON too complex
+                foreach (Ticket t in sortedList)
                 {
-                    case TicketPriority.Low:
-                        low++;
-                        break;
-                    case TicketPriority.Medium:
-                        medium++;
-                        break;
-                    case TicketPriority.High:
-                        high++;
-                        break;
-                    case TicketPriority.None:
-                        none++;
-                        break;
+                    switch (t.TicketStatus)
+                    {
+                        case TicketStatus.Open:
+                            open++;
+                            break;
+                        case TicketStatus.InProgress:
+                            inprogress++;
+                            break;
+                        case TicketStatus.RequireAdditionalInfo:
+                            requireadditionalinfo++;
+                            break;
+                        case TicketStatus.Unknown:
+                            unknown++;
+                            break;
+                    }
+
                 }
-
+                List<JsonDto> list = new List<JsonDto>();
+                list.Add(new JsonDto() { key = localizer["Open"], value = open.ToString() });
+                list.Add(new JsonDto() { key = localizer["In Progress"], value = inprogress.ToString() });
+                list.Add(new JsonDto() { key = localizer["Require Additional Info"], value = requireadditionalinfo.ToString() });
+                list.Add(new JsonDto() { key = localizer["Unknown"], value = unknown.ToString() });
+                return Json(new { data = list });
             }
-            List<JsonDto> list = new List<JsonDto>();
-            list.Add(new JsonDto() { key = localizer["Low"], value = low.ToString() });
-            list.Add(new JsonDto() { key = localizer["Medium"], value = medium.ToString() });
-            list.Add(new JsonDto() { key = localizer["High"], value = high.ToString() });
-            list.Add(new JsonDto() { key = localizer["None"], value = none.ToString() });
-            return Json(new { data = list });
-        }
-        #endregion
+            public async Task<IActionResult> GetAllAssignedPriority()
+            {
+                var user = await userManager.GetUserAsync(HttpContext.User);
+                var tickets = await dbContext.Tickets.Where(t => t.TicketStatus != TicketStatus.Resolved).Include(t => t.TicketApplicationUsers).ToListAsync();
 
+                List<Ticket> sortedList = new List<Ticket>();
+                foreach (Ticket t in tickets)
+                {
+                    foreach (TicketApplicationUser pau in t.TicketApplicationUsers)
+                    {
+                        if (pau.ApplicationUserId == user.Id)
+                        {
+                            sortedList.Add(t);
+                        }
+                    }
+                }
+                int low = 0;
+                int medium = 0;
+                int high = 0;
+                int none = 0;
+                foreach (Ticket t in sortedList)
+                {
+                    switch (t.TicketPriority)
+                    {
+                        case TicketPriority.Low:
+                            low++;
+                            break;
+                        case TicketPriority.Medium:
+                            medium++;
+                            break;
+                        case TicketPriority.High:
+                            high++;
+                            break;
+                        case TicketPriority.None:
+                            none++;
+                            break;
+                    }
+
+                }
+                List<JsonDto> list = new List<JsonDto>();
+                list.Add(new JsonDto() { key = localizer["Low"], value = low.ToString() });
+                list.Add(new JsonDto() { key = localizer["Medium"], value = medium.ToString() });
+                list.Add(new JsonDto() { key = localizer["High"], value = high.ToString() });
+                list.Add(new JsonDto() { key = localizer["None"], value = none.ToString() });
+                return Json(new { data = list });
+            }
+            #endregion
+
+        }
     }
-}

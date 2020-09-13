@@ -1,6 +1,9 @@
 ﻿
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+.dark-mode{
+    filter: invert(1) hue-rotate(180deg);
+}
 
 td, td * {
     font-size: medium;

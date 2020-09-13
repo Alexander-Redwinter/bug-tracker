@@ -213,6 +213,9 @@
   <data name="Dashboard" xml:space="preserve">
     <value>Главная</value>
   </data>
+  <data name="Date Of Change" xml:space="preserve">
+    <value>Дата изменения</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
@@ -285,11 +288,17 @@
   <data name="New Ticket" xml:space="preserve">
     <value>Новая Заявка</value>
   </data>
+  <data name="New Value" xml:space="preserve">
+    <value>Новое значение</value>
+  </data>
   <data name="None" xml:space="preserve">
     <value>Минимальный</value>
   </data>
   <data name="Nothing yet" xml:space="preserve">
     <value>Пока пусто</value>
+  </data>
+  <data name="Old Value" xml:space="preserve">
+    <value>Старое значение</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Открыто</value>
